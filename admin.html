@@ -805,7 +805,7 @@
     };
 
     // Permanent ELYSIA Super Admin UID
-    const SUPER_ADMIN_UID = "NVDb3mqvSecRmQrpVZ1PtIi2uJl2";
+    const SUPER_ADMIN_UID = "cpdDyc4hOsMLslbM5AO0MZk0yAx1";
 
     firebase.initializeApp(firebaseConfig);
 
@@ -1005,7 +1005,7 @@
       }
 
       // The permanent Super Admin is identified by BOTH UID and role.
-      const adminRef = db.collection("admins").doc(email);
+      const adminRef = db.collection("admins").doc(user.uid);
       const adminSnap = await adminRef.get();
 
       if (!adminSnap.exists) {
@@ -1407,7 +1407,7 @@
           return {
             docId: doc.id,
             name: String(data.name || "").trim(),
-            email: String(doc.id || "").trim().toLowerCase(),
+            email: normalizeEmail(data.email || ""),
             role: String(data.role || "admin").trim().toLowerCase()
           };
         });
@@ -1559,7 +1559,7 @@
       const email = normalizeEmail(document.getElementById("adminAccountEmail").value);
       const passwordInput = document.getElementById("newAdminPassword");
       const password = passwordInput.value;
-      const originalEmail = normalizeEmail(editingOriginalAdminEmail.value);
+      const originalUid = String(editingOriginalAdminEmail.value || "").trim();
 
       if (!name || !email) {
         showAdminFormError("Please enter the administrator name and email.");
@@ -1571,7 +1571,7 @@
         return;
       }
 
-      if (!originalEmail && password.length < 6) {
+      if (!originalUid && password.length < 6) {
         showAdminFormError("Please enter a password with at least 6 characters.");
         return;
       }
@@ -1584,13 +1584,13 @@
 
       const saveBtn = document.getElementById("saveAdminBtn");
       saveBtn.disabled = true;
-      saveBtn.textContent = originalEmail ? "SAVING..." : "CREATING...";
+      saveBtn.textContent = originalUid ? "SAVING..." : "CREATING...";
 
       try {
-        if (!originalEmail) {
-          const existing = await db.collection("admins").doc(email).get();
+        if (!originalUid) {
+          const existingByEmail = allAdmins.find(a => normalizeEmail(a.email) === email);
 
-          if (existing.exists) {
+          if (existingByEmail) {
             showAdminFormError("This email is already authorized as an administrator.");
             return;
           }
@@ -1599,7 +1599,6 @@
           // so the Super Admin remains logged in to the main app.
           try {
             await adminCreatorAuth.createUserWithEmailAndPassword(email, password);
-            await adminCreatorAuth.signOut();
           } catch (authError) {
             console.error("Admin Auth account creation error:", authError);
 
@@ -1616,18 +1615,25 @@
           }
 
           // Only after Auth account creation succeeds do we authorize it in Firestore.
-          await db.collection("admins").doc(email).set({
+          const createdAdminUser = adminCreatorAuth.currentUser;
+          if (!createdAdminUser) {
+            throw new Error("ADMIN_AUTH_CREATE_FAILED");
+          }
+
+          await db.collection("admins").doc(createdAdminUser.uid).set({
             name,
+            email,
             role: "admin"
           });
 
+          await adminCreatorAuth.signOut();
           showNotice("Administrator account created successfully.");
 
         } else {
           // Editing changes the ELYSIA authorization record only.
           // The existing Firebase login/password remains unchanged.
-          const originalRef = db.collection("admins").doc(originalEmail);
-          const newRef = db.collection("admins").doc(email);
+          // The hidden field stores the administrator UID (not the email).
+          const originalRef = db.collection("admins").doc(originalUid);
           const originalSnap = await originalRef.get();
 
           if (!originalSnap.exists) {
@@ -1642,21 +1648,15 @@
             return;
           }
 
-          if (originalEmail !== email) {
-            const newSnap = await newRef.get();
-            if (newSnap.exists) {
-              showAdminFormError("The new email is already authorized as an administrator.");
-              return;
-            }
-
-            // Changing the Auth email from a client-only page would require
-            // signing in as that user, so we keep the Auth email unchanged here.
-            showAdminFormError("For security, use the original login email when editing an admin. To change the login email, remove this admin and create a new admin account.");
+          const storedEmail = normalizeEmail(originalData.email || "");
+          if (email !== storedEmail) {
+            showAdminFormError("The login email cannot be changed here. Remove this admin and create a new admin account with the new email.");
             return;
           }
 
           await originalRef.update({
             name,
+            email: storedEmail,
             role: "admin"
           });
 
