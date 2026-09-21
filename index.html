@@ -18,16 +18,16 @@ box-sizing: border-box;
 }
 
 :root {
---bg-primary: #020713;
---bg-midnight: #08172e;
---bg-deep-navy: #002254;
---gold-primary: #e6bf47;
---gold-bright: #ffe066;
---gold-light: #ffffff;
---gold-gradient: linear-gradient(135deg, #ffd700 0%, #fff4c2 45%, #d4af37 70%, #9e7806 100%);
---gold-border: rgba(255, 215, 0, 0.45);
+--bg-primary: #020716;
+--bg-deep-blue: #031338;
+--bg-royal-sapphire: #002d7a;
+--gold-primary: #f2c037;
+--gold-bright: #ffe66d;
+--gold-light: #fff5c0;
+--gold-gradient: linear-gradient(135deg, #ffd700 0%, #fff6cc 40%, #e0b02b 75%, #9b7100 100%);
+--gold-border: rgba(255, 215, 0, 0.5);
 --text-light: #ffffff;
---text-muted: #c4d7f5;
+--text-muted: #c7dbf9;
 --font-heading: 'Cinzel', serif;
 --font-body: 'Montserrat', sans-serif;
 }
@@ -51,29 +51,71 @@ z-index: 1;
 pointer-events: none;
 }
 
+/* Poster inspired Royal Atmosphere */
 .ambient-glow {
 position: fixed;
 inset: 0;
 background:
-radial-gradient(circle at 50% 20%, rgba(0, 56, 145, 0.95) 0%, transparent 65%),
-radial-gradient(circle at 85% 75%, rgba(240, 195, 45, 0.22) 0%, transparent 55%),
-radial-gradient(circle at 15% 85%, rgba(8, 28, 65, 0.98) 0%, transparent 60%);
+radial-gradient(circle at 50% 18%, rgba(0, 68, 187, 0.95) 0%, rgba(2, 18, 56, 0.8) 50%, transparent 75%),
+radial-gradient(circle at 88% 78%, rgba(255, 204, 0, 0.22) 0%, transparent 55%),
+radial-gradient(circle at 12% 82%, rgba(0, 52, 148, 0.9) 0%, transparent 60%);
 z-index: 1;
 pointer-events: none;
+animation: ambientBreath 8s ease-in-out infinite alternate;
+}
+
+@keyframes ambientBreath {
+0%   { opacity: 0.85; transform: scale(1); }
+100% { opacity: 1; transform: scale(1.03); }
+}
+
+/* Royal Ornaments */
+.royal-corner {
+position: fixed;
+width: 80px;
+height: 80px;
+z-index: 30;
+pointer-events: none;
+opacity: 0.75;
+}
+.royal-corner.top-left {
+top: 14px;
+left: 14px;
+border-top: 2px solid var(--gold-bright);
+border-left: 2px solid var(--gold-bright);
+border-top-left-radius: 8px;
+}
+.royal-corner.bottom-left {
+bottom: 14px;
+left: 14px;
+border-bottom: 2px solid var(--gold-bright);
+border-left: 2px solid var(--gold-bright);
+border-bottom-left-radius: 8px;
+}
+.royal-corner.bottom-right {
+bottom: 14px;
+right: 14px;
+border-bottom: 2px solid var(--gold-bright);
+border-right: 2px solid var(--gold-bright);
+border-bottom-right-radius: 8px;
+}
+
+@media (max-width: 768px) {
+.royal-corner { width: 45px; height: 45px; opacity: 0.5; }
 }
 
 .shimmer-text {
-background: linear-gradient(90deg, #d4af37 0%, #ffffff 25%, #ffe600 50%, #c59b27 75%, #d4af37 100%);
-background-size: 200% auto;
+background: linear-gradient(90deg, #d4af37 0%, #ffffff 25%, #ffe600 50%, #d4af37 75%, #ffffff 100%);
+background-size: 250% auto;
 color: transparent;
 -webkit-background-clip: text;
 background-clip: text;
 animation: goldShimmer 4s linear infinite;
-text-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+text-shadow: 0 0 25px rgba(255, 215, 0, 0.45);
 }
 
 @keyframes goldShimmer {
-to { background-position: 200% center; }
+to { background-position: 250% center; }
 }
 
 .btn-gold {
@@ -82,7 +124,7 @@ align-items: center;
 justify-content: center;
 gap: 10px;
 background: var(--gold-gradient);
-color: #030811;
+color: #030a17;
 font-family: var(--font-heading);
 font-weight: 800;
 font-size: 0.92rem;
@@ -90,12 +132,13 @@ letter-spacing: 2px;
 text-transform: uppercase;
 padding: 14px 34px;
 border-radius: 50px;
-border: 1px solid rgba(255, 255, 255, 0.6);
+border: 1.5px solid rgba(255, 255, 255, 0.8);
 cursor: pointer;
-box-shadow: 0 10px 30px rgba(212, 175, 55, 0.45), 0 0 15px rgba(255, 215, 0, 0.3);
+box-shadow: 0 10px 30px rgba(212, 175, 55, 0.45), 0 0 20px rgba(255, 215, 0, 0.35);
 transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
 position: relative;
 overflow: hidden;
+animation: goldPulse 3.5s ease-in-out infinite;
 }
 
 .btn-gold::before {
@@ -105,7 +148,7 @@ top: -50%;
 left: -50%;
 width: 200%;
 height: 200%;
-background: linear-gradient(60deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+background: linear-gradient(60deg, transparent, rgba(255, 255, 255, 0.45), transparent);
 transform: rotate(30deg) translateY(-100%);
 transition: transform 0.75s ease;
 }
@@ -116,7 +159,7 @@ transform: rotate(30deg) translateY(100%);
 
 .btn-gold:hover {
 transform: scale(1.05) translateY(-2px);
-box-shadow: 0 15px 40px rgba(255, 215, 0, 0.7);
+box-shadow: 0 15px 45px rgba(255, 215, 0, 0.75);
 }
 
 .btn-gold:disabled {
@@ -126,22 +169,33 @@ transform: none;
 }
 
 .glass-card {
-background: linear-gradient(145deg, rgba(12, 33, 68, 0.92) 0%, rgba(6, 18, 38, 0.96) 100%);
+background: linear-gradient(145deg, rgba(10, 32, 70, 0.94) 0%, rgba(4, 15, 36, 0.98) 100%);
 backdrop-filter: blur(20px);
 -webkit-backdrop-filter: blur(20px);
-border: 1px solid var(--gold-border);
+border: 1.5px solid var(--gold-border);
 border-radius: 20px;
 padding: 26px;
-box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), inset 0 0 20px rgba(212, 175, 55, 0.08);
+box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), inset 0 0 25px rgba(255, 215, 0, 0.12);
+animation: premiumFloat 6s ease-in-out infinite;
+}
+
+@keyframes premiumFloat {
+0%, 100% { transform: translateY(0); }
+50% { transform: translateY(-3px); }
+}
+
+@keyframes goldPulse {
+0%, 100% { box-shadow: 0 10px 25px rgba(212, 175, 55, 0.45); }
+50% { box-shadow: 0 14px 38px rgba(255, 215, 0, 0.7); }
 }
 
 .divider-gold {
-width: 80px;
+width: 90px;
 height: 2px;
 background: var(--gold-gradient);
 margin: 0 auto 20px auto;
 position: relative;
-box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+box-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
 }
 
 .divider-gold::after {
@@ -151,10 +205,10 @@ left: 50%;
 top: 50%;
 transform: translate(-50%, -50%);
 color: var(--gold-bright);
-font-size: 0.75rem;
-background: #06152b;
+font-size: 0.8rem;
+background: #04122d;
 padding: 0 8px;
-text-shadow: 0 0 8px var(--gold-bright);
+text-shadow: 0 0 10px var(--gold-bright);
 }
 
 /* AUTH LOGIN SCREEN */
@@ -166,7 +220,7 @@ display: flex;
 align-items: center;
 justify-content: center;
 padding: 20px;
-background: radial-gradient(circle at 50% 50%, rgba(5, 17, 38, 0.98) 0%, rgba(1, 4, 10, 0.99) 100%);
+background: radial-gradient(circle at 50% 50%, rgba(6, 22, 54, 0.98) 0%, rgba(1, 4, 12, 0.99) 100%);
 backdrop-filter: blur(16px);
 transition: opacity .55s ease, visibility .55s ease;
 }
@@ -176,28 +230,28 @@ max-width: 480px;
 width: 100%;
 text-align: center;
 padding: 40px 30px;
-border: 1.5px solid var(--gold-border);
-box-shadow: 0 25px 60px rgba(0,0,0,0.9), 0 0 35px rgba(212, 175, 55, 0.25);
+border: 2px solid var(--gold-border);
+box-shadow: 0 25px 60px rgba(0,0,0,0.9), 0 0 35px rgba(255, 215, 0, 0.25);
 }
 
 .auth-logo-slot {
-width: 84px;
-height: 84px;
+width: 86px;
+height: 86px;
 margin: 0 auto 18px auto;
 border-radius: 50%;
 border: 2px solid var(--gold-bright);
 display: flex;
 align-items: center;
 justify-content: center;
-background: linear-gradient(135deg, #002d72 0%, #001233 100%);
-box-shadow: 0 0 25px rgba(255, 215, 0, 0.45);
-font-size: 2.2rem;
+background: linear-gradient(135deg, #003688 0%, #001740 100%);
+box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+font-size: 2.3rem;
 }
 
 .auth-input {
 width: 100%;
-background: rgba(3, 8, 18, 0.95);
-border: 1.5px solid rgba(212, 175, 55, 0.55);
+background: rgba(2, 7, 18, 0.95);
+border: 1.5px solid rgba(255, 215, 0, 0.55);
 color: #fff;
 padding: 16px 20px;
 border-radius: 10px;
@@ -213,7 +267,7 @@ transition: border-color 0.3s, box-shadow 0.3s;
 
 .auth-input:focus {
 border-color: var(--gold-bright);
-box-shadow: 0 0 24px rgba(255, 215, 0, 0.5);
+box-shadow: 0 0 24px rgba(255, 215, 0, 0.6);
 }
 
 .auth-error {
@@ -259,7 +313,7 @@ z-index: 120;
 height: 100%;
 width: 20%;
 background: var(--gold-gradient);
-box-shadow: 0 0 16px var(--gold-bright);
+box-shadow: 0 0 18px var(--gold-bright);
 transition: width 0.7s cubic-bezier(0.2, 0.9, 0.3, 1);
 }
 
@@ -268,18 +322,18 @@ position: fixed;
 top: max(16px, env(safe-area-inset-top, 16px));
 right: 25px;
 z-index: 120;
-background: linear-gradient(135deg, rgba(14, 38, 77, 0.94) 0%, rgba(4, 13, 28, 0.96) 100%);
+background: linear-gradient(135deg, rgba(14, 42, 90, 0.96) 0%, rgba(4, 15, 36, 0.98) 100%);
 border: 1.5px solid var(--gold-primary);
-padding: 7px 20px;
+padding: 8px 22px;
 border-radius: 30px;
-font-size: 0.85rem;
+font-size: 0.86rem;
 font-weight: 600;
 letter-spacing: 1px;
-color: var(--gold-light);
+color: #ffffff;
 display: flex;
 align-items: center;
 gap: 10px;
-box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), 0 0 15px rgba(212, 175, 55, 0.2);
+box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 215, 0, 0.25);
 }
 
 @media (max-width: 768px) {
@@ -287,7 +341,7 @@ box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), 0 0 15px rgba(212, 175, 55, 0.2);
 right: 15px; 
 top: max(12px, env(safe-area-inset-top, 12px));
 font-size: 0.76rem; 
-padding: 5px 14px;
+padding: 6px 16px;
 }
 }
 
@@ -307,18 +361,18 @@ z-index: 120;
 }
 
 .nav-dot {
-width: 11px;
-height: 11px;
+width: 12px;
+height: 12px;
 border-radius: 50%;
-border: 1.8px solid var(--gold-primary);
-background: rgba(255, 215, 0, 0.1);
+border: 2px solid var(--gold-primary);
+background: rgba(255, 215, 0, 0.15);
 cursor: pointer;
 transition: all 0.35s ease;
 }
 
 .nav-dot.active {
 background: var(--gold-bright);
-box-shadow: 0 0 16px var(--gold-bright);
+box-shadow: 0 0 18px var(--gold-bright);
 transform: scale(1.4);
 border-color: #fff;
 }
@@ -326,7 +380,7 @@ border-color: #fff;
 /* FIXED MOBILE CONTROLS & ARROWS */
 .scroll-arrow-controls {
 position: fixed;
-bottom: max(24px, calc(env(safe-area-inset-bottom, 0px) + 18px));
+bottom: max(24px, calc(env(safe-area-inset-bottom, 0px) + 20px));
 left: 50%;
 transform: translateX(-50%);
 display: flex;
@@ -334,27 +388,27 @@ align-items: center;
 justify-content: center;
 gap: 18px;
 z-index: 150;
-padding: 6px 14px;
-background: rgba(4, 11, 24, 0.75);
-backdrop-filter: blur(10px);
+padding: 7px 16px;
+background: rgba(4, 14, 34, 0.85);
+backdrop-filter: blur(14px);
 border-radius: 35px;
-border: 1px solid rgba(212, 175, 55, 0.3);
-box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+border: 1.5px solid rgba(255, 215, 0, 0.45);
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.2);
 }
 
 .arrow-btn {
-width: 44px;
-height: 44px;
+width: 46px;
+height: 46px;
 border-radius: 50%;
 border: 1.5px solid var(--gold-primary);
-background: linear-gradient(145deg, #0f2c59 0%, #06142a 100%);
+background: linear-gradient(145deg, #0d3063 0%, #05152f 100%);
 color: var(--gold-bright);
-font-size: 1rem;
+font-size: 1.1rem;
 display: flex;
 align-items: center;
 justify-content: center;
 cursor: pointer;
-box-shadow: 0 4px 15px rgba(0,0,0,0.5), inset 0 0 10px rgba(255, 215, 0, 0.2);
+box-shadow: 0 4px 15px rgba(0,0,0,0.6), inset 0 0 10px rgba(255, 215, 0, 0.25);
 transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
 outline: none;
 -webkit-tap-highlight-color: transparent;
@@ -371,7 +425,7 @@ background: var(--gold-gradient);
 color: #020713;
 border-color: #ffffff;
 transform: scale(1.1);
-box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+box-shadow: 0 0 22px rgba(255, 215, 0, 0.7);
 }
 
 /* 3D Slide Mechanism */
@@ -389,7 +443,7 @@ inset: 0;
 display: flex;
 align-items: center;
 justify-content: center;
-padding: 40px 18px 110px 18px;
+padding: 40px 18px 120px 18px;
 opacity: 0;
 pointer-events: none;
 transform: translate3d(0, 80px, -200px) rotateX(-8deg);
@@ -423,35 +477,37 @@ text-align: center;
 .event-banner-container {
 width: 100%;
 max-width: 720px;
-height: 190px;
+min-height: 195px;
+padding: 24px 20px;
 margin: 0 auto 24px auto;
-border-radius: 18px;
+border-radius: 20px;
 border: 1.5px solid var(--gold-border);
-background: linear-gradient(135deg, rgba(0, 48, 128, 0.85) 0%, rgba(8, 26, 56, 0.95) 100%);
-box-shadow: 0 15px 45px rgba(0, 0, 0, 0.75), inset 0 0 25px rgba(255, 215, 0, 0.15);
+background: linear-gradient(135deg, rgba(0, 52, 148, 0.88) 0%, rgba(5, 22, 54, 0.96) 100%);
+box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8), inset 0 0 30px rgba(255, 215, 0, 0.2);
 display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: center;
+animation: premiumFloat 6s ease-in-out infinite;
 }
 
 .school-crest {
-width: 64px;
-height: 64px;
+width: 66px;
+height: 66px;
 border-radius: 50%;
 border: 2px solid var(--gold-bright);
-margin-bottom: 10px;
-box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+margin-bottom: 12px;
+box-shadow: 0 0 25px rgba(255, 215, 0, 0.55);
 display: flex;
 align-items: center;
 justify-content: center;
-background: #00235e;
-font-size: 1.9rem;
+background: #002870;
+font-size: 2rem;
 }
 
 .banner-title {
 font-family: var(--font-heading);
-font-size: clamp(1.6rem, 3.6vw, 2.5rem);
+font-size: clamp(1.8rem, 4vw, 2.7rem);
 letter-spacing: 6px;
 font-weight: 900;
 }
@@ -466,7 +522,7 @@ letter-spacing: 1px;
 .attendee-welcome span {
 color: var(--gold-bright);
 font-weight: 800;
-text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+text-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
 border-bottom: 2px solid var(--gold-bright);
 padding-bottom: 2px;
 }
@@ -479,25 +535,25 @@ margin-bottom: 28px;
 }
 
 .mini-cd-box {
-background: linear-gradient(145deg, rgba(7, 20, 42, 0.95), rgba(3, 9, 20, 0.95));
-border: 1.2px solid rgba(255, 215, 0, 0.45);
+background: linear-gradient(145deg, rgba(7, 24, 56, 0.95), rgba(2, 10, 26, 0.95));
+border: 1.5px solid rgba(255, 215, 0, 0.5);
 border-radius: 12px;
-padding: 12px 16px;
-min-width: 72px;
-box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), inset 0 0 12px rgba(255, 215, 0, 0.12);
+padding: 12px 18px;
+min-width: 74px;
+box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), inset 0 0 14px rgba(255, 215, 0, 0.15);
 }
 
 .mini-cd-num {
 font-family: var(--font-heading);
-font-size: 1.55rem;
+font-size: 1.6rem;
 font-weight: 800;
 color: #ffffff;
-text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
 }
 
 .mini-cd-lbl {
-font-size: 0.68rem;
-font-weight: 600;
+font-size: 0.7rem;
+font-weight: 700;
 color: var(--gold-bright);
 letter-spacing: 1.5px;
 text-transform: uppercase;
@@ -506,32 +562,33 @@ margin-top: 2px;
 
 /* SLIDE 1: DIGITAL PASS */
 .digital-ticket-card {
-max-width: 480px;
+max-width: 490px;
 margin: 0 auto;
-background: linear-gradient(155deg, #102d5c 0%, #071936 55%, #030a17 100%);
+background: linear-gradient(155deg, #0e306b 0%, #071c42 55%, #020a1c 100%);
 border: 2px solid var(--gold-bright);
 border-radius: 22px;
 padding: 28px 24px;
-box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 35px rgba(212, 175, 55, 0.35);
+box-shadow: 0 25px 65px rgba(0, 0, 0, 0.9), 0 0 40px rgba(255, 215, 0, 0.35);
+animation: premiumFloat 6s ease-in-out infinite;
 }
 
 .ticket-badge {
 display: inline-block;
-padding: 4px 14px;
+padding: 5px 16px;
 border-radius: 20px;
-font-size: 0.76rem;
+font-size: 0.78rem;
 font-weight: 700;
-background: rgba(255, 215, 0, 0.18);
+background: rgba(255, 215, 0, 0.22);
 color: var(--gold-bright);
 letter-spacing: 2px;
 margin-bottom: 14px;
-border: 1px solid var(--gold-bright);
-box-shadow: 0 0 15px rgba(255, 215, 0, 0.25);
+border: 1.5px solid var(--gold-bright);
+box-shadow: 0 0 15px rgba(255, 215, 0, 0.35);
 }
 
 .ticket-guest-name {
 font-family: var(--font-heading);
-font-size: 1.55rem;
+font-size: 1.6rem;
 font-weight: 800;
 color: #ffffff;
 margin-bottom: 4px;
@@ -540,16 +597,16 @@ text-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
 
 .ticket-id-tag {
 font-family: monospace;
-font-size: 1.25rem;
+font-size: 1.3rem;
 font-weight: 700;
 color: var(--gold-bright);
 letter-spacing: 3px;
 margin-bottom: 8px;
-text-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+text-shadow: 0 0 14px rgba(255, 215, 0, 0.5);
 }
 
 .ticket-nic-tag {
-font-size: 0.92rem;
+font-size: 0.94rem;
 font-weight: 600;
 color: var(--text-muted);
 margin-bottom: 16px;
@@ -557,13 +614,13 @@ letter-spacing: 1.5px;
 }
 
 .ticket-qr-placeholder {
-width: 145px;
-height: 145px;
+width: 150px;
+height: 150px;
 margin: 14px auto;
 background: #ffffff;
 padding: 8px;
 border-radius: 12px;
-box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+box-shadow: 0 0 28px rgba(255, 255, 255, 0.45);
 }
 
 .ticket-qr-placeholder img {
@@ -573,7 +630,7 @@ display: block;
 }
 
 .pass-note {
-font-size: 0.82rem;
+font-size: 0.84rem;
 color: var(--text-muted);
 margin-top: 14px;
 line-height: 1.5;
@@ -581,9 +638,28 @@ line-height: 1.5;
 
 .grid-4 {
 display: grid;
-grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-gap: 16px;
+grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+gap: 18px;
 text-align: center;
+}
+
+/* Poster Preview Card in Slide 2 */
+.poster-preview-card {
+max-width: 380px;
+margin: 0 auto 24px auto;
+border-radius: 16px;
+overflow: hidden;
+border: 2px solid var(--gold-bright);
+box-shadow: 0 15px 45px rgba(0,0,0,0.85), 0 0 25px rgba(255, 215, 0, 0.3);
+transition: transform 0.4s ease;
+}
+.poster-preview-card:hover {
+transform: scale(1.03);
+}
+.poster-preview-card img {
+width: 100%;
+height: auto;
+display: block;
 }
 
 .trivia-box {
@@ -593,46 +669,6 @@ text-align: left;
 display: flex;
 flex-direction: column;
 gap: 15px;
-}
-
-/* MICRO MOTIONS */
-.ambient-glow {
-animation: ambientBreath 9s ease-in-out infinite alternate;
-}
-
-@keyframes ambientBreath {
-0%   { opacity: 0.88; transform: scale(1); }
-100% { opacity: 1; transform: scale(1.03); }
-}
-
-.glass-card,
-.event-banner-container,
-.digital-ticket-card {
-animation: premiumFloat 6s ease-in-out infinite;
-will-change: transform;
-}
-
-@keyframes premiumFloat {
-0%, 100% { transform: translateY(0); }
-50% { transform: translateY(-3px); }
-}
-
-.btn-gold {
-animation: goldPulse 3.5s ease-in-out infinite;
-}
-
-@keyframes goldPulse {
-0%, 100% { box-shadow: 0 10px 25px rgba(212, 175, 55, 0.45); }
-50% { box-shadow: 0 14px 38px rgba(255, 215, 0, 0.7); }
-}
-
-.arrow-btn {
-animation: arrowGlow 3s ease-in-out infinite;
-}
-
-@keyframes arrowGlow {
-0%, 100% { box-shadow: 0 0 0 rgba(255, 215, 0, 0); }
-50% { box-shadow: 0 0 18px rgba(255, 215, 0, 0.35); }
 }
 
 body.auth-locked {
@@ -662,17 +698,22 @@ animation: none !important;
 <canvas id="particles-canvas"></canvas>
 <div class="ambient-glow"></div>
 
+<!-- Royal Frame Accents matching the poster -->
+<div class="royal-corner top-left"></div>
+<div class="royal-corner bottom-left"></div>
+<div class="royal-corner bottom-right"></div>
+
 <!-- AUTH SCREEN -->
 <div id="auth-screen">
 <div class="glass-card auth-card">
 <div class="auth-logo-slot">🏛️</div>
-<span style="font-size: 0.75rem; letter-spacing: 4px; color: var(--gold-bright); text-transform: uppercase; font-weight: 700;">
-2020 O/L • 2023 A/L REUNION
+<span style="font-size: 0.78rem; letter-spacing: 4px; color: var(--gold-bright); text-transform: uppercase; font-weight: 700;">
+2020 O/L • 2023 A/L PRESENTS
 </span>
-<h2 class="shimmer-text" style="font-family: var(--font-heading); font-size: 2.2rem; margin: 10px 0 16px 0;">
+<h2 class="shimmer-text" style="font-family: var(--font-heading); font-size: 2.3rem; margin: 10px 0 16px 0;">
 ELYSIA
 </h2>
-<p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
+<p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.6;">
 ඔබගේ <strong>ජාතික හැඳුනුම්පත් අංකය (NIC)</strong> ඇතුළත් කර ඔබගේ Royal Gate Pass එක ලබා ගන්න.
 </p>
 
@@ -709,7 +750,7 @@ Unlock Royal Pass
 <div class="nav-dot" onclick="goToSlide(4)"></div>
 </div>
 
-<!-- Scroll Arrows -->
+<!-- Scroll Arrows (Fixed Safe Area on Mobile) -->
 <div class="scroll-arrow-controls">
 <button class="arrow-btn" onclick="prevSlide()" aria-label="Previous Slide">▲</button>
 <button class="arrow-btn" onclick="nextSlide()" aria-label="Next Slide">▼</button>
@@ -722,8 +763,9 @@ Unlock Royal Pass
 <div class="slide-inner">
 <div class="event-banner-container">
 <div class="school-crest">🎓</div>
-<h1 class="banner-title shimmer-text">ELYSIA 2026</h1>
-<p style="font-size: 0.85rem; letter-spacing: 3.5px; color: var(--gold-bright); font-weight: 600;">THE ULTIMATE GET TOGETHER</p>
+<span style="font-size: 0.78rem; letter-spacing: 4px; color: var(--gold-light); font-weight: 700; margin-bottom: 6px;">2020 O/L BATCH / 2023 A/L BATCH PRESENTS</span>
+<h1 class="banner-title shimmer-text">ELYSIA</h1>
+<p style="font-size: 0.88rem; letter-spacing: 4px; color: var(--gold-bright); font-weight: 600; margin-top: 4px;">– THE ULTIMATE GET TOGETHER –</p>
 </div>
 
 <div class="attendee-welcome">
@@ -747,7 +789,7 @@ Honored Guest: <span id="welcomeName">Loading...</span>
 <span style="font-size: 0.78rem; letter-spacing: 4px; color: var(--gold-bright); text-transform: uppercase; font-weight: 700;">
 Entrance Verification
 </span>
-<h2 style="font-family: var(--font-heading); font-size: 2rem; margin: 6px 0 16px 0; text-shadow: 0 0 15px rgba(255,255,255,0.2);">Official Digital Pass</h2>
+<h2 style="font-family: var(--font-heading); font-size: 2.1rem; margin: 6px 0 16px 0; text-shadow: 0 0 15px rgba(255,255,255,0.25);">Official Digital Pass</h2>
 <div class="divider-gold"></div>
 
 <div class="digital-ticket-card">
@@ -761,42 +803,47 @@ Entrance Verification
 <img id="ticketQR" src="" alt="Gate Pass QR" />
 </div>
 
-<p style="font-size: 0.95rem; color: #ffffff; margin-top: 10px; font-weight: 600;">Glamoura Hotel • Gemunupura</p>
-<p style="font-size: 0.85rem; color: var(--gold-bright); margin-top: 4px; font-weight: 500;">27th December 2026 • 8:00 AM – 4:00 PM</p>
+<p style="font-size: 1rem; color: #ffffff; margin-top: 12px; font-weight: 700;">GLAMOURA HOTEL • GEMUNUPURA</p>
+<p style="font-size: 0.88rem; color: var(--gold-bright); margin-top: 4px; font-weight: 600;">27TH DECEMBER 2026 • 8.00 AM TO 16.00 PM</p>
 <p class="pass-note">⚠️ Event එකට ඇතුළු වීමේදී මෙම Screen එක හෝ මෙහි Screenshot එක Gate එකට පෙන්වන්න.</p>
 </div>
 </div>
 </div>
 
-<!-- SLIDE 2: SCHEDULE & VENUE DETAILS -->
+<!-- SLIDE 2: SCHEDULE, VENUE & POSTER -->
 <div class="slide">
 <div class="slide-inner">
 <span style="font-size: 0.78rem; letter-spacing: 4px; color: var(--gold-bright); text-transform: uppercase; font-weight: 700;">
 Event Information
 </span>
-<h2 style="font-family: var(--font-heading); font-size: 2rem; margin: 6px 0 16px 0;">Venue & Schedule</h2>
+<h2 style="font-family: var(--font-heading); font-size: 2.1rem; margin: 6px 0 16px 0;">Venue & Details</h2>
 <div class="divider-gold"></div>
+
+<!-- Official Event Poster Integration -->
+<div class="poster-preview-card">
+<img src="https://i.postimg.cc/RZdHxfRK/IMG-20260921-WA0001.jpg" alt="ELYSIA 2026 Official Poster" loading="lazy" />
+</div>
 
 <div class="grid-4">
 <div class="glass-card">
 <h4 style="font-family: var(--font-heading); color: var(--gold-bright); margin-bottom: 8px; font-size: 1.15rem;">Location</h4>
-<p style="font-weight: 600; color: #fff;">Glamoura Hotel</p>
-<p style="font-size: 0.85rem; color: var(--gold-primary); margin-top: 3px;">Gemunupura</p>
+<p style="font-weight: 700; color: #fff;">Glamoura Hotel</p>
+<p style="font-size: 0.88rem; color: var(--gold-primary); margin-top: 3px;">Gemunupura</p>
 </div>
 <div class="glass-card">
 <h4 style="font-family: var(--font-heading); color: var(--gold-bright); margin-bottom: 8px; font-size: 1.15rem;">Time</h4>
-<p style="font-weight: 600; color: #fff;">8:00 AM – 4:00 PM</p>
-<p style="font-size: 0.85rem; color: var(--gold-primary); margin-top: 3px;">Full Day Feast</p>
+<p style="font-weight: 700; color: #fff;">8.00 AM to 16.00 PM</p>
+<p style="font-size: 0.88rem; color: var(--gold-primary); margin-top: 3px;">Full Day Celebration</p>
 </div>
 <div class="glass-card">
 <h4 style="font-family: var(--font-heading); color: var(--gold-bright); margin-bottom: 8px; font-size: 1.15rem;">Dress Code</h4>
-<p style="font-weight: 600; color: #fff;">Black & White</p>
-<p style="font-size: 0.85rem; color: #90caf9; margin-top: 3px;">White & Blue</p>
+<p style="font-weight: 700; color: #fff;">Black & White</p>
+<p style="font-size: 0.88rem; color: #90caf9; margin-top: 3px;">White & Blue</p>
 </div>
 <div class="glass-card">
-<h4 style="font-family: var(--font-heading); color: var(--gold-bright); margin-bottom: 8px; font-size: 1.15rem;">Admission</h4>
-<p style="font-weight: 600; color: #fff;">LKR 4,000</p>
-<p style="font-size: 0.85rem; color: #a5d6a7; margin-top: 3px;">All Inclusive</p>
+<h4 style="font-family: var(--font-heading); color: var(--gold-bright); margin-bottom: 8px; font-size: 1.15rem;">Tickets</h4>
+<p style="font-weight: 700; color: #fff;">LKR 4,000</p>
+<p style="font-size: 0.88rem; color: #a5d6a7; margin-top: 3px;">All Inclusive</p>
 </div>
 </div>
 </div>
@@ -808,29 +855,29 @@ Event Information
 <span style="font-size: 0.78rem; letter-spacing: 4px; color: var(--gold-bright); text-transform: uppercase; font-weight: 700;">
 What Awaits You
 </span>
-<h2 style="font-family: var(--font-heading); font-size: 2rem; margin: 6px 0 16px 0;">Activities & Moments</h2>
+<h2 style="font-family: var(--font-heading); font-size: 2.1rem; margin: 6px 0 16px 0;">Activities & Moments</h2>
 <div class="divider-gold"></div>
 
 <div class="grid-4">
 <div class="glass-card">
-<div style="font-size: 2.3rem; margin-bottom: 8px;">🎧</div>
-<h4 style="font-family: var(--font-heading); color: var(--gold-bright); margin-bottom: 6px;">Live DJ</h4>
-<p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">Non-stop school anthems and party tracks.</p>
+<div style="font-size: 2.5rem; margin-bottom: 10px;">🎧</div>
+<h4 style="font-family: var(--font-heading); color: var(--gold-bright); margin-bottom: 6px; font-size: 1.15rem;">DJ</h4>
+<p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Non-stop party anthems & tracks.</p>
 </div>
 <div class="glass-card">
-<div style="font-size: 2.3rem; margin-bottom: 8px;">📸</div>
-<h4 style="font-family: var(--font-heading); color: var(--gold-bright); margin-bottom: 6px;">Memory Booth</h4>
-<p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">Red carpet studio photo shoots with batch mates.</p>
+<div style="font-size: 2.5rem; margin-bottom: 10px;">📸</div>
+<h4 style="font-family: var(--font-heading); color: var(--gold-bright); margin-bottom: 6px; font-size: 1.15rem;">Photo Shoot</h4>
+<p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Exclusive memories with batch mates.</p>
 </div>
 <div class="glass-card">
-<div style="font-size: 2.3rem; margin-bottom: 8px;">🥂</div>
-<h4 style="font-family: var(--font-heading); color: var(--gold-bright); margin-bottom: 6px;">Welcome Drinks</h4>
-<p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">Chilled mocktails & refreshing beverages.</p>
+<div style="font-size: 2.5rem; margin-bottom: 10px;">🍸</div>
+<h4 style="font-family: var(--font-heading); color: var(--gold-bright); margin-bottom: 6px; font-size: 1.15rem;">Drinks</h4>
+<p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Chilled beverages and refreshments.</p>
 </div>
 <div class="glass-card">
-<div style="font-size: 2.3rem; margin-bottom: 8px;">🍽️</div>
-<h4 style="font-family: var(--font-heading); color: var(--gold-bright); margin-bottom: 6px;">Grand Buffet</h4>
-<p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">Multi-course gourmet feast & desserts.</p>
+<div style="font-size: 2.5rem; margin-bottom: 10px;">🍽️</div>
+<h4 style="font-family: var(--font-heading); color: var(--gold-bright); margin-bottom: 6px; font-size: 1.15rem;">Food</h4>
+<p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Gourmet buffet and delicious desserts.</p>
 </div>
 </div>
 </div>
@@ -842,26 +889,26 @@ What Awaits You
 <span style="font-size: 0.78rem; letter-spacing: 4px; color: var(--gold-bright); text-transform: uppercase; font-weight: 700;">
 Secret Vault
 </span>
-<h2 style="font-family: var(--font-heading); font-size: 2rem; margin: 6px 0 16px 0;">Unlock Memories</h2>
+<h2 style="font-family: var(--font-heading); font-size: 2.1rem; margin: 6px 0 16px 0;">Unlock Memories</h2>
 <div class="divider-gold"></div>
 
 <div class="trivia-box">
 <div class="glass-card">
-<div style="font-size: 0.95rem; color: #fff; margin-bottom: 10px; font-weight: 500;">1. Which batch kickstarted this journey?</div>
+<div style="font-size: 1rem; color: #fff; margin-bottom: 10px; font-weight: 600;">1. Which batch kickstarted this journey?</div>
 <div style="display:flex; gap:10px;">
-<input type="text" id="tr-1" placeholder="Year..." style="flex:1; background:rgba(2,6,15,0.8); border:1px solid #e0b93f; padding:10px 14px; border-radius:6px; color:#fff; outline:none; font-size: 0.95rem;" />
-<button class="btn-gold" style="padding:10px 20px; font-size:0.8rem; border-radius:6px;" onclick="checkTrivia(1, '2020')">Unlock</button>
+<input type="text" id="tr-1" placeholder="Year..." style="flex:1; background:rgba(2,7,18,0.85); border:1.5px solid #e0b93f; padding:12px 14px; border-radius:8px; color:#fff; outline:none; font-size: 1rem;" />
+<button class="btn-gold" style="padding:10px 22px; font-size:0.82rem; border-radius:8px;" onclick="checkTrivia(1, '2020')">Unlock</button>
 </div>
-<p id="tr-rev-1" style="display:none; color:var(--gold-bright); font-size:0.9rem; margin-top:10px; font-weight: 600;">The unforgettable O/L memories that brought us here! 🎓</p>
+<p id="tr-rev-1" style="display:none; color:var(--gold-bright); font-size:0.92rem; margin-top:10px; font-weight: 700;">The unforgettable 2020 O/L memories that brought us here! 🎓</p>
 </div>
 
 <div class="glass-card">
-<div style="font-size: 0.95rem; color: #fff; margin-bottom: 10px; font-weight: 500;">2. Which year marked our high school finale?</div>
+<div style="font-size: 1rem; color: #fff; margin-bottom: 10px; font-weight: 600;">2. Which year marked our high school finale?</div>
 <div style="display:flex; gap:10px;">
-<input type="text" id="tr-2" placeholder="Year..." style="flex:1; background:rgba(2,6,15,0.8); border:1px solid #e0b93f; padding:10px 14px; border-radius:6px; color:#fff; outline:none; font-size: 0.95rem;" />
-<button class="btn-gold" style="padding:10px 20px; font-size:0.8rem; border-radius:6px;" onclick="checkTrivia(2, '2023')">Unlock</button>
+<input type="text" id="tr-2" placeholder="Year..." style="flex:1; background:rgba(2,7,18,0.85); border:1.5px solid #e0b93f; padding:12px 14px; border-radius:8px; color:#fff; outline:none; font-size: 1rem;" />
+<button class="btn-gold" style="padding:10px 22px; font-size:0.82rem; border-radius:8px;" onclick="checkTrivia(2, '2023')">Unlock</button>
 </div>
-<p id="tr-rev-2" style="display:none; color:var(--gold-bright); font-size:0.9rem; margin-top:10px; font-weight: 600;">A/L grind, shared dreams, and unbreakable bonds! ✨</p>
+<p id="tr-rev-2" style="display:none; color:var(--gold-bright); font-size:0.92rem; margin-top:10px; font-weight: 700;">2023 A/L grind, shared dreams, and unbreakable bonds! ✨</p>
 </div>
 </div>
 </div>
@@ -1008,7 +1055,7 @@ const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${e
 document.getElementById('ticketQR').src = qrApi;
 }
 
-/* 3D SLIDE VIEWPORT CONTROLLER */
+/* 3D SLIDE CONTROLLER */
 const slides = document.querySelectorAll('.slide');
 const dots = document.querySelectorAll('.nav-dot');
 const progressBar = document.getElementById('topProgressBar');
@@ -1079,7 +1126,7 @@ const diff = targetDate - now;
 if (diff > 0) {
 document.getElementById('days').innerText = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
 document.getElementById('hours').innerText = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
-document.getElementById('minutes').innerText = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+document.getElementById('minutes').innerText = String(Math.floor((diff % (1000 * 60)) / (1000 * 60))).padStart(2, '0');
 document.getElementById('seconds').innerText = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
 }
 }
@@ -1093,7 +1140,7 @@ const rev = document.getElementById(`tr-rev-${step}`);
 if (input.value.trim().toLowerCase().includes(key)) rev.style.display = 'block';
 }
 
-/* BACKGROUND PARTICLES */
+/* BACKGROUND GOLD PARTICLES */
 const canvas = document.getElementById('particles-canvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
@@ -1106,7 +1153,7 @@ constructor() { this.reset(); }
 reset() {
 this.x = Math.random() * canvas.width;
 this.y = Math.random() * canvas.height;
-this.size = Math.random() * 2.2 + 0.6;
+this.size = Math.random() * 2.4 + 0.6;
 this.speedY = -(Math.random() * 0.45 + 0.15);
 this.speedX = (Math.random() - 0.5) * 0.3;
 this.opacity = Math.random() * 0.55 + 0.35;
@@ -1119,16 +1166,16 @@ if (this.y < 0) { this.y = canvas.height; this.x = Math.random() * canvas.width;
 draw() {
 ctx.beginPath();
 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-ctx.fillStyle = '#ffe066';
+ctx.fillStyle = '#ffe66d';
 ctx.globalAlpha = this.opacity;
-ctx.shadowBlur = 8;
+ctx.shadowBlur = 10;
 ctx.shadowColor = '#ffd700';
 ctx.fill();
 ctx.globalAlpha = 1;
 ctx.shadowBlur = 0;
 }
 }
-for (let i = 0; i < 45; i++) particles.push(new Particle());
+for (let i = 0; i < 48; i++) particles.push(new Particle());
 function loop() {
 ctx.clearRect(0, 0, canvas.width, canvas.height);
 particles.forEach(p => { p.update(); p.draw(); });
