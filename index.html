@@ -235,8 +235,8 @@ box-shadow: 0 25px 60px rgba(0,0,0,0.9), 0 0 35px rgba(255, 215, 0, 0.25);
 }
 
 .auth-logo-slot {
-width: 86px;
-height: 86px;
+width: 92px;
+height: 92px;
 margin: 0 auto 18px auto;
 border-radius: 50%;
 border: 2px solid var(--gold-bright);
@@ -245,7 +245,16 @@ align-items: center;
 justify-content: center;
 background: linear-gradient(135deg, #003688 0%, #001740 100%);
 box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
-font-size: 2.3rem;
+padding: 8px;
+overflow: hidden;
+}
+
+.auth-logo-slot img {
+width: 100%;
+height: 100%;
+object-fit: contain;
+border-radius: 50%;
+filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.4));
 }
 
 .auth-input {
@@ -377,57 +386,6 @@ transform: scale(1.4);
 border-color: #fff;
 }
 
-/* FIXED MOBILE CONTROLS & ARROWS */
-.scroll-arrow-controls {
-position: fixed;
-bottom: max(24px, calc(env(safe-area-inset-bottom, 0px) + 20px));
-left: 50%;
-transform: translateX(-50%);
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 18px;
-z-index: 150;
-padding: 7px 16px;
-background: rgba(4, 14, 34, 0.85);
-backdrop-filter: blur(14px);
-border-radius: 35px;
-border: 1.5px solid rgba(255, 215, 0, 0.45);
-box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.2);
-}
-
-.arrow-btn {
-width: 46px;
-height: 46px;
-border-radius: 50%;
-border: 1.5px solid var(--gold-primary);
-background: linear-gradient(145deg, #0d3063 0%, #05152f 100%);
-color: var(--gold-bright);
-font-size: 1.1rem;
-display: flex;
-align-items: center;
-justify-content: center;
-cursor: pointer;
-box-shadow: 0 4px 15px rgba(0,0,0,0.6), inset 0 0 10px rgba(255, 215, 0, 0.25);
-transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-outline: none;
--webkit-tap-highlight-color: transparent;
-}
-
-.arrow-btn:active {
-transform: scale(0.92);
-background: var(--gold-primary);
-color: #030811;
-}
-
-.arrow-btn:hover {
-background: var(--gold-gradient);
-color: #020713;
-border-color: #ffffff;
-transform: scale(1.1);
-box-shadow: 0 0 22px rgba(255, 215, 0, 0.7);
-}
-
 /* 3D Slide Mechanism */
 .deck-container {
 position: relative;
@@ -443,7 +401,7 @@ inset: 0;
 display: flex;
 align-items: center;
 justify-content: center;
-padding: 40px 18px 120px 18px;
+padding: 40px 18px 40px 18px;
 opacity: 0;
 pointer-events: none;
 transform: translate3d(0, 80px, -200px) rotateX(-8deg);
@@ -476,14 +434,14 @@ text-align: center;
 /* SLIDE 0: BANNER & COUNTDOWN */
 .event-banner-container {
 width: 100%;
-max-width: 720px;
-min-height: 195px;
-padding: 24px 20px;
+max-width: 760px;
+min-height: 220px;
+padding: 28px 24px;
 margin: 0 auto 24px auto;
-border-radius: 20px;
+border-radius: 24px;
 border: 1.5px solid var(--gold-border);
-background: linear-gradient(135deg, rgba(0, 52, 148, 0.88) 0%, rgba(5, 22, 54, 0.96) 100%);
-box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8), inset 0 0 30px rgba(255, 215, 0, 0.2);
+background: linear-gradient(135deg, rgba(0, 52, 148, 0.92) 0%, rgba(5, 22, 54, 0.98) 100%);
+box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), inset 0 0 35px rgba(255, 215, 0, 0.22);
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -492,24 +450,49 @@ animation: premiumFloat 6s ease-in-out infinite;
 }
 
 .school-crest {
-width: 66px;
-height: 66px;
+width: 88px;
+height: 88px;
 border-radius: 50%;
-border: 2px solid var(--gold-bright);
-margin-bottom: 12px;
-box-shadow: 0 0 25px rgba(255, 215, 0, 0.55);
+border: 2.5px solid var(--gold-bright);
+margin-bottom: 14px;
+box-shadow: 0 0 30px rgba(255, 215, 0, 0.65), inset 0 0 15px rgba(255, 215, 0, 0.3);
 display: flex;
 align-items: center;
 justify-content: center;
-background: #002870;
-font-size: 2rem;
+background: linear-gradient(135deg, #002870 0%, #001238 100%);
+padding: 8px;
+overflow: hidden;
+}
+
+.school-crest img {
+width: 100%;
+height: 100%;
+object-fit: contain;
+border-radius: 50%;
+filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.5));
+}
+
+.batch-badge {
+display: inline-block;
+font-family: var(--font-heading);
+font-size: clamp(0.85rem, 1.8vw, 1.05rem);
+letter-spacing: 4px;
+color: #ffffff;
+font-weight: 800;
+margin-bottom: 8px;
+text-shadow: 0 0 14px rgba(255, 215, 0, 0.6);
+padding: 4px 18px;
+background: rgba(255, 215, 0, 0.12);
+border: 1px solid rgba(255, 215, 0, 0.35);
+border-radius: 30px;
 }
 
 .banner-title {
 font-family: var(--font-heading);
-font-size: clamp(1.8rem, 4vw, 2.7rem);
-letter-spacing: 6px;
+font-size: clamp(2rem, 4.4vw, 3rem);
+letter-spacing: 7px;
 font-weight: 900;
+line-height: 1.15;
 }
 
 .attendee-welcome {
@@ -686,8 +669,7 @@ pointer-events: none;
 .glass-card,
 .event-banner-container,
 .digital-ticket-card,
-.btn-gold,
-.arrow-btn {
+.btn-gold {
 animation: none !important;
 }
 }
@@ -706,7 +688,9 @@ animation: none !important;
 <!-- AUTH SCREEN -->
 <div id="auth-screen">
 <div class="glass-card auth-card">
-<div class="auth-logo-slot">🏛️</div>
+<div class="auth-logo-slot">
+  <img src="https://i.postimg.cc/x8k1hNCr/OIP.webp" alt="School Crest" />
+</div>
 <span style="font-size: 0.78rem; letter-spacing: 4px; color: var(--gold-bright); text-transform: uppercase; font-weight: 700;">
 2020 O/L • 2023 A/L PRESENTS
 </span>
@@ -750,22 +734,18 @@ Unlock Royal Pass
 <div class="nav-dot" onclick="goToSlide(4)"></div>
 </div>
 
-<!-- Scroll Arrows (Fixed Safe Area on Mobile) -->
-<div class="scroll-arrow-controls">
-<button class="arrow-btn" onclick="prevSlide()" aria-label="Previous Slide">▲</button>
-<button class="arrow-btn" onclick="nextSlide()" aria-label="Next Slide">▼</button>
-</div>
-
 <div class="deck-container">
 
 <!-- SLIDE 0: BANNER, CREST & COUNTDOWN -->
 <div class="slide active">
 <div class="slide-inner">
 <div class="event-banner-container">
-<div class="school-crest">🎓</div>
-<span style="font-size: 0.78rem; letter-spacing: 4px; color: var(--gold-light); font-weight: 700; margin-bottom: 6px;">2020 O/L BATCH / 2023 A/L BATCH PRESENTS</span>
+<div class="school-crest">
+  <img src="https://i.postimg.cc/x8k1hNCr/OIP.webp" alt="School Crest Logo" />
+</div>
+<div class="batch-badge">2020 O/L BATCH / 2023 A/L BATCH PRESENTS</div>
 <h1 class="banner-title shimmer-text">ELYSIA</h1>
-<p style="font-size: 0.88rem; letter-spacing: 4px; color: var(--gold-bright); font-weight: 600; margin-top: 4px;">– THE ULTIMATE GET TOGETHER –</p>
+<p style="font-size: 0.9rem; letter-spacing: 4px; color: var(--gold-bright); font-weight: 600; margin-top: 6px;">– THE ULTIMATE GET TOGETHER –</p>
 </div>
 
 <div class="attendee-welcome">
@@ -1126,7 +1106,7 @@ const diff = targetDate - now;
 if (diff > 0) {
 document.getElementById('days').innerText = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
 document.getElementById('hours').innerText = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
-document.getElementById('minutes').innerText = String(Math.floor((diff % (1000 * 60)) / (1000 * 60))).padStart(2, '0');
+document.getElementById('minutes').innerText = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
 document.getElementById('seconds').innerText = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
 }
 }
