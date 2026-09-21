@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+meka perfect. meke colors poddk dul wge. nikn transparency eka adu wela wge. eka mta hadala denawada. anith kisima deyak wenas karanna epa. meke design eka improve karala meke color issue eka hadanna. aye meke arrow deka mobile ui ekedi crop wenw ekth hadanna. animation include karala superb ui experience ekk denna"<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -285,6 +285,35 @@ box-shadow: 0 0 12px var(--gold-bright);
 transform: scale(1.3);
 }
 
+.scroll-arrow-controls {
+position: fixed;
+bottom: max(18px, calc(env(safe-area-inset-bottom, 0px) + 14px));
+left: 50%;
+transform: translateX(-50%);
+display: flex;
+gap: 16px;
+z-index: 80;
+}
+
+.arrow-btn {
+width: 42px;
+height: 42px;
+border-radius: 50%;
+border: 1px solid var(--gold-primary);
+background: rgba(8, 30, 66, 0.82);
+color: var(--gold-light);
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+transition: all 0.3s;
+}
+
+.arrow-btn:hover {
+background: var(--gold-primary);
+color: #050d1a;
+transform: scale(1.1);
+}
 
 /* 3D Slide Mechanism */
 .deck-container {
@@ -514,8 +543,22 @@ body.auth-locked {
 
 
 @media (max-width: 768px) {
+  .scroll-arrow-controls {
+    bottom: max(18px, calc(env(safe-area-inset-bottom, 0px) + 18px));
+    gap: 12px;
+    z-index: 120;
+  }
+
+  .arrow-btn {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    flex: 0 0 44px;
+  }
+
   .slide {
-    padding: 26px 14px 70px 14px;
+    padding: 26px 14px 104px 14px;
   }
 }
 
@@ -550,6 +593,14 @@ body.auth-locked {
   50% { box-shadow: 0 12px 34px rgba(255, 220, 70, 0.58); }
 }
 
+.arrow-btn {
+  animation: arrowGlow 3.2s ease-in-out infinite;
+}
+
+@keyframes arrowGlow {
+  0%, 100% { box-shadow: 0 0 0 rgba(255, 215, 0, 0); }
+  50% { box-shadow: 0 0 18px rgba(255, 220, 70, 0.24); }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .ambient-glow,
@@ -557,6 +608,7 @@ body.auth-locked {
   .event-banner-container,
   .digital-ticket-card,
   .btn-gold,
+  .arrow-btn {
     animation: none !important;
   }
 }
@@ -614,18 +666,21 @@ Unlock Royal Pass
 <div class="nav-dot" onclick="goToSlide(4)"></div>
 </div>
 
+<!-- Scroll Arrows -->
+<div class="scroll-arrow-controls">
+<button class="arrow-btn" onclick="prevSlide()">▲</button>
+<button class="arrow-btn" onclick="nextSlide()">▼</button>
+</div>
+
 <div class="deck-container">
 
 <!-- SLIDE 0: BANNER, CREST & COUNTDOWN -->
 <div class="slide active">
 <div class="slide-inner">
 <div class="event-banner-container">
-<div class="event-poster-layer" aria-hidden="true"></div>
-<div class="event-banner-content">
 <div class="school-crest">🎓</div>
 <h1 class="banner-title shimmer-text">ELYSIA 2026</h1>
 <p style="font-size: 0.8rem; letter-spacing: 3px; color: var(--gold-light);">THE ULTIMATE GET TOGETHER</p>
-</div>
 </div>
 
 <div class="attendee-welcome">
@@ -747,14 +802,24 @@ Secret Vault
 <h2 style="font-family: var(--font-heading); font-size: 1.8rem; margin: 5px 0 15px 0;">Unlock Memories</h2>
 <div class="divider-gold"></div>
 
-<div class="memory-vault-card glass-card">
-<div class="memory-vault-icon">📸</div>
-<h3 class="memory-vault-title">Our Reunion Memories</h3>
-<p class="memory-vault-text">Capture the moments, smiles and memories from ELYSIA 2026.</p>
-<label class="memory-upload-btn" for="memoryPhotos">＋ Add Reunion Photos</label>
-<input id="memoryPhotos" type="file" accept="image/*" multiple hidden onchange="previewMemoryPhotos(event)">
-<p class="memory-upload-note">Photos will appear here as an album preview.</p>
-<div id="memoryPreview" class="memory-preview-grid"></div>
+<div class="trivia-box">
+<div class="glass-card">
+<div style="font-size: 0.9rem; color: var(--gold-light); margin-bottom: 8px;">1. Which batch kickstarted this journey?</div>
+<div style="display:flex; gap:8px;">
+<input type="text" id="tr-1" placeholder="Year..." style="flex:1; background:rgba(0,0,0,0.5); border:1px solid #d4af37; padding:8px; border-radius:4px; color:#fff;" />
+<button class="btn-gold" style="padding:8px 16px; font-size:0.75rem;" onclick="checkTrivia(1, '2020')">Unlock</button>
+</div>
+<p id="tr-rev-1" style="display:none; color:var(--gold-bright); font-size:0.85rem; margin-top:8px;">The unforgettable O/L memories that brought us here! 🎓</p>
+</div>
+
+<div class="glass-card">
+<div style="font-size: 0.9rem; color: var(--gold-light); margin-bottom: 8px;">2. Which year marked our high school finale?</div>
+<div style="display:flex; gap:8px;">
+<input type="text" id="tr-2" placeholder="Year..." style="flex:1; background:rgba(0,0,0,0.5); border:1px solid #d4af37; padding:8px; border-radius:4px; color:#fff;" />
+<button class="btn-gold" style="padding:8px 16px; font-size:0.75rem;" onclick="checkTrivia(2, '2023')">Unlock</button>
+</div>
+<p id="tr-rev-2" style="display:none; color:var(--gold-bright); font-size:0.85rem; margin-top:8px;">A/L grind, shared dreams, and unbreakable bonds! ✨</p>
+</div>
 </div>
 </div>
 </div>
@@ -993,29 +1058,11 @@ document.getElementById('seconds').innerText = String(Math.floor((diff % (1000 *
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
-
-
-/* REUNION PHOTO PREVIEW — album-ready UI */
-function previewMemoryPhotos(event) {
-  const files = Array.from(event.target.files || []);
-  const grid = document.getElementById("memoryPreview");
-  if (!grid) return;
-  grid.innerHTML = "";
-
-  files.filter(file => file.type.startsWith("image/")).slice(0, 24).forEach((file, index) => {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const item = document.createElement("div");
-      item.className = "memory-preview-item";
-      item.style.animationDelay = `${index * 45}ms`;
-      const img = document.createElement("img");
-      img.src = e.target.result;
-      img.alt = `Reunion memory ${index + 1}`;
-      item.appendChild(img);
-      grid.appendChild(item);
-    };
-    reader.readAsDataURL(file);
-  });
+/* TRIVIA */
+function checkTrivia(step, key) {
+const input = document.getElementById(`tr-${step}`);
+const rev = document.getElementById(`tr-rev-${step}`);
+if (input.value.trim().toLowerCase().includes(key)) rev.style.display = 'block';
 }
 
 /* BACKGROUND PARTICLES */
