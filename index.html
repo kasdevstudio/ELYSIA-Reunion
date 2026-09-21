@@ -613,6 +613,9 @@ Unlock Royal Pass
 
 <div class="attendee-welcome">
 Honored Guest: <span id="welcomeName">Loading...</span>
+<div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">
+Affiliation: <strong id="welcomeBatch">Batch Member</strong>
+</div>
 </div>
 
 <div class="mini-countdown">
@@ -860,7 +863,9 @@ document.getElementById("nicLoginForm").addEventListener("submit", async functio
       name: String(guest.name || "").trim(),
       nic: String(guest.nic || nic).trim(),
       ticketId: String(guest.ticketId || "").trim(),
+      batch: String(guest.batch || "2020 O/L & 2023 A/L").trim(),
       phone: String(guest.phone || "").trim(),
+      status: String(guest.status || "PAID").trim()
     };
 
     if (!userData.name || !userData.ticketId) {
@@ -894,6 +899,7 @@ document.getElementById('portal-content').style.display = 'block';
 document.getElementById('pillUser').innerText = userData.name;
 document.getElementById('pillTicket').innerText = userData.ticketId;
 document.getElementById('welcomeName').innerText = userData.name;
+document.getElementById('welcomeBatch').innerText = userData.batch || "2020 O/L & 2023 A/L";
 
 // Pass details
 document.getElementById('cardGuestName').innerText = userData.name;
