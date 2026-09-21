@@ -758,69 +758,139 @@ Secret Vault
 </div>
 </div>
 
+
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+
 <script>
 /* ============================================================
-   ELYSIA NIC LOGIN
-   NIC is submitted as a normal GET request to Apps Script.
-   Code.gs verifies it against Google Sheets and returns either
-   the locked page with an error, or the unlocked page.
+   ELYSIA NIC LOGIN — FIREBASE
+   GitHub Pages + Firebase Authentication + Cloud Firestore.
    ============================================================ */
 
-const SERVER_GUEST = null;
-const SERVER_ERROR = "";
-// Firebase will be connected in the next step.
-// Do not put guest data or admin passwords directly in this file.
+const firebaseConfig = {
+  apiKey: "AIzaSyCWEJ1eyb2zec7O5B9mWa_LWj0hYprHjq0",
+  authDomain: "elysia-reunion.firebaseapp.com",
+  projectId: "elysia-reunion",
+  storageBucket: "elysia-reunion.firebasestorage.app",
+  messagingSenderId: "985506879172",
+  appId: "1:985506879172:web:cf62355fb3ee406331b91",
+  measurementId: "G-EDYKJD8HZL"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const db = firebase.firestore();
 
 function normalizeNIC(value) {
   return String(value || "").trim().toUpperCase().replace(/[\s\-_]/g, "");
 }
 
-function applyServerState() {
-  const auth = document.getElementById("auth-screen");
-  const portal = document.getElementById("portal-content");
-  const input = document.getElementById("accessKeyInput");
+function showAuthError(message) {
   const err = document.getElementById("authError");
+  const btn = document.getElementById("loginBtn");
 
-  if (SERVER_ERROR) {
+  if (err) {
     err.style.display = "block";
-    err.innerText = SERVER_ERROR;
-    if (input) input.value = new URLSearchParams(window.location.search).get("nic") || "";
+    err.innerText = message;
   }
 
-  if (SERVER_GUEST && SERVER_GUEST.success) {
-    launchPortal(SERVER_GUEST);
-    portal.classList.add("auth-unlocked");
-    auth.classList.add("auth-hidden");
-    document.body.classList.remove("auth-locked");
-    return;
+  if (btn) {
+    btn.disabled = false;
+    btn.innerText = "Unlock Royal Pass";
   }
-
-  if (input) setTimeout(() => input.focus(), 120);
 }
 
-document.getElementById("nicLoginForm").addEventListener("submit", function(e) {
+function setLoginBusy(isBusy) {
+  const btn = document.getElementById("loginBtn");
+  if (!btn) return;
+
+  btn.disabled = isBusy;
+  btn.innerText = isBusy ? "VERIFYING NIC..." : "Unlock Royal Pass";
+}
+
+/* Anonymous Firebase sign-in happens automatically.
+   The visitor never needs an email/password account. */
+auth.signInAnonymously()
+  .then(() => {
+    const input = document.getElementById("accessKeyInput");
+    if (input) setTimeout(() => input.focus(), 120);
+  })
+  .catch((error) => {
+    console.error("Firebase Anonymous Auth error:", error);
+    showAuthError("System connection error. Please refresh the page and try again.");
+  });
+
+document.getElementById("nicLoginForm").addEventListener("submit", async function(e) {
   e.preventDefault();
 
   const input = document.getElementById("accessKeyInput");
   const err = document.getElementById("authError");
-  const btn = document.getElementById("loginBtn");
   const nic = normalizeNIC(input.value);
 
   if (!nic) {
-    err.style.display = "block";
-    err.innerText = "කරුණාකර ඔබගේ ජාතික හැඳුනුම්පත් අංකය (NIC) ඇතුළත් කරන්න!";
+    showAuthError("කරුණාකර ඔබගේ ජාතික හැඳුනුම්පත් අංකය (NIC) ඇතුළත් කරන්න!");
     input.focus();
     return;
   }
 
-  // Firebase guest lookup will be connected in the next step.
-  err.style.display = "block";
-  err.innerText = "Guest database එක තවම connect කරලා නැහැ. ඊළඟ Firebase step එකෙන් NIC verification activate කරමු.";
-  btn.disabled = false;
-  btn.innerText = "Unlock Royal Pass";
-});
+  if (!auth.currentUser) {
+    showAuthError("Secure connection is still starting. Please try again in a moment.");
+    return;
+  }
 
-document.addEventListener("DOMContentLoaded", applyServerState);
+  if (err) err.style.display = "none";
+  setLoginBusy(true);
+
+  try {
+    // NIC is used as the Firestore document ID.
+    const guestRef = db.collection("guests").doc(nic);
+    const guestSnap = await guestRef.get();
+
+    if (!guestSnap.exists) {
+      showAuthError("මෙම NIC අංකයට අදාල Royal Gate Pass එකක් හමු නොවීය. කරුණාකර NIC එක නැවත පරීක්ෂා කරන්න.");
+      input.focus();
+      input.select();
+      return;
+    }
+
+    const guest = guestSnap.data() || {};
+
+    const userData = {
+      success: true,
+      name: String(guest.name || "").trim(),
+      nic: String(guest.nic || nic).trim(),
+      ticketId: String(guest.ticketId || "").trim(),
+      batch: String(guest.batch || "2020 O/L & 2023 A/L").trim(),
+      phone: String(guest.phone || "").trim(),
+      status: String(guest.status || "PAID").trim()
+    };
+
+    if (!userData.name || !userData.ticketId) {
+      showAuthError("Guest record is incomplete. Please contact the event organizer.");
+      return;
+    }
+
+    launchPortal(userData);
+
+    document.getElementById("portal-content").classList.add("auth-unlocked");
+    document.getElementById("auth-screen").classList.add("auth-hidden");
+    document.body.classList.remove("auth-locked");
+
+  } catch (error) {
+    console.error("Firestore guest lookup error:", error);
+
+    if (error && error.code === "permission-denied") {
+      showAuthError("Secure access was denied. Please refresh the page and try again.");
+    } else {
+      showAuthError("Could not verify your NIC right now. Please check your connection and try again.");
+    }
+  } finally {
+    setLoginBusy(false);
+  }
+});
 
 function launchPortal(userData) {
 document.getElementById('portal-content').style.display = 'block';
@@ -952,9 +1022,5 @@ requestAnimationFrame(loop);
 }
 loop();
 </script>
-<!-- ELYSIA GitHub Pages build:
-     Step 2: frontend converted from Apps Script template to static HTML.
-     Step 3: connect Firebase Authentication/Firestore.
--->
 </body>
 </html>
