@@ -135,6 +135,12 @@
 
     .btn:hover { transform: translateY(-1px); }
 
+    input[readonly] {
+      opacity: .78;
+      cursor: not-allowed;
+      border-color: rgba(212,175,55,.5);
+    }
+
     .btn-gold {
       width: 100%;
       background: linear-gradient(135deg, #d4af37, #fff2b2, #aa8214);
@@ -533,7 +539,7 @@
 
         <div class="field">
           <label for="guestTicketId">TICKET ID</label>
-          <input id="guestTicketId" type="text" placeholder="ELY-0001" required />
+          <input id="guestTicketId" type="text" placeholder="Auto-generated" required readonly />
         </div>
 
         <div id="formError" class="error"></div>
@@ -825,6 +831,19 @@
       openGuestModal();
     });
 
+    function generateNextTicketId() {
+      let maxNumber = 0;
+
+      allGuests.forEach(guest => {
+        const match = String(guest.ticketId || "").trim().toUpperCase().match(/^ELY-(\d+)$/);
+        if (match) {
+          maxNumber = Math.max(maxNumber, parseInt(match[1], 10));
+        }
+      });
+
+      return `ELY-${String(maxNumber + 1).padStart(4, "0")}`;
+    }
+
     function openGuestModal(guest = null) {
       hideFormError();
       guestForm.reset();
@@ -839,6 +858,7 @@
       } else {
         modalTitle.textContent = "Add Guest";
         editingOriginalNic.value = "";
+        document.getElementById("guestTicketId").value = generateNextTicketId();
       }
 
       modalBackdrop.classList.add("open");
