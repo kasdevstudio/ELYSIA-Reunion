@@ -18,15 +18,15 @@ box-sizing: border-box;
 }
 
 :root {
---bg-primary: #040914;
---bg-midnight: #0a1931;
---bg-deep-navy: #001f54;
---gold-primary: #d4af37;
---gold-bright: #ffd700;
---gold-light: #fef1b8;
+--bg-primary: #030817;
+--bg-midnight: #0b1f3d;
+--bg-deep-navy: #002b70;
+--gold-primary: #e0b93f;
+--gold-bright: #ffdc45;
+--gold-light: #fff4c7;
 --gold-gradient: linear-gradient(135deg, #d4af37 0%, #fff2b2 50%, #aa8214 100%);
---text-light: #f0f4fc;
---text-muted: #9bb2d4;
+--text-light: #f7f9ff;
+--text-muted: #b7c9e5;
 --font-heading: 'Cinzel', serif;
 --font-body: 'Montserrat', sans-serif;
 }
@@ -54,9 +54,9 @@ pointer-events: none;
 position: fixed;
 inset: 0;
 background:
-radial-gradient(circle at 50% 15%, rgba(0, 31, 84, 0.75) 0%, transparent 65%),
-radial-gradient(circle at 85% 70%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
-radial-gradient(circle at 15% 85%, rgba(10, 25, 49, 0.9) 0%, transparent 60%);
+radial-gradient(circle at 50% 15%, rgba(0, 43, 112, 0.88) 0%, transparent 65%),
+radial-gradient(circle at 85% 70%, rgba(224, 185, 63, 0.15) 0%, transparent 50%),
+radial-gradient(circle at 15% 85%, rgba(11, 31, 61, 0.96) 0%, transparent 60%);
 z-index: 1;
 pointer-events: none;
 }
@@ -106,13 +106,13 @@ transform: none;
 }
 
 .glass-card {
-background: rgba(10, 25, 49, 0.52);
+background: rgba(10, 28, 55, 0.70);
 backdrop-filter: blur(16px);
 -webkit-backdrop-filter: blur(16px);
 border: 1px solid rgba(212, 175, 55, 0.3);
 border-radius: 18px;
 padding: 25px;
-box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+box-shadow: 0 15px 40px rgba(0, 0, 0, 0.72), 0 0 28px rgba(15, 52, 105, 0.12);
 }
 
 .divider-gold {
@@ -164,7 +164,7 @@ border: 2px solid var(--gold-primary);
 display: flex;
 align-items: center;
 justify-content: center;
-background: rgba(0, 31, 84, 0.6);
+background: rgba(0, 43, 112, 0.78);
 box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
 font-size: 2.2rem;
 }
@@ -237,7 +237,7 @@ position: fixed;
 top: 15px;
 right: 25px;
 z-index: 80;
-background: rgba(10, 25, 49, 0.52);
+background: rgba(10, 28, 55, 0.70);
 border: 1px solid var(--gold-primary);
 padding: 6px 18px;
 border-radius: 30px;
@@ -287,7 +287,7 @@ transform: scale(1.3);
 
 .scroll-arrow-controls {
 position: fixed;
-bottom: 20px;
+bottom: max(18px, calc(env(safe-area-inset-bottom, 0px) + 14px));
 left: 50%;
 transform: translateX(-50%);
 display: flex;
@@ -300,7 +300,7 @@ width: 42px;
 height: 42px;
 border-radius: 50%;
 border: 1px solid var(--gold-primary);
-background: rgba(10, 25, 49, 0.52);
+background: rgba(10, 28, 55, 0.70);
 color: var(--gold-light);
 display: flex;
 align-items: center;
@@ -367,7 +367,7 @@ height: 180px;
 margin: 0 auto 20px auto;
 border-radius: 14px;
 border: 1px solid rgba(212, 175, 55, 0.4);
-background: linear-gradient(135deg, rgba(0, 31, 84, 0.52), rgba(10, 25, 49, 0.62));
+background: linear-gradient(135deg, rgba(0, 43, 112, 0.70), rgba(10, 28, 55, 0.76));
 box-shadow: 0 10px 30px rgba(0,0,0,0.6);
 display: flex;
 flex-direction: column;
@@ -443,7 +443,7 @@ text-transform: uppercase;
 .digital-ticket-card {
 max-width: 480px;
 margin: 0 auto;
-background: linear-gradient(145deg, #0d1e38, #050d1a);
+background: linear-gradient(145deg, #102a52 0%, #07152c 58%, #040b18 100%);
 border: 2px solid var(--gold-primary);
 border-radius: 18px;
 padding: 25px;
@@ -541,6 +541,75 @@ body.auth-locked {
   transition: opacity .55s ease, visibility .55s ease;
 }
 
+
+@media (max-width: 768px) {
+  .scroll-arrow-controls {
+    bottom: max(20px, calc(env(safe-area-inset-bottom, 0px) + 16px));
+    gap: 12px;
+    z-index: 95;
+  }
+
+  .arrow-btn {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+  }
+
+  .slide {
+    padding-bottom: 92px;
+  }
+}
+
+/* Premium micro-motion — intentionally subtle, preserving the original layout */
+.ambient-glow {
+  animation: ambientBreath 8s ease-in-out infinite alternate;
+}
+
+@keyframes ambientBreath {
+  0%   { opacity: .86; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.025); }
+}
+
+.glass-card,
+.event-banner-container,
+.digital-ticket-card {
+  animation: premiumFloat 7s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes premiumFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+.btn-gold {
+  animation: goldPulse 3.8s ease-in-out infinite;
+}
+
+@keyframes goldPulse {
+  0%, 100% { box-shadow: 0 10px 25px rgba(212, 175, 55, 0.35); }
+  50% { box-shadow: 0 12px 32px rgba(255, 215, 0, 0.48); }
+}
+
+.arrow-btn {
+  animation: arrowGlow 3.2s ease-in-out infinite;
+}
+
+@keyframes arrowGlow {
+  0%, 100% { box-shadow: 0 0 0 rgba(255, 215, 0, 0); }
+  50% { box-shadow: 0 0 16px rgba(255, 215, 0, 0.18); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-glow,
+  .glass-card,
+  .event-banner-container,
+  .digital-ticket-card,
+  .btn-gold,
+  .arrow-btn {
+    animation: none !important;
+  }
+}
 </style>
 </head>
 <body class="auth-locked">
