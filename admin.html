@@ -176,6 +176,13 @@
       margin-top: 14px;
     }
 
+    .field-help {
+      color: var(--muted);
+      font-size: .68rem;
+      line-height: 1.4;
+      margin-top: 6px;
+    }
+
     .admin-app {
       min-height: 100vh;
       padding: 24px;
@@ -517,46 +524,6 @@
       font-size: .84rem;
     }
 
-    .google-login-btn {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      background: #fff;
-      color: #1f1f1f;
-      border: 0;
-    }
-
-    .google-login-btn:hover {
-      box-shadow: 0 8px 28px rgba(255,255,255,.12);
-    }
-
-    .google-icon {
-      width: 19px;
-      height: 19px;
-      display: inline-block;
-      font-weight: 900;
-    }
-
-    .login-note {
-      margin-top: 15px;
-      color: #7f95b6;
-      font-size: .7rem;
-      line-height: 1.5;
-    }
-
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 17px 0;
-      color: #6f84a5;
-      font-size: .66rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
     .divider::before,
     .divider::after {
       content: "";
@@ -584,21 +551,30 @@
         Secure guest management for the ELYSIA Reunion.
       </div>
 
-      <button id="googleLoginBtn" class="btn google-login-btn" type="button">
-        <span class="google-icon">G</span>
-        CONTINUE WITH GOOGLE
-      </button>
+      <form id="adminLoginForm">
+        <div class="field">
+          <label for="adminEmail">ADMIN EMAIL</label>
+          <input id="adminEmail" type="email" autocomplete="username" required placeholder="admin@email.com" />
+        </div>
 
-      <div class="divider">Authorized administrators only</div>
+        <div class="field">
+          <label for="adminPassword">PASSWORD</label>
+          <input id="adminPassword" type="password" autocomplete="current-password" required placeholder="Enter password" />
+        </div>
 
-      <div id="loginError" class="error"></div>
+        <div id="loginError" class="error"></div>
+
+        <button id="loginBtn" class="btn btn-gold" type="submit">
+          ADMIN LOGIN
+        </button>
+      </form>
 
       <div id="loginLoading" class="loading hidden">
         Connecting securely...
       </div>
 
       <div class="login-note">
-        Sign in with the Google account that has been authorized by the ELYSIA Super Admin.
+        Authorized ELYSIA administrators only.
       </div>
     </div>
   </section>
@@ -767,14 +743,26 @@
         </div>
 
         <div class="field">
-          <label for="adminAccountEmail">GOOGLE ACCOUNT EMAIL</label>
+          <label for="adminAccountEmail">ADMIN EMAIL</label>
           <input
             id="adminAccountEmail"
             type="email"
             required
             autocomplete="off"
-            placeholder="admin@gmail.com"
+            placeholder="admin@email.com"
           />
+        </div>
+
+        <div class="field" id="adminPasswordField">
+          <label for="newAdminPassword">PASSWORD</label>
+          <input
+            id="newAdminPassword"
+            type="password"
+            minlength="6"
+            autocomplete="new-password"
+            placeholder="Minimum 6 characters"
+          />
+          <div class="field-help">Set the password the new administrator will use to log in.</div>
         </div>
 
         <div class="field">
@@ -823,7 +811,12 @@
 
     const auth = firebase.auth();
     const db = firebase.firestore();
-    const googleProvider = new firebase.auth.GoogleAuthProvider();
+
+    // Secondary Firebase app used only when the Super Admin creates
+    // a new email/password administrator. This keeps the Super Admin
+    // session signed in while the new account is created.
+    const adminCreatorApp = firebase.initializeApp(firebaseConfig, "adminCreator");
+    const adminCreatorAuth = adminCreatorApp.auth();
 
     let allGuests = [];
     let allAdmins = [];
@@ -833,7 +826,8 @@
 
     const loginScreen = document.getElementById("loginScreen");
     const adminApp = document.getElementById("adminApp");
-    const googleLoginBtn = document.getElementById("googleLoginBtn");
+    const loginForm = document.getElementById("adminLoginForm");
+    const loginBtn = document.getElementById("loginBtn");
     const loginError = document.getElementById("loginError");
     const loginLoading = document.getElementById("loginLoading");
 
@@ -918,11 +912,8 @@
     }
 
     function setLoginBusy(busy) {
-      googleLoginBtn.disabled = busy;
-      googleLoginBtn.innerHTML = busy
-        ? "CONNECTING..."
-        : '<span class="google-icon">G</span> CONTINUE WITH GOOGLE';
-
+      loginBtn.disabled = busy;
+      loginBtn.textContent = busy ? "SIGNING IN..." : "ADMIN LOGIN";
       loginLoading.classList.toggle("hidden", !busy);
     }
 
@@ -941,48 +932,55 @@
        AUTHENTICATION
        ============================================================ */
 
-    googleLoginBtn.addEventListener("click", async () => {
+    loginForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
       hideLoginError();
+
+      const email = normalizeEmail(document.getElementById("adminEmail").value);
+      const password = document.getElementById("adminPassword").value;
+
+      if (!email || !password) {
+        showLoginError("Please enter your admin email and password.");
+        return;
+      }
+
       setLoginBusy(true);
 
       try {
-        const result = await auth.signInWithPopup(googleProvider);
-
-        if (!result.user) {
-          throw new Error("No authenticated user returned.");
-        }
-
-        await verifyAdminAndOpen(result.user);
-
+        const credential = await auth.signInWithEmailAndPassword(email, password);
+        await verifyAdminAndOpen(credential.user);
       } catch (error) {
-        console.error("Google admin login error:", error);
-
-        if (error && error.code === "auth/popup-closed-by-user") {
-          showLoginError("Google sign-in was cancelled.");
-        } else if (error && error.code === "auth/popup-blocked") {
-          showLoginError("Your browser blocked the Google sign-in popup. Please allow popups for this site.");
-        } else if (error && error.code === "auth/unauthorized-domain") {
-          showLoginError("This website domain is not authorized in Firebase Authentication.");
-        } else {
-          showLoginError("Could not sign in with Google. Please try again.");
-        }
+        console.error("Admin login error:", error);
 
         try {
           await auth.signOut();
         } catch (_) {}
 
+        if (error && (
+          error.code === "auth/invalid-credential" ||
+          error.code === "auth/wrong-password" ||
+          error.code === "auth/user-not-found"
+        )) {
+          showLoginError("Incorrect email or password.");
+        } else if (error && error.code === "auth/too-many-requests") {
+          showLoginError("Too many login attempts. Please wait and try again.");
+        } else if (error && error.code === "permission-denied") {
+          showLoginError("This account is not authorized as an ELYSIA administrator.");
+        } else if (error && error.message === "UNAUTHORIZED_ADMIN") {
+          showLoginError("This account is not authorized as an ELYSIA administrator.");
+        } else {
+          showLoginError("Could not sign in. Please check your credentials and try again.");
+        }
       } finally {
         setLoginBusy(false);
       }
     });
-
 
     auth.onAuthStateChanged(async (user) => {
       if (!user) {
         currentUser = null;
         currentRole = null;
         currentAdminName = "";
-
         loginScreen.classList.remove("hidden");
         adminApp.classList.add("hidden");
         adminManagement.classList.add("hidden");
@@ -993,54 +991,40 @@
         await verifyAdminAndOpen(user);
       } catch (error) {
         console.error("Auth state verification error:", error);
-
-        try {
-          await auth.signOut();
-        } catch (_) {}
-
+        try { await auth.signOut(); } catch (_) {}
         loginScreen.classList.remove("hidden");
         adminApp.classList.add("hidden");
       }
     });
 
-
     async function verifyAdminAndOpen(user) {
       const email = normalizeEmail(user.email);
 
       if (!email) {
-        throw new Error("The Google account does not have an email address.");
+        throw new Error("The account does not have an email address.");
       }
 
+      // The permanent Super Admin is identified by BOTH UID and role.
       const adminRef = db.collection("admins").doc(email);
       const adminSnap = await adminRef.get();
 
       if (!adminSnap.exists) {
-        await auth.signOut();
-        showLoginError("This Google account is not authorized as an ELYSIA administrator.");
-        throw new Error("Unauthorized administrator.");
+        throw new Error("UNAUTHORIZED_ADMIN");
       }
 
       const adminData = adminSnap.data() || {};
       const role = String(adminData.role || "").trim().toLowerCase();
 
       if (role !== "admin" && role !== "superadmin") {
-        await auth.signOut();
-        showLoginError("This account does not have a valid ELYSIA administrator role.");
-        throw new Error("Invalid administrator role.");
+        throw new Error("UNAUTHORIZED_ADMIN");
       }
 
-      // The permanent Super Admin must also match the protected UID.
       if (role === "superadmin" && user.uid !== SUPER_ADMIN_UID) {
-        await auth.signOut();
-        showLoginError("This account is not the authorized ELYSIA Super Admin.");
-        throw new Error("Invalid Super Admin UID.");
+        throw new Error("UNAUTHORIZED_SUPERADMIN");
       }
 
-      // The protected Super Admin UID must always have the superadmin role.
       if (user.uid === SUPER_ADMIN_UID && role !== "superadmin") {
-        await auth.signOut();
-        showLoginError("Super Admin account configuration is invalid.");
-        throw new Error("Super Admin role mismatch.");
+        throw new Error("SUPERADMIN_ROLE_MISMATCH");
       }
 
       currentUser = user;
@@ -1049,7 +1033,6 @@
 
       await openAdminPortal(user);
     }
-
 
     async function openAdminPortal(user) {
       loginScreen.classList.add("hidden");
@@ -1073,12 +1056,8 @@
       }
 
       await loadGuests();
-
-      if (currentRole === "superadmin") {
-        await loadAdmins();
-      }
+      if (currentRole === "superadmin") await loadAdmins();
     }
-
 
     document.getElementById("logoutBtn").addEventListener("click", async () => {
       await auth.signOut();
@@ -1510,16 +1489,25 @@
       hideAdminFormError();
       adminForm.reset();
 
+      const passwordField = document.getElementById("adminPasswordField");
+      const passwordInput = document.getElementById("newAdminPassword");
+
       if (admin) {
         adminModalTitle.textContent = "Edit Admin";
         editingOriginalAdminEmail.value = admin.docId;
 
         document.getElementById("adminName").value = admin.name;
         document.getElementById("adminAccountEmail").value = admin.email;
+        passwordInput.value = "";
+        passwordInput.required = false;
+        passwordField.style.display = "none";
 
       } else {
         adminModalTitle.textContent = "Add Admin";
         editingOriginalAdminEmail.value = "";
+        passwordInput.value = "";
+        passwordInput.required = true;
+        passwordField.style.display = "block";
       }
 
       adminModalBackdrop.classList.add("open");
@@ -1569,10 +1557,12 @@
 
       const name = document.getElementById("adminName").value.trim();
       const email = normalizeEmail(document.getElementById("adminAccountEmail").value);
+      const passwordInput = document.getElementById("newAdminPassword");
+      const password = passwordInput.value;
       const originalEmail = normalizeEmail(editingOriginalAdminEmail.value);
 
       if (!name || !email) {
-        showAdminFormError("Please enter the administrator name and Google account email.");
+        showAdminFormError("Please enter the administrator name and email.");
         return;
       }
 
@@ -1581,22 +1571,22 @@
         return;
       }
 
-      // Never allow creation/editing of another Super Admin.
+      if (!originalEmail && password.length < 6) {
+        showAdminFormError("Please enter a password with at least 6 characters.");
+        return;
+      }
+
+      // Never allow the protected Super Admin account to be replaced.
       if (email === normalizeEmail(currentUser.email)) {
-        showAdminFormError("The Super Admin account is protected. You cannot add or replace it here.");
+        showAdminFormError("The Super Admin account is protected.");
         return;
       }
 
       const saveBtn = document.getElementById("saveAdminBtn");
       saveBtn.disabled = true;
-      saveBtn.textContent = "SAVING...";
+      saveBtn.textContent = originalEmail ? "SAVING..." : "CREATING...";
 
       try {
-        const newData = {
-          name,
-          role: "admin"
-        };
-
         if (!originalEmail) {
           const existing = await db.collection("admins").doc(email).get();
 
@@ -1605,14 +1595,39 @@
             return;
           }
 
-          await db.collection("admins").doc(email).set(newData);
+          // Create the Firebase Auth account using a SECONDARY app,
+          // so the Super Admin remains logged in to the main app.
+          try {
+            await adminCreatorAuth.createUserWithEmailAndPassword(email, password);
+            await adminCreatorAuth.signOut();
+          } catch (authError) {
+            console.error("Admin Auth account creation error:", authError);
 
-          showNotice("Administrator added successfully.");
+            if (authError && authError.code === "auth/email-already-in-use") {
+              showAdminFormError("A Firebase account already exists for this email. Use a different email.");
+            } else if (authError && authError.code === "auth/invalid-email") {
+              showAdminFormError("Please enter a valid email address.");
+            } else if (authError && authError.code === "auth/weak-password") {
+              showAdminFormError("Password is too weak. Please use at least 6 characters.");
+            } else {
+              showAdminFormError("Could not create the administrator login account.");
+            }
+            return;
+          }
+
+          // Only after Auth account creation succeeds do we authorize it in Firestore.
+          await db.collection("admins").doc(email).set({
+            name,
+            role: "admin"
+          });
+
+          showNotice("Administrator account created successfully.");
 
         } else {
+          // Editing changes the ELYSIA authorization record only.
+          // The existing Firebase login/password remains unchanged.
           const originalRef = db.collection("admins").doc(originalEmail);
           const newRef = db.collection("admins").doc(email);
-
           const originalSnap = await originalRef.get();
 
           if (!originalSnap.exists) {
@@ -1629,22 +1644,23 @@
 
           if (originalEmail !== email) {
             const newSnap = await newRef.get();
-
             if (newSnap.exists) {
               showAdminFormError("The new email is already authorized as an administrator.");
               return;
             }
 
-            await newRef.set(newData);
-            await originalRef.delete();
-
-            showNotice("Administrator email updated successfully.");
-
-          } else {
-            await originalRef.update(newData);
-
-            showNotice("Administrator updated successfully.");
+            // Changing the Auth email from a client-only page would require
+            // signing in as that user, so we keep the Auth email unchanged here.
+            showAdminFormError("For security, use the original login email when editing an admin. To change the login email, remove this admin and create a new admin account.");
+            return;
           }
+
+          await originalRef.update({
+            name,
+            role: "admin"
+          });
+
+          showNotice("Administrator updated successfully.");
         }
 
         closeAdminModal();
@@ -1658,7 +1674,6 @@
         } else {
           showAdminFormError("Could not save this administrator. Please try again.");
         }
-
       } finally {
         saveBtn.disabled = false;
         saveBtn.textContent = "Save Admin";
