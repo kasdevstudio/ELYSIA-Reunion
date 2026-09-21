@@ -405,47 +405,208 @@
       .admin-email { width: 100%; }
       .login-card { padding: 26px 20px; }
     }
+  
+    /* ============================================================
+       SUPER ADMIN / ADMIN MANAGEMENT
+       ============================================================ */
+    .role-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: .66rem;
+      font-weight: 800;
+      letter-spacing: .7px;
+      text-transform: uppercase;
+    }
+
+    .role-superadmin {
+      color: #fff0a8;
+      background: rgba(255,215,0,.12);
+      border: 1px solid rgba(255,215,0,.35);
+    }
+
+    .role-admin {
+      color: #bcd7ff;
+      background: rgba(80,150,255,.12);
+      border: 1px solid rgba(80,150,255,.28);
+    }
+
+    .admin-management {
+      margin-top: 18px;
+      background: rgba(10,25,49,.78);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .admin-management-header {
+      padding: 17px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+
+    .admin-management-title {
+      font-family: 'Cinzel', serif;
+      color: var(--gold2);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .admin-management-sub {
+      color: var(--muted);
+      font-size: .72rem;
+      margin-top: 4px;
+    }
+
+    .admin-table-wrap {
+      overflow: auto;
+    }
+
+    .admin-table {
+      width: 100%;
+      min-width: 720px;
+      border-collapse: collapse;
+    }
+
+    .admin-table th,
+    .admin-table td {
+      padding: 13px 15px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      font-size: .8rem;
+    }
+
+    .admin-table th {
+      color: var(--gold-light, #fef1b8);
+      font-family: 'Cinzel', serif;
+      font-size: .7rem;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    .admin-table tr:last-child td { border-bottom: 0; }
+
+    .admin-email-cell {
+      color: #dfe8f7;
+      word-break: break-word;
+    }
+
+    .protected-row {
+      opacity: .92;
+    }
+
+    .admin-modal .modal {
+      width: min(520px, 100%);
+    }
+
+    .readonly-role {
+      display: flex;
+      align-items: center;
+      min-height: 46px;
+      padding: 12px 14px;
+      border-radius: 9px;
+      background: rgba(3,9,18,.55);
+      border: 1px solid rgba(212,175,55,.24);
+      color: var(--muted);
+      font-size: .84rem;
+    }
+
+    .google-login-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #fff;
+      color: #1f1f1f;
+      border: 0;
+    }
+
+    .google-login-btn:hover {
+      box-shadow: 0 8px 28px rgba(255,255,255,.12);
+    }
+
+    .google-icon {
+      width: 19px;
+      height: 19px;
+      display: inline-block;
+      font-weight: 900;
+    }
+
+    .login-note {
+      margin-top: 15px;
+      color: #7f95b6;
+      font-size: .7rem;
+      line-height: 1.5;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 17px 0;
+      color: #6f84a5;
+      font-size: .66rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,.08);
+    }
+
+    @media (max-width: 720px) {
+      .admin-management-header { align-items: stretch; }
+      .admin-management-header .btn { width: 100%; }
+    }
+
   </style>
 </head>
-
 <body>
 
   <!-- ADMIN LOGIN -->
   <section id="loginScreen" class="login-screen">
     <div class="login-card">
-      <div class="crest">🔐</div>
+      <div class="crest">👑</div>
       <div class="eyebrow">ELYSIA 2026</div>
       <h1>Admin Portal</h1>
       <div class="subtitle">
         Secure guest management for the ELYSIA Reunion.
       </div>
 
-      <form id="adminLoginForm">
-        <div class="field">
-          <label for="adminEmail">ADMIN EMAIL</label>
-          <input id="adminEmail" type="email" autocomplete="username" required />
-        </div>
+      <button id="googleLoginBtn" class="btn google-login-btn" type="button">
+        <span class="google-icon">G</span>
+        CONTINUE WITH GOOGLE
+      </button>
 
-        <div class="field">
-          <label for="adminPassword">PASSWORD</label>
-          <input id="adminPassword" type="password" autocomplete="current-password" required />
-        </div>
+      <div class="divider">Authorized administrators only</div>
 
-        <div id="loginError" class="error"></div>
-
-        <button id="loginBtn" class="btn btn-gold" type="submit">
-          ADMIN LOGIN
-        </button>
-      </form>
+      <div id="loginError" class="error"></div>
 
       <div id="loginLoading" class="loading hidden">
         Connecting securely...
       </div>
+
+      <div class="login-note">
+        Sign in with the Google account that has been authorized by the ELYSIA Super Admin.
+      </div>
     </div>
   </section>
 
+
   <!-- ADMIN APP -->
   <main id="adminApp" class="admin-app hidden">
+
     <header class="topbar">
       <div class="brand">
         <div class="brand-icon">👑</div>
@@ -456,13 +617,16 @@
       </div>
 
       <div class="top-actions">
+        <span id="adminRoleDisplay" class="role-badge"></span>
         <span id="adminEmailDisplay" class="admin-email"></span>
         <button id="refreshBtn" class="btn btn-secondary">↻ Refresh</button>
         <button id="logoutBtn" class="btn btn-danger">Logout</button>
       </div>
     </header>
 
+
     <section class="dashboard">
+
       <div class="stats">
         <div class="stat">
           <div class="stat-label">Total Guests</div>
@@ -475,13 +639,14 @@
         </div>
 
         <div class="stat">
-          <div class="stat-label">Database</div>
-          <div class="stat-value" style="font-size:1.05rem;">Firestore</div>
+          <div class="stat-label">Your Access</div>
+          <div id="accessLevel" class="stat-value" style="font-size:1.05rem;">—</div>
         </div>
       </div>
 
       <div id="notice" class="notice"></div>
 
+      <!-- GUEST MANAGEMENT -->
       <div class="toolbar">
         <input
           id="searchInput"
@@ -511,10 +676,45 @@
           No guest records found.
         </div>
       </div>
+
+
+      <!-- SUPER ADMIN ONLY -->
+      <section id="adminManagement" class="admin-management hidden">
+        <div class="admin-management-header">
+          <div>
+            <div class="admin-management-title">👑 Admin Management</div>
+            <div class="admin-management-sub">
+              Super Admin control panel — add, edit or remove ELYSIA administrators.
+            </div>
+          </div>
+
+          <button id="addAdminBtn" class="btn btn-gold">+ Add Admin</button>
+        </div>
+
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>NAME</th>
+                <th>EMAIL</th>
+                <th>ROLE</th>
+                <th>ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody id="adminTableBody"></tbody>
+          </table>
+
+          <div id="adminEmptyState" class="empty hidden">
+            No administrators found.
+          </div>
+        </div>
+      </section>
+
     </section>
   </main>
 
-  <!-- ADD / EDIT MODAL -->
+
+  <!-- ADD / EDIT GUEST MODAL -->
   <div id="guestModalBackdrop" class="modal-backdrop">
     <div class="modal">
       <h2 id="modalTitle">Add Guest</h2>
@@ -552,6 +752,49 @@
     </div>
   </div>
 
+
+  <!-- ADD / EDIT ADMIN MODAL -->
+  <div id="adminModalBackdrop" class="modal-backdrop admin-modal">
+    <div class="modal">
+      <h2 id="adminModalTitle">Add Admin</h2>
+
+      <form id="adminForm">
+        <input id="editingOriginalAdminEmail" type="hidden" />
+
+        <div class="field">
+          <label for="adminName">ADMIN NAME</label>
+          <input id="adminName" type="text" required />
+        </div>
+
+        <div class="field">
+          <label for="adminAccountEmail">GOOGLE ACCOUNT EMAIL</label>
+          <input
+            id="adminAccountEmail"
+            type="email"
+            required
+            autocomplete="off"
+            placeholder="admin@gmail.com"
+          />
+        </div>
+
+        <div class="field">
+          <label>ROLE</label>
+          <div class="readonly-role">
+            👤 ADMIN &nbsp; — &nbsp; Super Admin can manage this account
+          </div>
+        </div>
+
+        <div id="adminFormError" class="error"></div>
+
+        <div class="modal-actions">
+          <button type="button" id="cancelAdminModalBtn" class="btn btn-secondary">Cancel</button>
+          <button type="submit" id="saveAdminBtn" class="btn btn-gold">Save Admin</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
@@ -560,6 +803,7 @@
     /* ============================================================
        ELYSIA ADMIN PORTAL
        Firebase Authentication + Cloud Firestore
+       Super Admin + Normal Admin system
        ============================================================ */
 
     const firebaseConfig = {
@@ -572,19 +816,24 @@
       measurementId: "G-EDYKJD8HZL"
     };
 
-    const ADMIN_UID = "6UzYHxndhxRwIA03mRbxEpENXm93";
+    // Permanent ELYSIA Super Admin UID
+    const SUPER_ADMIN_UID = "NVDb3mqvSecRmQrpVZ1PtIi2uJl2";
 
     firebase.initializeApp(firebaseConfig);
 
     const auth = firebase.auth();
     const db = firebase.firestore();
+    const googleProvider = new firebase.auth.GoogleAuthProvider();
 
     let allGuests = [];
+    let allAdmins = [];
+    let currentUser = null;
+    let currentRole = null;
+    let currentAdminName = "";
 
     const loginScreen = document.getElementById("loginScreen");
     const adminApp = document.getElementById("adminApp");
-    const loginForm = document.getElementById("adminLoginForm");
-    const loginBtn = document.getElementById("loginBtn");
+    const googleLoginBtn = document.getElementById("googleLoginBtn");
     const loginError = document.getElementById("loginError");
     const loginLoading = document.getElementById("loginLoading");
 
@@ -595,17 +844,35 @@
     const visibleGuests = document.getElementById("visibleGuests");
     const notice = document.getElementById("notice");
 
-    const modalBackdrop = document.getElementById("guestModalBackdrop");
+    const guestModalBackdrop = document.getElementById("guestModalBackdrop");
     const modalTitle = document.getElementById("modalTitle");
     const guestForm = document.getElementById("guestForm");
     const formError = document.getElementById("formError");
     const editingOriginalNic = document.getElementById("editingOriginalNic");
+
+    const adminManagement = document.getElementById("adminManagement");
+    const adminTableBody = document.getElementById("adminTableBody");
+    const adminEmptyState = document.getElementById("adminEmptyState");
+    const adminModalBackdrop = document.getElementById("adminModalBackdrop");
+    const adminModalTitle = document.getElementById("adminModalTitle");
+    const adminForm = document.getElementById("adminForm");
+    const adminFormError = document.getElementById("adminFormError");
+    const editingOriginalAdminEmail = document.getElementById("editingOriginalAdminEmail");
+
+
+    /* ============================================================
+       HELPERS
+       ============================================================ */
 
     function normalizeNIC(value) {
       return String(value || "")
         .trim()
         .toUpperCase()
         .replace(/[\s\-_]/g, "");
+    }
+
+    function normalizeEmail(value) {
+      return String(value || "").trim().toLowerCase();
     }
 
     function showLoginError(message) {
@@ -628,11 +895,22 @@
       formError.style.display = "none";
     }
 
+    function showAdminFormError(message) {
+      adminFormError.textContent = message;
+      adminFormError.style.display = "block";
+    }
+
+    function hideAdminFormError() {
+      adminFormError.textContent = "";
+      adminFormError.style.display = "none";
+    }
+
     function showNotice(message, type = "success") {
       notice.textContent = message;
       notice.className = "notice " + type;
 
       clearTimeout(showNotice.timer);
+
       showNotice.timer = setTimeout(() => {
         notice.className = "notice";
         notice.textContent = "";
@@ -640,73 +918,138 @@
     }
 
     function setLoginBusy(busy) {
-      loginBtn.disabled = busy;
-      loginBtn.textContent = busy ? "SIGNING IN..." : "ADMIN LOGIN";
+      googleLoginBtn.disabled = busy;
+      googleLoginBtn.innerHTML = busy
+        ? "CONNECTING..."
+        : '<span class="google-icon">G</span> CONTINUE WITH GOOGLE';
+
       loginLoading.classList.toggle("hidden", !busy);
     }
 
-    /* ------------------------------------------------------------
-       AUTH
-       ------------------------------------------------------------ */
+    function closeGuestModal() {
+      guestModalBackdrop.classList.remove("open");
+      hideFormError();
+    }
 
-    loginForm.addEventListener("submit", async (event) => {
-      event.preventDefault();
+    function closeAdminModal() {
+      adminModalBackdrop.classList.remove("open");
+      hideAdminFormError();
+    }
+
+
+    /* ============================================================
+       AUTHENTICATION
+       ============================================================ */
+
+    googleLoginBtn.addEventListener("click", async () => {
       hideLoginError();
-
-      const email = document.getElementById("adminEmail").value.trim();
-      const password = document.getElementById("adminPassword").value;
-
-      if (!email || !password) {
-        showLoginError("Please enter your admin email and password.");
-        return;
-      }
-
       setLoginBusy(true);
 
       try {
-        const credential = await auth.signInWithEmailAndPassword(email, password);
+        const result = await auth.signInWithPopup(googleProvider);
 
-        if (!credential.user || credential.user.uid !== ADMIN_UID) {
-          await auth.signOut();
-          showLoginError("This account is not authorized as an ELYSIA administrator.");
-          return;
+        if (!result.user) {
+          throw new Error("No authenticated user returned.");
         }
 
-        await openAdminPortal(credential.user);
+        await verifyAdminAndOpen(result.user);
 
       } catch (error) {
-        console.error("Admin login error:", error);
+        console.error("Google admin login error:", error);
 
-        if (error && (
-          error.code === "auth/invalid-credential" ||
-          error.code === "auth/wrong-password" ||
-          error.code === "auth/user-not-found"
-        )) {
-          showLoginError("Incorrect email or password.");
-        } else if (error && error.code === "auth/too-many-requests") {
-          showLoginError("Too many login attempts. Please wait and try again.");
+        if (error && error.code === "auth/popup-closed-by-user") {
+          showLoginError("Google sign-in was cancelled.");
+        } else if (error && error.code === "auth/popup-blocked") {
+          showLoginError("Your browser blocked the Google sign-in popup. Please allow popups for this site.");
+        } else if (error && error.code === "auth/unauthorized-domain") {
+          showLoginError("This website domain is not authorized in Firebase Authentication.");
         } else {
-          showLoginError("Could not sign in. Please try again.");
+          showLoginError("Could not sign in with Google. Please try again.");
         }
+
+        try {
+          await auth.signOut();
+        } catch (_) {}
+
       } finally {
         setLoginBusy(false);
       }
     });
 
+
     auth.onAuthStateChanged(async (user) => {
       if (!user) {
+        currentUser = null;
+        currentRole = null;
+        currentAdminName = "";
+
         loginScreen.classList.remove("hidden");
         adminApp.classList.add("hidden");
+        adminManagement.classList.add("hidden");
         return;
       }
 
-      if (user.uid !== ADMIN_UID) {
-        await auth.signOut();
-        return;
+      try {
+        await verifyAdminAndOpen(user);
+      } catch (error) {
+        console.error("Auth state verification error:", error);
+
+        try {
+          await auth.signOut();
+        } catch (_) {}
+
+        loginScreen.classList.remove("hidden");
+        adminApp.classList.add("hidden");
       }
+    });
+
+
+    async function verifyAdminAndOpen(user) {
+      const email = normalizeEmail(user.email);
+
+      if (!email) {
+        throw new Error("The Google account does not have an email address.");
+      }
+
+      const adminRef = db.collection("admins").doc(email);
+      const adminSnap = await adminRef.get();
+
+      if (!adminSnap.exists) {
+        await auth.signOut();
+        showLoginError("This Google account is not authorized as an ELYSIA administrator.");
+        throw new Error("Unauthorized administrator.");
+      }
+
+      const adminData = adminSnap.data() || {};
+      const role = String(adminData.role || "").trim().toLowerCase();
+
+      if (role !== "admin" && role !== "superadmin") {
+        await auth.signOut();
+        showLoginError("This account does not have a valid ELYSIA administrator role.");
+        throw new Error("Invalid administrator role.");
+      }
+
+      // The permanent Super Admin must also match the protected UID.
+      if (role === "superadmin" && user.uid !== SUPER_ADMIN_UID) {
+        await auth.signOut();
+        showLoginError("This account is not the authorized ELYSIA Super Admin.");
+        throw new Error("Invalid Super Admin UID.");
+      }
+
+      // The protected Super Admin UID must always have the superadmin role.
+      if (user.uid === SUPER_ADMIN_UID && role !== "superadmin") {
+        await auth.signOut();
+        showLoginError("Super Admin account configuration is invalid.");
+        throw new Error("Super Admin role mismatch.");
+      }
+
+      currentUser = user;
+      currentRole = role;
+      currentAdminName = String(adminData.name || "").trim();
 
       await openAdminPortal(user);
-    });
+    }
+
 
     async function openAdminPortal(user) {
       loginScreen.classList.add("hidden");
@@ -714,16 +1057,37 @@
 
       document.getElementById("adminEmailDisplay").textContent = user.email || "";
 
+      const roleDisplay = document.getElementById("adminRoleDisplay");
+      const accessLevel = document.getElementById("accessLevel");
+
+      if (currentRole === "superadmin") {
+        roleDisplay.textContent = "👑 SUPER ADMIN";
+        roleDisplay.className = "role-badge role-superadmin";
+        accessLevel.textContent = "Super Admin";
+        adminManagement.classList.remove("hidden");
+      } else {
+        roleDisplay.textContent = "👤 ADMIN";
+        roleDisplay.className = "role-badge role-admin";
+        accessLevel.textContent = "Admin";
+        adminManagement.classList.add("hidden");
+      }
+
       await loadGuests();
+
+      if (currentRole === "superadmin") {
+        await loadAdmins();
+      }
     }
+
 
     document.getElementById("logoutBtn").addEventListener("click", async () => {
       await auth.signOut();
     });
 
-    /* ------------------------------------------------------------
-       FIRESTORE
-       ------------------------------------------------------------ */
+
+    /* ============================================================
+       GUESTS
+       ============================================================ */
 
     async function loadGuests() {
       try {
@@ -752,12 +1116,13 @@
         console.error("Guest load error:", error);
 
         if (error && error.code === "permission-denied") {
-          showNotice("Firestore denied admin access. Check the Admin UID in Rules.", "error");
+          showNotice("Firestore denied guest access. Check the published Rules and admin account.", "error");
         } else {
           showNotice("Could not load guest records.", "error");
         }
       }
     }
+
 
     function renderGuests() {
       const query = searchInput.value.trim().toLowerCase();
@@ -793,8 +1158,11 @@
           <td class="ticket">${escapeHtml(guest.ticketId)}</td>
           <td>
             <div class="actions">
-              <button class="btn btn-secondary small-btn" onclick="editGuest('${escapeAttr(guest.docId)}')">Edit</button>
-              <button class="btn btn-danger small-btn" onclick="deleteGuest('${escapeAttr(guest.docId)}')">Delete</button>
+              <button class="btn btn-secondary small-btn"
+                onclick="editGuest('${escapeAttr(guest.docId)}')">Edit</button>
+
+              <button class="btn btn-danger small-btn"
+                onclick="deleteGuest('${escapeAttr(guest.docId)}')">Delete</button>
             </div>
           </td>
         `;
@@ -802,6 +1170,7 @@
         tableBody.appendChild(tr);
       });
     }
+
 
     function escapeHtml(value) {
       return String(value)
@@ -813,27 +1182,36 @@
     }
 
     function escapeAttr(value) {
-      return String(value).replaceAll("\\", "\\\\").replaceAll("'", "\\'");
+      return String(value)
+        .replaceAll("\\", "\\\\")
+        .replaceAll("'", "\\'");
     }
+
 
     searchInput.addEventListener("input", renderGuests);
 
+
     document.getElementById("refreshBtn").addEventListener("click", async () => {
       await loadGuests();
-      showNotice("Guest list refreshed.");
+
+      if (currentRole === "superadmin") {
+        await loadAdmins();
+      }
+
+      showNotice("Dashboard refreshed.");
     });
 
-    /* ------------------------------------------------------------
-       ADD / EDIT
-       ------------------------------------------------------------ */
+
+    /* ============================================================
+       ADD / EDIT GUEST
+       ============================================================ */
 
     document.getElementById("addGuestBtn").addEventListener("click", () => {
       openGuestModal();
     });
 
+
     async function generateNextTicketId() {
-      // Always read the latest guest list before generating the next ID,
-      // so the number cannot be stale when the admin has multiple records.
       const snapshot = await db.collection("guests").get();
       let maxNumber = 0;
 
@@ -841,31 +1219,42 @@
         const data = doc.data() || {};
         const ticket = String(data.ticketId || "").trim().toUpperCase();
         const match = ticket.match(/^ELY-(\d+)$/);
-        if (match) maxNumber = Math.max(maxNumber, parseInt(match[1], 10));
+
+        if (match) {
+          maxNumber = Math.max(maxNumber, parseInt(match[1], 10));
+        }
       });
 
       return `ELY-${String(maxNumber + 1).padStart(4, "0")}`;
     }
 
+
     async function openGuestModal(guest = null) {
       hideFormError();
       guestForm.reset();
 
+      const ticketInput = document.getElementById("guestTicketId");
+
       if (guest) {
         modalTitle.textContent = "Edit Guest";
         editingOriginalNic.value = guest.docId;
-        document.getElementById("guestTicketId").disabled = false;
+
+        ticketInput.disabled = false;
+        ticketInput.readOnly = false;
+
         document.getElementById("guestName").value = guest.name;
         document.getElementById("guestNic").value = guest.nic;
         document.getElementById("guestPhone").value = guest.phone;
-        document.getElementById("guestTicketId").value = guest.ticketId;
+        ticketInput.value = guest.ticketId;
+
       } else {
         modalTitle.textContent = "Add Guest";
         editingOriginalNic.value = "";
-        const ticketInput = document.getElementById("guestTicketId");
+
         ticketInput.value = "Generating...";
         ticketInput.disabled = true;
         ticketInput.readOnly = true;
+
         try {
           ticketInput.value = await generateNextTicketId();
         } catch (error) {
@@ -875,20 +1264,20 @@
         }
       }
 
-      modalBackdrop.classList.add("open");
-      setTimeout(() => document.getElementById("guestName").focus(), 80);
+      guestModalBackdrop.classList.add("open");
+
+      setTimeout(() => {
+        document.getElementById("guestName").focus();
+      }, 80);
     }
 
-    function closeGuestModal() {
-      modalBackdrop.classList.remove("open");
-      hideFormError();
-    }
 
     document.getElementById("cancelModalBtn").addEventListener("click", closeGuestModal);
 
-    modalBackdrop.addEventListener("click", (event) => {
-      if (event.target === modalBackdrop) closeGuestModal();
+    guestModalBackdrop.addEventListener("click", (event) => {
+      if (event.target === guestModalBackdrop) closeGuestModal();
     });
+
 
     window.editGuest = function(docId) {
       const guest = allGuests.find(item => item.docId === docId);
@@ -900,6 +1289,7 @@
 
       openGuestModal(guest);
     };
+
 
     guestForm.addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -929,7 +1319,6 @@
         };
 
         if (!originalNic) {
-          // ADD
           const existing = await db.collection("guests").doc(nic).get();
 
           if (existing.exists) {
@@ -941,12 +1330,10 @@
           showNotice("Guest added successfully.");
 
         } else if (originalNic === nic) {
-          // EDIT without changing document ID
           await db.collection("guests").doc(originalNic).update(newData);
           showNotice("Guest updated successfully.");
 
         } else {
-          // NIC changed: create new document, then delete old one.
           const newRef = db.collection("guests").doc(nic);
           const oldRef = db.collection("guests").doc(originalNic);
 
@@ -977,7 +1364,7 @@
         console.error("Save guest error:", error);
 
         if (error && error.code === "permission-denied") {
-          showFormError("Permission denied. Please make sure you are logged in as the admin.");
+          showFormError("Permission denied. Please make sure you are logged in as an authorized admin.");
         } else {
           showFormError("Could not save this guest. Please try again.");
         }
@@ -988,9 +1375,10 @@
       }
     });
 
-    /* ------------------------------------------------------------
-       DELETE
-       ------------------------------------------------------------ */
+
+    /* ============================================================
+       DELETE GUEST
+       ============================================================ */
 
     window.deleteGuest = async function(docId) {
       const guest = allGuests.find(item => item.docId === docId);
@@ -1008,6 +1396,7 @@
 
       try {
         await db.collection("guests").doc(docId).delete();
+
         showNotice("Guest deleted successfully.");
         await loadGuests();
 
@@ -1021,6 +1410,300 @@
         }
       }
     };
+
+
+    /* ============================================================
+       SUPER ADMIN — ADMIN MANAGEMENT
+       ============================================================ */
+
+    async function loadAdmins() {
+      if (currentRole !== "superadmin") return;
+
+      try {
+        const snapshot = await db.collection("admins").get();
+
+        allAdmins = snapshot.docs.map(doc => {
+          const data = doc.data() || {};
+
+          return {
+            docId: doc.id,
+            name: String(data.name || "").trim(),
+            email: String(doc.id || "").trim().toLowerCase(),
+            role: String(data.role || "admin").trim().toLowerCase()
+          };
+        });
+
+        allAdmins.sort((a, b) => {
+          if (a.role === "superadmin" && b.role !== "superadmin") return -1;
+          if (a.role !== "superadmin" && b.role === "superadmin") return 1;
+          return a.name.localeCompare(b.name, undefined, { sensitivity: "base" });
+        });
+
+        renderAdmins();
+
+      } catch (error) {
+        console.error("Admin load error:", error);
+
+        if (error && error.code === "permission-denied") {
+          showNotice("Firestore denied Admin Management access. Check the published Rules.", "error");
+        } else {
+          showNotice("Could not load administrator records.", "error");
+        }
+      }
+    }
+
+
+    function renderAdmins() {
+      adminTableBody.innerHTML = "";
+
+      if (!allAdmins.length) {
+        adminEmptyState.classList.remove("hidden");
+        return;
+      }
+
+      adminEmptyState.classList.add("hidden");
+
+      allAdmins.forEach(admin => {
+        const isSuper = admin.role === "superadmin";
+        const tr = document.createElement("tr");
+
+        if (isSuper) tr.classList.add("protected-row");
+
+        const roleBadge = isSuper
+          ? '<span class="role-badge role-superadmin">👑 SUPER ADMIN</span>'
+          : '<span class="role-badge role-admin">👤 ADMIN</span>';
+
+        const actions = isSuper
+          ? '<span style="color:#8da4c7;font-size:.72rem;">Protected</span>'
+          : `
+              <div class="actions">
+                <button class="btn btn-secondary small-btn"
+                  onclick="editAdmin('${escapeAttr(admin.docId)}')">Edit</button>
+
+                <button class="btn btn-danger small-btn"
+                  onclick="deleteAdmin('${escapeAttr(admin.docId)}')">Remove</button>
+              </div>
+            `;
+
+        tr.innerHTML = `
+          <td>${escapeHtml(admin.name)}</td>
+          <td class="admin-email-cell">${escapeHtml(admin.email)}</td>
+          <td>${roleBadge}</td>
+          <td>${actions}</td>
+        `;
+
+        adminTableBody.appendChild(tr);
+      });
+    }
+
+
+    document.getElementById("addAdminBtn").addEventListener("click", () => {
+      if (currentRole !== "superadmin") return;
+
+      openAdminModal();
+    });
+
+
+    async function openAdminModal(admin = null) {
+      if (currentRole !== "superadmin") return;
+
+      hideAdminFormError();
+      adminForm.reset();
+
+      if (admin) {
+        adminModalTitle.textContent = "Edit Admin";
+        editingOriginalAdminEmail.value = admin.docId;
+
+        document.getElementById("adminName").value = admin.name;
+        document.getElementById("adminAccountEmail").value = admin.email;
+
+      } else {
+        adminModalTitle.textContent = "Add Admin";
+        editingOriginalAdminEmail.value = "";
+      }
+
+      adminModalBackdrop.classList.add("open");
+
+      setTimeout(() => {
+        document.getElementById("adminName").focus();
+      }, 80);
+    }
+
+
+    document.getElementById("cancelAdminModalBtn").addEventListener("click", closeAdminModal);
+
+    adminModalBackdrop.addEventListener("click", (event) => {
+      if (event.target === adminModalBackdrop) closeAdminModal();
+    });
+
+
+    window.editAdmin = function(docId) {
+      if (currentRole !== "superadmin") return;
+
+      const admin = allAdmins.find(item => item.docId === docId);
+
+      if (!admin) {
+        showNotice("Administrator record could not be found.", "error");
+        return;
+      }
+
+      // The permanent Super Admin cannot be edited through this panel.
+      if (admin.role === "superadmin") {
+        showNotice("The Super Admin account is protected.", "error");
+        return;
+      }
+
+      openAdminModal(admin);
+    };
+
+
+    adminForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (currentRole !== "superadmin") {
+        showAdminFormError("Only the Super Admin can manage administrators.");
+        return;
+      }
+
+      hideAdminFormError();
+
+      const name = document.getElementById("adminName").value.trim();
+      const email = normalizeEmail(document.getElementById("adminAccountEmail").value);
+      const originalEmail = normalizeEmail(editingOriginalAdminEmail.value);
+
+      if (!name || !email) {
+        showAdminFormError("Please enter the administrator name and Google account email.");
+        return;
+      }
+
+      if (!email.includes("@")) {
+        showAdminFormError("Please enter a valid email address.");
+        return;
+      }
+
+      // Never allow creation/editing of another Super Admin.
+      if (email === normalizeEmail(currentUser.email)) {
+        showAdminFormError("The Super Admin account is protected. You cannot add or replace it here.");
+        return;
+      }
+
+      const saveBtn = document.getElementById("saveAdminBtn");
+      saveBtn.disabled = true;
+      saveBtn.textContent = "SAVING...";
+
+      try {
+        const newData = {
+          name,
+          role: "admin"
+        };
+
+        if (!originalEmail) {
+          const existing = await db.collection("admins").doc(email).get();
+
+          if (existing.exists) {
+            showAdminFormError("This email is already authorized as an administrator.");
+            return;
+          }
+
+          await db.collection("admins").doc(email).set(newData);
+
+          showNotice("Administrator added successfully.");
+
+        } else {
+          const originalRef = db.collection("admins").doc(originalEmail);
+          const newRef = db.collection("admins").doc(email);
+
+          const originalSnap = await originalRef.get();
+
+          if (!originalSnap.exists) {
+            showAdminFormError("Original administrator record no longer exists.");
+            return;
+          }
+
+          const originalData = originalSnap.data() || {};
+
+          if (String(originalData.role || "").toLowerCase() === "superadmin") {
+            showAdminFormError("The Super Admin account is protected.");
+            return;
+          }
+
+          if (originalEmail !== email) {
+            const newSnap = await newRef.get();
+
+            if (newSnap.exists) {
+              showAdminFormError("The new email is already authorized as an administrator.");
+              return;
+            }
+
+            await newRef.set(newData);
+            await originalRef.delete();
+
+            showNotice("Administrator email updated successfully.");
+
+          } else {
+            await originalRef.update(newData);
+
+            showNotice("Administrator updated successfully.");
+          }
+        }
+
+        closeAdminModal();
+        await loadAdmins();
+
+      } catch (error) {
+        console.error("Save admin error:", error);
+
+        if (error && error.code === "permission-denied") {
+          showAdminFormError("Permission denied. Only the Super Admin can manage administrators.");
+        } else {
+          showAdminFormError("Could not save this administrator. Please try again.");
+        }
+
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = "Save Admin";
+      }
+    });
+
+
+    window.deleteAdmin = async function(docId) {
+      if (currentRole !== "superadmin") return;
+
+      const admin = allAdmins.find(item => item.docId === docId);
+
+      if (!admin) {
+        showNotice("Administrator record could not be found.", "error");
+        return;
+      }
+
+      if (admin.role === "superadmin") {
+        showNotice("The Super Admin account is protected and cannot be removed.", "error");
+        return;
+      }
+
+      const confirmed = confirm(
+        `Remove this administrator?\n\nName: ${admin.name}\nEmail: ${admin.email}\n\nThey will no longer be able to access the ELYSIA Admin Portal.`
+      );
+
+      if (!confirmed) return;
+
+      try {
+        await db.collection("admins").doc(docId).delete();
+
+        showNotice("Administrator removed successfully.");
+        await loadAdmins();
+
+      } catch (error) {
+        console.error("Delete admin error:", error);
+
+        if (error && error.code === "permission-denied") {
+          showNotice("Permission denied. Only the Super Admin can remove administrators.", "error");
+        } else {
+          showNotice("Could not remove this administrator.", "error");
+        }
+      }
+    };
+
   </script>
 </body>
 </html>
