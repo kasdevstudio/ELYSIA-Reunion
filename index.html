@@ -1,13 +1,13 @@
-<!DOCTYPE html>
+meka perfect. meke colors poddk dul wge. nikn transparency eka adu wela wge. eka mta hadala denawada. anith kisima deyak wenas karanna epa. meke design eka improve karala meke color issue eka hadanna. aye meke arrow deka mobile ui ekedi crop wenw ekth hadanna. animation include karala superb ui experience ekk denna"<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ELYSIA – Royal Gate Pass Portal</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 *, *::before, *::after {
@@ -18,16 +18,15 @@ box-sizing: border-box;
 }
 
 :root {
---bg-primary: #020716;
---bg-deep-blue: #031338;
---bg-royal-sapphire: #002d7a;
---gold-primary: #f2c037;
---gold-bright: #ffe66d;
---gold-light: #fff5c0;
---gold-gradient: linear-gradient(135deg, #ffd700 0%, #fff6cc 40%, #e0b02b 75%, #9b7100 100%);
---gold-border: rgba(255, 215, 0, 0.5);
---text-light: #ffffff;
---text-muted: #c7dbf9;
+--bg-primary: #020817;
+--bg-midnight: #0b2450;
+--bg-deep-navy: #003b91;
+--gold-primary: #d9b63c;
+--gold-bright: #ffd84a;
+--gold-light: #fff2bd;
+--gold-gradient: linear-gradient(135deg, #c79a24 0%, #ffe58a 46%, #ffd13b 68%, #a87912 100%);
+--text-light: #f7f9ff;
+--text-muted: #c4d3ea;
 --font-heading: 'Cinzel', serif;
 --font-body: 'Montserrat', sans-serif;
 }
@@ -51,71 +50,28 @@ z-index: 1;
 pointer-events: none;
 }
 
-/* Poster inspired Royal Atmosphere */
 .ambient-glow {
 position: fixed;
 inset: 0;
 background:
-radial-gradient(circle at 50% 18%, rgba(0, 68, 187, 0.95) 0%, rgba(2, 18, 56, 0.8) 50%, transparent 75%),
-radial-gradient(circle at 88% 78%, rgba(255, 204, 0, 0.22) 0%, transparent 55%),
-radial-gradient(circle at 12% 82%, rgba(0, 52, 148, 0.9) 0%, transparent 60%);
+radial-gradient(circle at 50% 15%, rgba(0, 52, 135, 0.96) 0%, transparent 65%),
+radial-gradient(circle at 85% 70%, rgba(255, 210, 58, 0.20) 0%, transparent 50%),
+radial-gradient(circle at 15% 85%, rgba(7, 25, 55, 0.98) 0%, transparent 60%);
 z-index: 1;
 pointer-events: none;
-animation: ambientBreath 8s ease-in-out infinite alternate;
-}
-
-@keyframes ambientBreath {
-0%   { opacity: 0.85; transform: scale(1); }
-100% { opacity: 1; transform: scale(1.03); }
-}
-
-/* Royal Ornaments */
-.royal-corner {
-position: fixed;
-width: 80px;
-height: 80px;
-z-index: 30;
-pointer-events: none;
-opacity: 0.75;
-}
-.royal-corner.top-left {
-top: 14px;
-left: 14px;
-border-top: 2px solid var(--gold-bright);
-border-left: 2px solid var(--gold-bright);
-border-top-left-radius: 8px;
-}
-.royal-corner.bottom-left {
-bottom: 14px;
-left: 14px;
-border-bottom: 2px solid var(--gold-bright);
-border-left: 2px solid var(--gold-bright);
-border-bottom-left-radius: 8px;
-}
-.royal-corner.bottom-right {
-bottom: 14px;
-right: 14px;
-border-bottom: 2px solid var(--gold-bright);
-border-right: 2px solid var(--gold-bright);
-border-bottom-right-radius: 8px;
-}
-
-@media (max-width: 768px) {
-.royal-corner { width: 45px; height: 45px; opacity: 0.5; }
 }
 
 .shimmer-text {
-background: linear-gradient(90deg, #d4af37 0%, #ffffff 25%, #ffe600 50%, #d4af37 75%, #ffffff 100%);
-background-size: 250% auto;
+background: linear-gradient(90deg, #d4af37 0%, #ffffff 25%, #ffd700 50%, #aa8214 75%, #d4af37 100%);
+background-size: 200% auto;
 color: transparent;
 -webkit-background-clip: text;
 background-clip: text;
-animation: goldShimmer 4s linear infinite;
-text-shadow: 0 0 25px rgba(255, 215, 0, 0.45);
+animation: goldShimmer 5s linear infinite;
 }
 
 @keyframes goldShimmer {
-to { background-position: 250% center; }
+to { background-position: 200% center; }
 }
 
 .btn-gold {
@@ -124,42 +80,23 @@ align-items: center;
 justify-content: center;
 gap: 10px;
 background: var(--gold-gradient);
-color: #030a17;
+color: #050d1a;
 font-family: var(--font-heading);
-font-weight: 800;
-font-size: 0.92rem;
+font-weight: 700;
+font-size: 0.9rem;
 letter-spacing: 2px;
 text-transform: uppercase;
 padding: 14px 34px;
 border-radius: 50px;
-border: 1.5px solid rgba(255, 255, 255, 0.8);
+border: none;
 cursor: pointer;
-box-shadow: 0 10px 30px rgba(212, 175, 55, 0.45), 0 0 20px rgba(255, 215, 0, 0.35);
-transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
-position: relative;
-overflow: hidden;
-animation: goldPulse 3.5s ease-in-out infinite;
-}
-
-.btn-gold::before {
-content: '';
-position: absolute;
-top: -50%;
-left: -50%;
-width: 200%;
-height: 200%;
-background: linear-gradient(60deg, transparent, rgba(255, 255, 255, 0.45), transparent);
-transform: rotate(30deg) translateY(-100%);
-transition: transform 0.75s ease;
-}
-
-.btn-gold:hover::before {
-transform: rotate(30deg) translateY(100%);
+box-shadow: 0 10px 25px rgba(212, 175, 55, 0.35);
+transition: all 0.3s ease;
 }
 
 .btn-gold:hover {
-transform: scale(1.05) translateY(-2px);
-box-shadow: 0 15px 45px rgba(255, 215, 0, 0.75);
+transform: scale(1.05);
+box-shadow: 0 15px 35px rgba(255, 215, 0, 0.55);
 }
 
 .btn-gold:disabled {
@@ -169,33 +106,21 @@ transform: none;
 }
 
 .glass-card {
-background: linear-gradient(145deg, rgba(10, 32, 70, 0.94) 0%, rgba(4, 15, 36, 0.98) 100%);
-backdrop-filter: blur(20px);
--webkit-backdrop-filter: blur(20px);
-border: 1.5px solid var(--gold-border);
-border-radius: 20px;
-padding: 26px;
-box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), inset 0 0 25px rgba(255, 215, 0, 0.12);
-animation: premiumFloat 6s ease-in-out infinite;
-}
-
-@keyframes premiumFloat {
-0%, 100% { transform: translateY(0); }
-50% { transform: translateY(-3px); }
-}
-
-@keyframes goldPulse {
-0%, 100% { box-shadow: 0 10px 25px rgba(212, 175, 55, 0.45); }
-50% { box-shadow: 0 14px 38px rgba(255, 215, 0, 0.7); }
+background: rgba(8, 30, 66, 0.82);
+backdrop-filter: blur(16px);
+-webkit-backdrop-filter: blur(16px);
+border: 1px solid rgba(255, 216, 74, 0.34);
+border-radius: 18px;
+padding: 25px;
+box-shadow: 0 15px 40px rgba(0, 0, 0, 0.72), 0 0 28px rgba(15, 52, 105, 0.12);
 }
 
 .divider-gold {
-width: 90px;
+width: 70px;
 height: 2px;
 background: var(--gold-gradient);
 margin: 0 auto 20px auto;
 position: relative;
-box-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
 }
 
 .divider-gold::after {
@@ -205,24 +130,22 @@ left: 50%;
 top: 50%;
 transform: translate(-50%, -50%);
 color: var(--gold-bright);
-font-size: 0.8rem;
-background: #04122d;
-padding: 0 8px;
-text-shadow: 0 0 10px var(--gold-bright);
+font-size: 0.7rem;
+background: var(--bg-primary);
+padding: 0 6px;
 }
 
 /* AUTH LOGIN SCREEN */
 #auth-screen {
 position: fixed;
 inset: 0;
-z-index: 1000;
+z-index: 100;
 display: flex;
 align-items: center;
 justify-content: center;
 padding: 20px;
-background: radial-gradient(circle at 50% 50%, rgba(6, 22, 54, 0.98) 0%, rgba(1, 4, 12, 0.99) 100%);
-backdrop-filter: blur(16px);
-transition: opacity .55s ease, visibility .55s ease;
+background: rgba(4, 9, 20, 0.96);
+backdrop-filter: blur(14px);
 }
 
 .auth-card {
@@ -230,73 +153,65 @@ max-width: 480px;
 width: 100%;
 text-align: center;
 padding: 40px 30px;
-border: 2px solid var(--gold-border);
-box-shadow: 0 25px 60px rgba(0,0,0,0.9), 0 0 35px rgba(255, 215, 0, 0.25);
 }
 
 .auth-logo-slot {
-width: 86px;
-height: 86px;
-margin: 0 auto 18px auto;
+width: 80px;
+height: 80px;
+margin: 0 auto 15px auto;
 border-radius: 50%;
-border: 2px solid var(--gold-bright);
+border: 2px solid #d9b63c;
 display: flex;
 align-items: center;
 justify-content: center;
-background: linear-gradient(135deg, #003688 0%, #001740 100%);
-box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
-font-size: 2.3rem;
+background: rgba(0, 52, 135, 0.90);
+box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+font-size: 2.2rem;
 }
 
 .auth-input {
 width: 100%;
-background: rgba(2, 7, 18, 0.95);
-border: 1.5px solid rgba(255, 215, 0, 0.55);
-color: #fff;
-padding: 16px 20px;
-border-radius: 10px;
-font-size: 1.15rem;
+background: rgba(5, 13, 26, 0.9);
+border: 1px solid rgba(212, 175, 55, 0.4);
+color: #ffffff;
+padding: 15px 20px;
+border-radius: 8px;
+font-size: 1.1rem;
 font-family: var(--font-body);
 text-align: center;
 letter-spacing: 2px;
-margin: 22px 0 14px 0;
+margin: 20px 0 12px 0;
 outline: none;
 text-transform: uppercase;
-transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .auth-input:focus {
 border-color: var(--gold-bright);
-box-shadow: 0 0 24px rgba(255, 215, 0, 0.6);
+box-shadow: 0 0 18px rgba(212, 175, 55, 0.4);
 }
 
 .auth-error {
-color: #ff6b6b;
-font-size: 0.88rem;
-margin-bottom: 14px;
+color: #ff5252;
+font-size: 0.85rem;
+margin-bottom: 12px;
 display: none;
 line-height: 1.4;
-background: rgba(255, 82, 82, 0.15);
-padding: 10px;
-border-radius: 8px;
-border: 1px solid rgba(255, 82, 82, 0.4);
+background: rgba(255, 82, 82, 0.1);
+padding: 8px;
+border-radius: 6px;
+border: 1px solid rgba(255, 82, 82, 0.3);
 }
 
 /* MAIN VIEWPORT */
 #portal-content {
 display: block;
 width: 100vw;
-height: 100vh;
-opacity: 0;
+filter: blur(18px);
+transform: scale(1.015);
 pointer-events: none;
 user-select: none;
-transition: opacity 0.5s ease;
-}
-
-#portal-content.auth-unlocked {
-opacity: 1;
-pointer-events: auto;
-user-select: auto;
+transition: filter .65s ease, transform .65s ease;
+height: 100vh;
 }
 
 .top-progress-container {
@@ -305,55 +220,49 @@ top: 0;
 left: 0;
 width: 100%;
 height: 4px;
-background: rgba(255, 255, 255, 0.1);
-z-index: 120;
+background: rgba(255, 255, 255, 0.05);
+z-index: 90;
 }
 
 .top-progress-bar {
 height: 100%;
 width: 20%;
 background: var(--gold-gradient);
-box-shadow: 0 0 18px var(--gold-bright);
+box-shadow: 0 0 12px var(--gold-bright);
 transition: width 0.7s cubic-bezier(0.2, 0.9, 0.3, 1);
 }
 
 .user-access-pill {
 position: fixed;
-top: max(16px, env(safe-area-inset-top, 16px));
+top: 15px;
 right: 25px;
-z-index: 120;
-background: linear-gradient(135deg, rgba(14, 42, 90, 0.96) 0%, rgba(4, 15, 36, 0.98) 100%);
-border: 1.5px solid var(--gold-primary);
-padding: 8px 22px;
+z-index: 80;
+background: rgba(8, 30, 66, 0.82);
+border: 1px solid var(--gold-primary);
+padding: 6px 18px;
 border-radius: 30px;
-font-size: 0.86rem;
-font-weight: 600;
+font-size: 0.8rem;
 letter-spacing: 1px;
-color: #ffffff;
+color: var(--gold-light);
 display: flex;
 align-items: center;
-gap: 10px;
-box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 215, 0, 0.25);
+gap: 8px;
+box-shadow: 0 0 15px rgba(0,0,0,0.5);
 }
 
 @media (max-width: 768px) {
-.user-access-pill { 
-right: 15px; 
-top: max(12px, env(safe-area-inset-top, 12px));
-font-size: 0.76rem; 
-padding: 6px 16px;
-}
+.user-access-pill { right: 15px; font-size: 0.72rem; }
 }
 
 .side-nav {
 position: fixed;
-right: 30px;
+right: 35px;
 top: 50%;
 transform: translateY(-50%);
 display: flex;
 flex-direction: column;
 gap: 16px;
-z-index: 120;
+z-index: 80;
 }
 
 @media (max-width: 768px) {
@@ -361,71 +270,49 @@ z-index: 120;
 }
 
 .nav-dot {
-width: 12px;
-height: 12px;
+width: 10px;
+height: 10px;
 border-radius: 50%;
-border: 2px solid var(--gold-primary);
-background: rgba(255, 215, 0, 0.15);
+border: 1.5px solid var(--gold-primary);
+background: transparent;
 cursor: pointer;
-transition: all 0.35s ease;
+transition: all 0.3s ease;
 }
 
 .nav-dot.active {
 background: var(--gold-bright);
-box-shadow: 0 0 18px var(--gold-bright);
-transform: scale(1.4);
-border-color: #fff;
+box-shadow: 0 0 12px var(--gold-bright);
+transform: scale(1.3);
 }
 
-/* FIXED MOBILE CONTROLS & ARROWS */
 .scroll-arrow-controls {
 position: fixed;
-bottom: max(24px, calc(env(safe-area-inset-bottom, 0px) + 20px));
+bottom: max(18px, calc(env(safe-area-inset-bottom, 0px) + 14px));
 left: 50%;
 transform: translateX(-50%);
 display: flex;
-align-items: center;
-justify-content: center;
-gap: 18px;
-z-index: 150;
-padding: 7px 16px;
-background: rgba(4, 14, 34, 0.85);
-backdrop-filter: blur(14px);
-border-radius: 35px;
-border: 1.5px solid rgba(255, 215, 0, 0.45);
-box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.2);
+gap: 16px;
+z-index: 80;
 }
 
 .arrow-btn {
-width: 46px;
-height: 46px;
+width: 42px;
+height: 42px;
 border-radius: 50%;
-border: 1.5px solid var(--gold-primary);
-background: linear-gradient(145deg, #0d3063 0%, #05152f 100%);
-color: var(--gold-bright);
-font-size: 1.1rem;
+border: 1px solid var(--gold-primary);
+background: rgba(8, 30, 66, 0.82);
+color: var(--gold-light);
 display: flex;
 align-items: center;
 justify-content: center;
 cursor: pointer;
-box-shadow: 0 4px 15px rgba(0,0,0,0.6), inset 0 0 10px rgba(255, 215, 0, 0.25);
-transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-outline: none;
--webkit-tap-highlight-color: transparent;
-}
-
-.arrow-btn:active {
-transform: scale(0.92);
-background: var(--gold-primary);
-color: #030811;
+transition: all 0.3s;
 }
 
 .arrow-btn:hover {
-background: var(--gold-gradient);
-color: #020713;
-border-color: #ffffff;
+background: var(--gold-primary);
+color: #050d1a;
 transform: scale(1.1);
-box-shadow: 0 0 22px rgba(255, 215, 0, 0.7);
 }
 
 /* 3D Slide Mechanism */
@@ -443,13 +330,12 @@ inset: 0;
 display: flex;
 align-items: center;
 justify-content: center;
-padding: 40px 18px 120px 18px;
+padding: 30px 15px;
 opacity: 0;
 pointer-events: none;
-transform: translate3d(0, 80px, -200px) rotateX(-8deg);
-transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.85s cubic-bezier(0.2, 0.9, 0.3, 1);
+transform: translate3d(0, 100px, -250px) rotateX(-12deg);
+transition: opacity 0.85s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.95s cubic-bezier(0.2, 0.9, 0.3, 1);
 overflow-y: auto;
--webkit-overflow-scrolling: touch;
 }
 
 .slide.active {
@@ -462,7 +348,7 @@ z-index: 20;
 .slide.passed {
 opacity: 0;
 pointer-events: none;
-transform: translate3d(0, -80px, 150px) rotateX(8deg);
+transform: translate3d(0, -100px, 200px) rotateX(12deg);
 z-index: 10;
 }
 
@@ -477,189 +363,154 @@ text-align: center;
 .event-banner-container {
 width: 100%;
 max-width: 720px;
-min-height: 195px;
-padding: 24px 20px;
-margin: 0 auto 24px auto;
-border-radius: 20px;
-border: 1.5px solid var(--gold-border);
-background: linear-gradient(135deg, rgba(0, 52, 148, 0.88) 0%, rgba(5, 22, 54, 0.96) 100%);
-box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8), inset 0 0 30px rgba(255, 215, 0, 0.2);
+height: 180px;
+margin: 0 auto 20px auto;
+border-radius: 14px;
+border: 1px solid rgba(212, 175, 55, 0.4);
+background: linear-gradient(135deg, rgba(0, 55, 145, 0.88), rgba(8, 30, 66, 0.86));
+box-shadow: 0 10px 30px rgba(0,0,0,0.6);
 display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: center;
-animation: premiumFloat 6s ease-in-out infinite;
 }
 
 .school-crest {
-width: 66px;
-height: 66px;
+width: 60px;
+height: 60px;
 border-radius: 50%;
-border: 2px solid var(--gold-bright);
-margin-bottom: 12px;
-box-shadow: 0 0 25px rgba(255, 215, 0, 0.55);
+border: 1.5px solid var(--gold-bright);
+margin-bottom: 8px;
+box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
 display: flex;
 align-items: center;
 justify-content: center;
-background: #002870;
-font-size: 2rem;
+background: #003b91;
+font-size: 1.8rem;
 }
 
 .banner-title {
 font-family: var(--font-heading);
-font-size: clamp(1.8rem, 4vw, 2.7rem);
-letter-spacing: 6px;
+font-size: clamp(1.4rem, 3.2vw, 2.2rem);
+letter-spacing: 5px;
 font-weight: 900;
 }
 
 .attendee-welcome {
-font-size: 1.15rem;
-color: #ffffff;
-margin: 18px 0 24px 0;
+font-size: 1.05rem;
+color: var(--gold-light);
+margin: 15px 0 20px 0;
 letter-spacing: 1px;
 }
 
 .attendee-welcome span {
 color: var(--gold-bright);
-font-weight: 800;
-text-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
-border-bottom: 2px solid var(--gold-bright);
-padding-bottom: 2px;
+font-weight: 700;
+text-decoration: underline;
+text-underline-offset: 4px;
 }
 
 .mini-countdown {
 display: flex;
 justify-content: center;
 gap: 15px;
-margin-bottom: 28px;
+margin-bottom: 25px;
 }
 
 .mini-cd-box {
-background: linear-gradient(145deg, rgba(7, 24, 56, 0.95), rgba(2, 10, 26, 0.95));
-border: 1.5px solid rgba(255, 215, 0, 0.5);
-border-radius: 12px;
-padding: 12px 18px;
-min-width: 74px;
-box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), inset 0 0 14px rgba(255, 215, 0, 0.15);
+background: rgba(5, 18, 40, 0.88);
+border: 1px solid rgba(255, 216, 74, 0.34);
+border-radius: 8px;
+padding: 10px 14px;
+min-width: 65px;
 }
 
 .mini-cd-num {
 font-family: var(--font-heading);
-font-size: 1.6rem;
-font-weight: 800;
-color: #ffffff;
-text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+font-size: 1.4rem;
+font-weight: 700;
+color: var(--gold-light);
 }
 
 .mini-cd-lbl {
-font-size: 0.7rem;
-font-weight: 700;
-color: var(--gold-bright);
-letter-spacing: 1.5px;
+font-size: 0.65rem;
+color: #c4d3ea;
+letter-spacing: 1px;
 text-transform: uppercase;
-margin-top: 2px;
 }
 
 /* SLIDE 1: DIGITAL PASS */
 .digital-ticket-card {
-max-width: 490px;
+max-width: 480px;
 margin: 0 auto;
-background: linear-gradient(155deg, #0e306b 0%, #071c42 55%, #020a1c 100%);
-border: 2px solid var(--gold-bright);
-border-radius: 22px;
-padding: 28px 24px;
-box-shadow: 0 25px 65px rgba(0, 0, 0, 0.9), 0 0 40px rgba(255, 215, 0, 0.35);
-animation: premiumFloat 6s ease-in-out infinite;
+background: linear-gradient(145deg, #102a52 0%, #07152c 58%, #040b18 100%);
+border: 2px solid #d9b63c;
+border-radius: 18px;
+padding: 25px;
+box-shadow: 0 15px 45px rgba(0,0,0,0.72), 0 0 32px rgba(255, 210, 58, 0.24);
 }
 
 .ticket-badge {
 display: inline-block;
-padding: 5px 16px;
+padding: 3px 12px;
 border-radius: 20px;
-font-size: 0.78rem;
-font-weight: 700;
-background: rgba(255, 215, 0, 0.22);
+font-size: 0.72rem;
+background: rgba(212, 175, 55, 0.2);
 color: var(--gold-bright);
 letter-spacing: 2px;
-margin-bottom: 14px;
-border: 1.5px solid var(--gold-bright);
-box-shadow: 0 0 15px rgba(255, 215, 0, 0.35);
+margin-bottom: 12px;
+border: 1px solid var(--gold-primary);
 }
 
 .ticket-guest-name {
 font-family: var(--font-heading);
-font-size: 1.6rem;
-font-weight: 800;
+font-size: 1.4rem;
 color: #ffffff;
 margin-bottom: 4px;
-text-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
 }
 
 .ticket-id-tag {
 font-family: monospace;
-font-size: 1.3rem;
-font-weight: 700;
+font-size: 1.15rem;
 color: var(--gold-bright);
 letter-spacing: 3px;
 margin-bottom: 8px;
-text-shadow: 0 0 14px rgba(255, 215, 0, 0.5);
 }
 
 .ticket-nic-tag {
-font-size: 0.94rem;
-font-weight: 600;
-color: var(--text-muted);
-margin-bottom: 16px;
-letter-spacing: 1.5px;
+font-size: 0.85rem;
+color: #c4d3ea;
+margin-bottom: 14px;
+letter-spacing: 1px;
 }
 
 .ticket-qr-placeholder {
-width: 150px;
-height: 150px;
-margin: 14px auto;
-background: #ffffff;
+width: 130px;
+height: 130px;
+margin: 12px auto;
+background: #fff;
 padding: 8px;
-border-radius: 12px;
-box-shadow: 0 0 28px rgba(255, 255, 255, 0.45);
+border-radius: 10px;
+box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
 }
 
 .ticket-qr-placeholder img {
 width: 100%;
 height: 100%;
-display: block;
 }
 
 .pass-note {
-font-size: 0.84rem;
-color: var(--text-muted);
-margin-top: 14px;
-line-height: 1.5;
+font-size: 0.78rem;
+color: #c4d3ea;
+margin-top: 10px;
+line-height: 1.4;
 }
 
 .grid-4 {
 display: grid;
-grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-gap: 18px;
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+gap: 15px;
 text-align: center;
-}
-
-/* Poster Preview Card in Slide 2 */
-.poster-preview-card {
-max-width: 380px;
-margin: 0 auto 24px auto;
-border-radius: 16px;
-overflow: hidden;
-border: 2px solid var(--gold-bright);
-box-shadow: 0 15px 45px rgba(0,0,0,0.85), 0 0 25px rgba(255, 215, 0, 0.3);
-transition: transform 0.4s ease;
-}
-.poster-preview-card:hover {
-transform: scale(1.03);
-}
-.poster-preview-card img {
-width: 100%;
-height: auto;
-display: block;
 }
 
 .trivia-box {
@@ -668,28 +519,98 @@ margin: 0 auto;
 text-align: left;
 display: flex;
 flex-direction: column;
-gap: 15px;
+gap: 12px;
 }
 
+/* ============================================================
+   ELYSIA AUTHENTICATION LOCK
+   ============================================================ */
 body.auth-locked {
-overflow: hidden;
+  overflow: hidden;
+}
+#portal-content.auth-unlocked {
+  filter: blur(0);
+  transform: scale(1);
+  pointer-events: auto;
+  user-select: auto;
+}
+#auth-screen.auth-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .55s ease, visibility .55s ease;
 }
 
-#auth-screen.auth-hidden {
-opacity: 0;
-visibility: hidden;
-pointer-events: none;
+
+@media (max-width: 768px) {
+  .scroll-arrow-controls {
+    bottom: max(18px, calc(env(safe-area-inset-bottom, 0px) + 18px));
+    gap: 12px;
+    z-index: 120;
+  }
+
+  .arrow-btn {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    flex: 0 0 44px;
+  }
+
+  .slide {
+    padding: 26px 14px 104px 14px;
+  }
+}
+
+/* Premium micro-motion — intentionally subtle, preserving the original layout */
+.ambient-glow {
+  animation: ambientBreath 8s ease-in-out infinite alternate;
+}
+
+@keyframes ambientBreath {
+  0%   { opacity: .86; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.025); }
+}
+
+.glass-card,
+.event-banner-container,
+.digital-ticket-card {
+  animation: premiumFloat 7s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes premiumFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+.btn-gold {
+  animation: goldPulse 3.8s ease-in-out infinite;
+}
+
+@keyframes goldPulse {
+  0%, 100% { box-shadow: 0 10px 25px rgba(255, 210, 58, 0.34); }
+  50% { box-shadow: 0 12px 34px rgba(255, 220, 70, 0.58); }
+}
+
+.arrow-btn {
+  animation: arrowGlow 3.2s ease-in-out infinite;
+}
+
+@keyframes arrowGlow {
+  0%, 100% { box-shadow: 0 0 0 rgba(255, 215, 0, 0); }
+  50% { box-shadow: 0 0 18px rgba(255, 220, 70, 0.24); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-.ambient-glow,
-.glass-card,
-.event-banner-container,
-.digital-ticket-card,
-.btn-gold,
-.arrow-btn {
-animation: none !important;
-}
+  .ambient-glow,
+  .glass-card,
+  .event-banner-container,
+  .digital-ticket-card,
+  .btn-gold,
+  .arrow-btn {
+    animation: none !important;
+  }
 }
 </style>
 </head>
@@ -698,29 +619,24 @@ animation: none !important;
 <canvas id="particles-canvas"></canvas>
 <div class="ambient-glow"></div>
 
-<!-- Royal Frame Accents matching the poster -->
-<div class="royal-corner top-left"></div>
-<div class="royal-corner bottom-left"></div>
-<div class="royal-corner bottom-right"></div>
-
 <!-- AUTH SCREEN -->
 <div id="auth-screen">
 <div class="glass-card auth-card">
 <div class="auth-logo-slot">🏛️</div>
-<span style="font-size: 0.78rem; letter-spacing: 4px; color: var(--gold-bright); text-transform: uppercase; font-weight: 700;">
-2020 O/L • 2023 A/L PRESENTS
+<span style="font-size: 0.75rem; letter-spacing: 4px; color: var(--gold-primary); text-transform: uppercase;">
+2020 O/L • 2023 A/L REUNION
 </span>
-<h2 class="shimmer-text" style="font-family: var(--font-heading); font-size: 2.3rem; margin: 10px 0 16px 0;">
+<h2 class="shimmer-text" style="font-family: var(--font-heading); font-size: 2rem; margin: 8px 0 15px 0;">
 ELYSIA
 </h2>
-<p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.6;">
+<p style="color: #c4d3ea; font-size: 0.88rem; line-height: 1.5;">
 ඔබගේ <strong>ජාතික හැඳුනුම්පත් අංකය (NIC)</strong> ඇතුළත් කර ඔබගේ Royal Gate Pass එක ලබා ගන්න.
 </p>
 
 <form id="nicLoginForm" method="get" autocomplete="off">
 <input type="text" id="accessKeyInput" name="nic" class="auth-input" placeholder="NIC NUMBER (E.G. 19936100356)" inputmode="text" spellcheck="false" autocomplete="off" />
 <div id="authError" class="auth-error"></div>
-<button type="submit" class="btn-gold" id="loginBtn" style="width: 100%; border-radius: 10px;">
+<button type="submit" class="btn-gold" id="loginBtn" style="width: 100%; border-radius: 8px;">
 Unlock Royal Pass
 </button>
 </form>
@@ -738,7 +654,7 @@ Unlock Royal Pass
 <div class="user-access-pill">
 <span>👑</span>
 <span id="pillUser">Welcome, Guest</span> •
-<span id="pillTicket" style="color: var(--gold-bright); font-weight: 800;">ELY-0000</span>
+<span id="pillTicket" style="color: var(--gold-bright); font-weight: 700;">ELY-0000</span>
 </div>
 
 <!-- Side Nav Dots -->
@@ -750,10 +666,10 @@ Unlock Royal Pass
 <div class="nav-dot" onclick="goToSlide(4)"></div>
 </div>
 
-<!-- Scroll Arrows (Fixed Safe Area on Mobile) -->
+<!-- Scroll Arrows -->
 <div class="scroll-arrow-controls">
-<button class="arrow-btn" onclick="prevSlide()" aria-label="Previous Slide">▲</button>
-<button class="arrow-btn" onclick="nextSlide()" aria-label="Next Slide">▼</button>
+<button class="arrow-btn" onclick="prevSlide()">▲</button>
+<button class="arrow-btn" onclick="nextSlide()">▼</button>
 </div>
 
 <div class="deck-container">
@@ -763,9 +679,8 @@ Unlock Royal Pass
 <div class="slide-inner">
 <div class="event-banner-container">
 <div class="school-crest">🎓</div>
-<span style="font-size: 0.78rem; letter-spacing: 4px; color: var(--gold-light); font-weight: 700; margin-bottom: 6px;">2020 O/L BATCH / 2023 A/L BATCH PRESENTS</span>
-<h1 class="banner-title shimmer-text">ELYSIA</h1>
-<p style="font-size: 0.88rem; letter-spacing: 4px; color: var(--gold-bright); font-weight: 600; margin-top: 4px;">– THE ULTIMATE GET TOGETHER –</p>
+<h1 class="banner-title shimmer-text">ELYSIA 2026</h1>
+<p style="font-size: 0.8rem; letter-spacing: 3px; color: var(--gold-light);">THE ULTIMATE GET TOGETHER</p>
 </div>
 
 <div class="attendee-welcome">
@@ -786,10 +701,10 @@ Honored Guest: <span id="welcomeName">Loading...</span>
 <!-- SLIDE 1: PERSONAL DIGITAL ROYAL GATE PASS -->
 <div class="slide">
 <div class="slide-inner">
-<span style="font-size: 0.78rem; letter-spacing: 4px; color: var(--gold-bright); text-transform: uppercase; font-weight: 700;">
+<span style="font-size: 0.75rem; letter-spacing: 4px; color: var(--gold-primary); text-transform: uppercase;">
 Entrance Verification
 </span>
-<h2 style="font-family: var(--font-heading); font-size: 2.1rem; margin: 6px 0 16px 0; text-shadow: 0 0 15px rgba(255,255,255,0.25);">Official Digital Pass</h2>
+<h2 style="font-family: var(--font-heading); font-size: 1.8rem; margin: 5px 0 15px 0;">Official Digital Pass</h2>
 <div class="divider-gold"></div>
 
 <div class="digital-ticket-card">
@@ -803,47 +718,42 @@ Entrance Verification
 <img id="ticketQR" src="" alt="Gate Pass QR" />
 </div>
 
-<p style="font-size: 1rem; color: #ffffff; margin-top: 12px; font-weight: 700;">GLAMOURA HOTEL • GEMUNUPURA</p>
-<p style="font-size: 0.88rem; color: var(--gold-bright); margin-top: 4px; font-weight: 600;">27TH DECEMBER 2026 • 8.00 AM TO 16.00 PM</p>
+<p style="font-size: 0.85rem; color: var(--gold-light); margin-top: 8px;">Glamoura Hotel • Gemunupura</p>
+<p style="font-size: 0.8rem; color: #c4d3ea;">27th December 2026 • 8:00 AM – 4:00 PM</p>
 <p class="pass-note">⚠️ Event එකට ඇතුළු වීමේදී මෙම Screen එක හෝ මෙහි Screenshot එක Gate එකට පෙන්වන්න.</p>
 </div>
 </div>
 </div>
 
-<!-- SLIDE 2: SCHEDULE, VENUE & POSTER -->
+<!-- SLIDE 2: SCHEDULE & VENUE DETAILS -->
 <div class="slide">
 <div class="slide-inner">
-<span style="font-size: 0.78rem; letter-spacing: 4px; color: var(--gold-bright); text-transform: uppercase; font-weight: 700;">
+<span style="font-size: 0.75rem; letter-spacing: 4px; color: var(--gold-primary); text-transform: uppercase;">
 Event Information
 </span>
-<h2 style="font-family: var(--font-heading); font-size: 2.1rem; margin: 6px 0 16px 0;">Venue & Details</h2>
+<h2 style="font-family: var(--font-heading); font-size: 1.8rem; margin: 5px 0 15px 0;">Venue & Schedule</h2>
 <div class="divider-gold"></div>
-
-<!-- Official Event Poster Integration -->
-<div class="poster-preview-card">
-<img src="https://i.postimg.cc/RZdHxfRK/IMG-20260921-WA0001.jpg" alt="ELYSIA 2026 Official Poster" loading="lazy" />
-</div>
 
 <div class="grid-4">
 <div class="glass-card">
-<h4 style="font-family: var(--font-heading); color: var(--gold-bright); margin-bottom: 8px; font-size: 1.15rem;">Location</h4>
-<p style="font-weight: 700; color: #fff;">Glamoura Hotel</p>
-<p style="font-size: 0.88rem; color: var(--gold-primary); margin-top: 3px;">Gemunupura</p>
+<h4 style="font-family: var(--font-heading); color: var(--gold-light); margin-bottom: 6px;">Location</h4>
+<p>Glamoura Hotel</p>
+<p style="font-size: 0.8rem; color: var(--gold-primary);">Gemunupura</p>
 </div>
 <div class="glass-card">
-<h4 style="font-family: var(--font-heading); color: var(--gold-bright); margin-bottom: 8px; font-size: 1.15rem;">Time</h4>
-<p style="font-weight: 700; color: #fff;">8.00 AM to 16.00 PM</p>
-<p style="font-size: 0.88rem; color: var(--gold-primary); margin-top: 3px;">Full Day Celebration</p>
+<h4 style="font-family: var(--font-heading); color: var(--gold-light); margin-bottom: 6px;">Time</h4>
+<p>8:00 AM – 4:00 PM</p>
+<p style="font-size: 0.8rem; color: var(--gold-primary);">Full Day Feast</p>
 </div>
 <div class="glass-card">
-<h4 style="font-family: var(--font-heading); color: var(--gold-bright); margin-bottom: 8px; font-size: 1.15rem;">Dress Code</h4>
-<p style="font-weight: 700; color: #fff;">Black & White</p>
-<p style="font-size: 0.88rem; color: #90caf9; margin-top: 3px;">White & Blue</p>
+<h4 style="font-family: var(--font-heading); color: var(--gold-light); margin-bottom: 6px;">Dress Code</h4>
+<p>Black & White</p>
+<p style="font-size: 0.8rem; color: #90caf9;">White & Blue</p>
 </div>
 <div class="glass-card">
-<h4 style="font-family: var(--font-heading); color: var(--gold-bright); margin-bottom: 8px; font-size: 1.15rem;">Tickets</h4>
-<p style="font-weight: 700; color: #fff;">LKR 4,000</p>
-<p style="font-size: 0.88rem; color: #a5d6a7; margin-top: 3px;">All Inclusive</p>
+<h4 style="font-family: var(--font-heading); color: var(--gold-light); margin-bottom: 6px;">Admission</h4>
+<p>LKR 4,000</p>
+<p style="font-size: 0.8rem; color: #81c784;">All Inclusive</p>
 </div>
 </div>
 </div>
@@ -852,32 +762,32 @@ Event Information
 <!-- SLIDE 3: ACTIVITIES & HIGHLIGHTS -->
 <div class="slide">
 <div class="slide-inner">
-<span style="font-size: 0.78rem; letter-spacing: 4px; color: var(--gold-bright); text-transform: uppercase; font-weight: 700;">
+<span style="font-size: 0.75rem; letter-spacing: 4px; color: var(--gold-primary); text-transform: uppercase;">
 What Awaits You
 </span>
-<h2 style="font-family: var(--font-heading); font-size: 2.1rem; margin: 6px 0 16px 0;">Activities & Moments</h2>
+<h2 style="font-family: var(--font-heading); font-size: 1.8rem; margin: 5px 0 15px 0;">Activities & Moments</h2>
 <div class="divider-gold"></div>
 
 <div class="grid-4">
 <div class="glass-card">
-<div style="font-size: 2.5rem; margin-bottom: 10px;">🎧</div>
-<h4 style="font-family: var(--font-heading); color: var(--gold-bright); margin-bottom: 6px; font-size: 1.15rem;">DJ</h4>
-<p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Non-stop party anthems & tracks.</p>
+<div style="font-size: 2.2rem; margin-bottom: 8px;">🎧</div>
+<h4 style="font-family: var(--font-heading); color: var(--gold-light); margin-bottom: 4px;">Live DJ</h4>
+<p style="font-size: 0.85rem; color: #c4d3ea;">Non-stop school anthems and party tracks.</p>
 </div>
 <div class="glass-card">
-<div style="font-size: 2.5rem; margin-bottom: 10px;">📸</div>
-<h4 style="font-family: var(--font-heading); color: var(--gold-bright); margin-bottom: 6px; font-size: 1.15rem;">Photo Shoot</h4>
-<p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Exclusive memories with batch mates.</p>
+<div style="font-size: 2.2rem; margin-bottom: 8px;">📸</div>
+<h4 style="font-family: var(--font-heading); color: var(--gold-light); margin-bottom: 4px;">Memory Booth</h4>
+<p style="font-size: 0.85rem; color: #c4d3ea;">Red carpet studio photo shoots with batch mates.</p>
 </div>
 <div class="glass-card">
-<div style="font-size: 2.5rem; margin-bottom: 10px;">🍸</div>
-<h4 style="font-family: var(--font-heading); color: var(--gold-bright); margin-bottom: 6px; font-size: 1.15rem;">Drinks</h4>
-<p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Chilled beverages and refreshments.</p>
+<div style="font-size: 2.2rem; margin-bottom: 8px;">🥂</div>
+<h4 style="font-family: var(--font-heading); color: var(--gold-light); margin-bottom: 4px;">Welcome Drinks</h4>
+<p style="font-size: 0.85rem; color: #c4d3ea;">Chilled mocktails & refreshing beverages.</p>
 </div>
 <div class="glass-card">
-<div style="font-size: 2.5rem; margin-bottom: 10px;">🍽️</div>
-<h4 style="font-family: var(--font-heading); color: var(--gold-bright); margin-bottom: 6px; font-size: 1.15rem;">Food</h4>
-<p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Gourmet buffet and delicious desserts.</p>
+<div style="font-size: 2.2rem; margin-bottom: 8px;">🍽️</div>
+<h4 style="font-family: var(--font-heading); color: var(--gold-light); margin-bottom: 4px;">Grand Buffet</h4>
+<p style="font-size: 0.85rem; color: #c4d3ea;">Multi-course gourmet feast & desserts.</p>
 </div>
 </div>
 </div>
@@ -886,29 +796,29 @@ What Awaits You
 <!-- SLIDE 4: TRIVIA / MEMORY VAULT -->
 <div class="slide">
 <div class="slide-inner">
-<span style="font-size: 0.78rem; letter-spacing: 4px; color: var(--gold-bright); text-transform: uppercase; font-weight: 700;">
+<span style="font-size: 0.75rem; letter-spacing: 4px; color: var(--gold-primary); text-transform: uppercase;">
 Secret Vault
 </span>
-<h2 style="font-family: var(--font-heading); font-size: 2.1rem; margin: 6px 0 16px 0;">Unlock Memories</h2>
+<h2 style="font-family: var(--font-heading); font-size: 1.8rem; margin: 5px 0 15px 0;">Unlock Memories</h2>
 <div class="divider-gold"></div>
 
 <div class="trivia-box">
 <div class="glass-card">
-<div style="font-size: 1rem; color: #fff; margin-bottom: 10px; font-weight: 600;">1. Which batch kickstarted this journey?</div>
-<div style="display:flex; gap:10px;">
-<input type="text" id="tr-1" placeholder="Year..." style="flex:1; background:rgba(2,7,18,0.85); border:1.5px solid #e0b93f; padding:12px 14px; border-radius:8px; color:#fff; outline:none; font-size: 1rem;" />
-<button class="btn-gold" style="padding:10px 22px; font-size:0.82rem; border-radius:8px;" onclick="checkTrivia(1, '2020')">Unlock</button>
+<div style="font-size: 0.9rem; color: var(--gold-light); margin-bottom: 8px;">1. Which batch kickstarted this journey?</div>
+<div style="display:flex; gap:8px;">
+<input type="text" id="tr-1" placeholder="Year..." style="flex:1; background:rgba(0,0,0,0.5); border:1px solid #d4af37; padding:8px; border-radius:4px; color:#fff;" />
+<button class="btn-gold" style="padding:8px 16px; font-size:0.75rem;" onclick="checkTrivia(1, '2020')">Unlock</button>
 </div>
-<p id="tr-rev-1" style="display:none; color:var(--gold-bright); font-size:0.92rem; margin-top:10px; font-weight: 700;">The unforgettable 2020 O/L memories that brought us here! 🎓</p>
+<p id="tr-rev-1" style="display:none; color:var(--gold-bright); font-size:0.85rem; margin-top:8px;">The unforgettable O/L memories that brought us here! 🎓</p>
 </div>
 
 <div class="glass-card">
-<div style="font-size: 1rem; color: #fff; margin-bottom: 10px; font-weight: 600;">2. Which year marked our high school finale?</div>
-<div style="display:flex; gap:10px;">
-<input type="text" id="tr-2" placeholder="Year..." style="flex:1; background:rgba(2,7,18,0.85); border:1.5px solid #e0b93f; padding:12px 14px; border-radius:8px; color:#fff; outline:none; font-size: 1rem;" />
-<button class="btn-gold" style="padding:10px 22px; font-size:0.82rem; border-radius:8px;" onclick="checkTrivia(2, '2023')">Unlock</button>
+<div style="font-size: 0.9rem; color: var(--gold-light); margin-bottom: 8px;">2. Which year marked our high school finale?</div>
+<div style="display:flex; gap:8px;">
+<input type="text" id="tr-2" placeholder="Year..." style="flex:1; background:rgba(0,0,0,0.5); border:1px solid #d4af37; padding:8px; border-radius:4px; color:#fff;" />
+<button class="btn-gold" style="padding:8px 16px; font-size:0.75rem;" onclick="checkTrivia(2, '2023')">Unlock</button>
 </div>
-<p id="tr-rev-2" style="display:none; color:var(--gold-bright); font-size:0.92rem; margin-top:10px; font-weight: 700;">2023 A/L grind, shared dreams, and unbreakable bonds! ✨</p>
+<p id="tr-rev-2" style="display:none; color:var(--gold-bright); font-size:0.85rem; margin-top:8px;">A/L grind, shared dreams, and unbreakable bonds! ✨</p>
 </div>
 </div>
 </div>
@@ -916,20 +826,26 @@ Secret Vault
 
 </div>
 </div>
+
 
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 
 <script>
+/* ============================================================
+   ELYSIA NIC LOGIN — FIREBASE
+   GitHub Pages + Firebase Authentication + Cloud Firestore.
+   ============================================================ */
+
 const firebaseConfig = {
-apiKey: "AIzaSyDGHS7j_Ovj0N-b-8RW71HyvEdTABKMdFA",
-authDomain: "elysia-reunion.firebaseapp.com",
-projectId: "elysia-reunion",
-storageBucket: "elysia-reunion.firebasestorage.app",
-messagingSenderId: "985506879172",
-appId: "1:985506879172:web:cf62355fb3ee406331b91",
-measurementId: "G-EDYKJD8HZL"
+  apiKey: "AIzaSyDGHS7j_Ovj0N-b-8RW71HyvEdTABKMdFA",
+  authDomain: "elysia-reunion.firebaseapp.com",
+  projectId: "elysia-reunion",
+  storageBucket: "elysia-reunion.firebasestorage.app",
+  messagingSenderId: "985506879172",
+  appId: "1:985506879172:web:cf62355fb3ee406331b91",
+  measurementId: "G-EDYKJD8HZL"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -938,124 +854,131 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 function normalizeNIC(value) {
-return String(value || "").trim().toUpperCase().replace(/[\s\-_]/g, "");
+  return String(value || "").trim().toUpperCase().replace(/[\s\-_]/g, "");
 }
 
 function showAuthError(message) {
-const err = document.getElementById("authError");
-const btn = document.getElementById("loginBtn");
+  const err = document.getElementById("authError");
+  const btn = document.getElementById("loginBtn");
 
-if (err) {
-err.style.display = "block";
-err.innerText = message;
-}
+  if (err) {
+    err.style.display = "block";
+    err.innerText = message;
+  }
 
-if (btn) {
-btn.disabled = false;
-btn.innerText = "Unlock Royal Pass";
-}
+  if (btn) {
+    btn.disabled = false;
+    btn.innerText = "Unlock Royal Pass";
+  }
 }
 
 function setLoginBusy(isBusy) {
-const btn = document.getElementById("loginBtn");
-if (!btn) return;
+  const btn = document.getElementById("loginBtn");
+  if (!btn) return;
 
-btn.disabled = isBusy;
-btn.innerText = isBusy ? "VERIFYING NIC..." : "Unlock Royal Pass";
+  btn.disabled = isBusy;
+  btn.innerText = isBusy ? "VERIFYING NIC..." : "Unlock Royal Pass";
 }
 
+/* Anonymous Firebase sign-in happens automatically.
+   The visitor never needs an email/password account. */
 auth.signInAnonymously()
-.then(() => {
-const input = document.getElementById("accessKeyInput");
-if (input) setTimeout(() => input.focus(), 120);
-})
-.catch((error) => {
-console.error("Firebase Anonymous Auth error:", error);
-showAuthError("System connection error. Please refresh the page and try again.");
-});
+  .then(() => {
+    const input = document.getElementById("accessKeyInput");
+    if (input) setTimeout(() => input.focus(), 120);
+  })
+  .catch((error) => {
+    console.error("Firebase Anonymous Auth error:", error);
+    showAuthError("System connection error. Please refresh the page and try again.");
+  });
 
 document.getElementById("nicLoginForm").addEventListener("submit", async function(e) {
-e.preventDefault();
+  e.preventDefault();
 
-const input = document.getElementById("accessKeyInput");
-const err = document.getElementById("authError");
-const nic = normalizeNIC(input.value);
+  const input = document.getElementById("accessKeyInput");
+  const err = document.getElementById("authError");
+  const nic = normalizeNIC(input.value);
 
-if (!nic) {
-showAuthError("කරුණාකර ඔබගේ ජාතික හැඳුනුම්පත් අංකය (NIC) ඇතුළත් කරන්න!");
-input.focus();
-return;
-}
+  if (!nic) {
+    showAuthError("කරුණාකර ඔබගේ ජාතික හැඳුනුම්පත් අංකය (NIC) ඇතුළත් කරන්න!");
+    input.focus();
+    return;
+  }
 
-if (!auth.currentUser) {
-showAuthError("Secure connection is still starting. Please try again in a moment.");
-return;
-}
+  if (!auth.currentUser) {
+    showAuthError("Secure connection is still starting. Please try again in a moment.");
+    return;
+  }
 
-if (err) err.style.display = "none";
-setLoginBusy(true);
+  if (err) err.style.display = "none";
+  setLoginBusy(true);
 
-try {
-const guestRef = db.collection("guests").doc(nic);
-const guestSnap = await guestRef.get();
+  try {
+    // NIC is used as the Firestore document ID.
+    const guestRef = db.collection("guests").doc(nic);
+    const guestSnap = await guestRef.get();
 
-if (!guestSnap.exists) {
-showAuthError("මෙම NIC අංකයට අදාල Royal Gate Pass එකක් හමු නොවීය. කරුණාකර NIC එක නැවත පරීක්ෂා කරන්න.");
-input.focus();
-input.select();
-return;
-}
+    if (!guestSnap.exists) {
+      showAuthError("මෙම NIC අංකයට අදාල Royal Gate Pass එකක් හමු නොවීය. කරුණාකර NIC එක නැවත පරීක්ෂා කරන්න.");
+      input.focus();
+      input.select();
+      return;
+    }
 
-const guest = guestSnap.data() || {};
+    const guest = guestSnap.data() || {};
 
-const userData = {
-success: true,
-name: String(guest.name || "").trim(),
-nic: String(guest.nic || nic).trim(),
-ticketId: String(guest.ticketId || "").trim(),
-phone: String(guest.phone || "").trim(),
-};
+    const userData = {
+      success: true,
+      name: String(guest.name || "").trim(),
+      nic: String(guest.nic || nic).trim(),
+      ticketId: String(guest.ticketId || "").trim(),
+      phone: String(guest.phone || "").trim(),
+    };
 
-if (!userData.name || !userData.ticketId) {
-showAuthError("Guest record is incomplete. Please contact the event organizer.");
-return;
-}
+    if (!userData.name || !userData.ticketId) {
+      showAuthError("Guest record is incomplete. Please contact the event organizer.");
+      return;
+    }
 
-launchPortal(userData);
+    launchPortal(userData);
 
-const portal = document.getElementById("portal-content");
-portal.classList.add("auth-unlocked");
-document.getElementById("auth-screen").classList.add("auth-hidden");
-document.body.classList.remove("auth-locked");
+    document.getElementById("portal-content").classList.add("auth-unlocked");
+    document.getElementById("auth-screen").classList.add("auth-hidden");
+    document.body.classList.remove("auth-locked");
 
-} catch (error) {
-console.error("Firestore guest lookup error:", error);
+  } catch (error) {
+    console.error("Firestore guest lookup error:", error);
 
-if (error && error.code === "permission-denied") {
-showAuthError("Secure access was denied. Please refresh the page and try again.");
-} else {
-showAuthError("Could not verify your NIC right now. Please check your connection and try again.");
-}
-} finally {
-setLoginBusy(false);
-}
+    if (error && error.code === "permission-denied") {
+      showAuthError("Secure access was denied. Please refresh the page and try again.");
+    } else {
+      showAuthError("Could not verify your NIC right now. Please check your connection and try again.");
+    }
+  } finally {
+    setLoginBusy(false);
+  }
 });
 
 function launchPortal(userData) {
+document.getElementById('portal-content').style.display = 'block';
+
+// Top pill & greetings
 document.getElementById('pillUser').innerText = userData.name;
 document.getElementById('pillTicket').innerText = userData.ticketId;
 document.getElementById('welcomeName').innerText = userData.name;
 
+// Pass details
 document.getElementById('cardGuestName').innerText = userData.name;
 document.getElementById('cardTicketId').innerText = userData.ticketId;
 document.getElementById('cardNic').innerText = 'NIC: ' + userData.nic;
 
+// Dynamic QR Code Generation
 const qrData = `${userData.ticketId} | ${userData.name} | ${userData.nic}`;
-const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(qrData)}`;
+const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(qrData)}`;
 document.getElementById('ticketQR').src = qrApi;
 }
 
-/* 3D SLIDE CONTROLLER */
+/* 3D SLIDE VIEWPORT CONTROLLER */
 const slides = document.querySelectorAll('.slide');
 const dots = document.querySelectorAll('.nav-dot');
 const progressBar = document.getElementById('topProgressBar');
@@ -1089,6 +1012,8 @@ const authScreen = document.getElementById('auth-screen');
 if (!authScreen || !authScreen.classList.contains('auth-hidden')) return;
 if (Math.abs(e.deltaY) < 18 || wheelCooldown) return;
 
+// The site uses a full-screen slide deck, so mouse-wheel should
+// move between slides rather than rely on native page scrolling.
 e.preventDefault();
 e.stopPropagation();
 wheelCooldown = true;
@@ -1099,13 +1024,13 @@ setTimeout(() => { wheelCooldown = false; }, 700);
 document.addEventListener('wheel', handleDeckWheel, { capture: true, passive: false });
 
 document.addEventListener('keydown', (e) => {
-const authScreen = document.getElementById('auth-screen');
-if (!authScreen || !authScreen.classList.contains('auth-hidden')) return;
-if (['ArrowDown', 'PageDown', ' ', 'ArrowRight'].includes(e.key)) {
-e.preventDefault(); nextSlide();
-} else if (['ArrowUp', 'PageUp', 'ArrowLeft'].includes(e.key)) {
-e.preventDefault(); prevSlide();
-}
+  const authScreen = document.getElementById('auth-screen');
+  if (!authScreen || !authScreen.classList.contains('auth-hidden')) return;
+  if (['ArrowDown', 'PageDown', ' ', 'ArrowRight'].includes(e.key)) {
+    e.preventDefault(); nextSlide();
+  } else if (['ArrowUp', 'PageUp', 'ArrowLeft'].includes(e.key)) {
+    e.preventDefault(); prevSlide();
+  }
 });
 
 let touchStartY = 0;
@@ -1126,7 +1051,7 @@ const diff = targetDate - now;
 if (diff > 0) {
 document.getElementById('days').innerText = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
 document.getElementById('hours').innerText = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
-document.getElementById('minutes').innerText = String(Math.floor((diff % (1000 * 60)) / (1000 * 60))).padStart(2, '0');
+document.getElementById('minutes').innerText = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
 document.getElementById('seconds').innerText = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
 }
 }
@@ -1140,7 +1065,7 @@ const rev = document.getElementById(`tr-rev-${step}`);
 if (input.value.trim().toLowerCase().includes(key)) rev.style.display = 'block';
 }
 
-/* BACKGROUND GOLD PARTICLES */
+/* BACKGROUND PARTICLES */
 const canvas = document.getElementById('particles-canvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
@@ -1153,10 +1078,10 @@ constructor() { this.reset(); }
 reset() {
 this.x = Math.random() * canvas.width;
 this.y = Math.random() * canvas.height;
-this.size = Math.random() * 2.4 + 0.6;
-this.speedY = -(Math.random() * 0.45 + 0.15);
+this.size = Math.random() * 2 + 0.5;
+this.speedY = -(Math.random() * 0.4 + 0.15);
 this.speedX = (Math.random() - 0.5) * 0.3;
-this.opacity = Math.random() * 0.55 + 0.35;
+this.opacity = Math.random() * 0.5 + 0.2;
 }
 update() {
 this.y += this.speedY;
@@ -1166,16 +1091,13 @@ if (this.y < 0) { this.y = canvas.height; this.x = Math.random() * canvas.width;
 draw() {
 ctx.beginPath();
 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-ctx.fillStyle = '#ffe66d';
+ctx.fillStyle = '#d4af37';
 ctx.globalAlpha = this.opacity;
-ctx.shadowBlur = 10;
-ctx.shadowColor = '#ffd700';
 ctx.fill();
 ctx.globalAlpha = 1;
-ctx.shadowBlur = 0;
 }
 }
-for (let i = 0; i < 48; i++) particles.push(new Particle());
+for (let i = 0; i < 40; i++) particles.push(new Particle());
 function loop() {
 ctx.clearRect(0, 0, canvas.width, canvas.height);
 particles.forEach(p => { p.update(); p.draw(); });
@@ -1184,4 +1106,4 @@ requestAnimationFrame(loop);
 loop();
 </script>
 </body>
-</html>
+</html>"
