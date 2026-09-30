@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Guest Management</title>
+  <title>KMV 2020 O/L    – Admin Guest Management</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -545,10 +545,10 @@
   <section id="loginScreen" class="login-screen">
     <div class="login-card">
       <div class="crest">👑</div>
-      <div class="eyebrow">"5 YEARS LATER" Event2026</div>
+      <div class="eyebrow">KMV 2020 O/L    2026</div>
       <h1>Admin Portal</h1>
       <div class="subtitle">
-        Secure guest management for the "5 YEARS LATER" EventReunion.
+        Secure guest management for the KMV 2020 O/L     Reunion.
       </div>
 
       <form id="adminLoginForm">
@@ -574,7 +574,7 @@
       </div>
 
       <div class="login-note">
-        Authorized "5 YEARS LATER" Eventadministrators only.
+        Authorized KMV 2020 O/L     administrators only.
       </div>
     </div>
   </section>
@@ -587,7 +587,7 @@
       <div class="brand">
         <div class="brand-icon">👑</div>
         <div>
-          <div class="brand-title">"5 YEARS LATER" EventADMIN</div>
+          <div class="brand-title">KMV 2020 O/L     ADMIN</div>
           <div class="brand-sub">Guest & Royal Gate Pass Management</div>
         </div>
       </div>
@@ -660,7 +660,7 @@
           <div>
             <div class="admin-management-title">👑 Admin Management</div>
             <div class="admin-management-sub">
-              Super Admin control panel — add, edit or remove "5 YEARS LATER" Eventadministrators.
+              Super Admin control panel — add, edit or remove KMV 2020 O/L     administrators.
             </div>
           </div>
 
@@ -789,7 +789,7 @@
 
   <script>
     /* ============================================================
-       "5 YEARS LATER" EventADMIN PORTAL
+       KMV 2020 O/L    ADMIN PORTAL
        Firebase Authentication + Cloud Firestore
        Super Admin + Normal Admin system
        ============================================================ */
@@ -804,7 +804,7 @@
       measurementId: "G-EDYKJD8HZL"
     };
 
-    // Permanent "5 YEARS LATER" EventSuper Admin UID
+    // Permanent KMV 2020 O/L    Super Admin UID
     const SUPER_ADMIN_UID = "cpdDyc4hOsMLslbM5AO0MZk0yAx1";
 
     firebase.initializeApp(firebaseConfig);
@@ -965,9 +965,9 @@
         } else if (error && error.code === "auth/too-many-requests") {
           showLoginError("Too many login attempts. Please wait and try again.");
         } else if (error && error.code === "permission-denied") {
-          showLoginError("This account is not authorized as an "5 YEARS LATER" Eventadministrator.");
+          showLoginError("This account is not authorized as an KMV 2020 O/L    administrator.");
         } else if (error && error.message === "UNAUTHORIZED_ADMIN") {
-          showLoginError("This account is not authorized as an "5 YEARS LATER" Eventadministrator.");
+          showLoginError("This account is not authorized as an KMV 2020 O/L    administrator.");
         } else {
           showLoginError("Could not sign in. Please check your credentials and try again.");
         }
@@ -1630,7 +1630,7 @@
           showNotice("Administrator account created successfully.");
 
         } else {
-          // Editing changes the "5 YEARS LATER" Eventauthorization record only.
+          // Editing changes the KMV 2020 O/L    authorization record only.
           // The existing Firebase login/password remains unchanged.
           // The hidden field stores the administrator UID (not the email).
           const originalRef = db.collection("admins").doc(originalUid);
@@ -1697,7 +1697,7 @@
       }
 
       const confirmed = confirm(
-        `Remove this administrator?\n\nName: ${admin.name}\nEmail: ${admin.email}\n\nThey will no longer be able to access the "5 YEARS LATER" EventAdmin Portal.`
+        `Remove this administrator?\n\nName: ${admin.name}\nEmail: ${admin.email}\n\nThey will no longer be able to access the KMV 2020 O/L    Admin Portal.`
       );
 
       if (!confirmed) return;
@@ -1711,7 +1711,7 @@
       } catch (error) {
         console.error("Delete admin error:", error);
 
-        if (error && error.code === "permission-devied") {
+        if (error && error.code === "permission-denied") {
           showNotice("Permission denied. Only the Super Admin can remove administrators.", "error");
         } else {
           showNotice("Could not remove this administrator.", "error");
