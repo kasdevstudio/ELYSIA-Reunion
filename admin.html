@@ -1197,7 +1197,7 @@
       snapshot.forEach(doc => {
         const data = doc.data() || {};
         const ticket = String(data.ticketId || "").trim().toUpperCase();
-        const match = ticket.match(/^ELY-(\d+)$/);
+        const match = ticket.match(/^KMV-(\d+)$/);
 
         if (match) {
           maxNumber = Math.max(maxNumber, parseInt(match[1], 10));
