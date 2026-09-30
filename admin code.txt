@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KMV 2020 O/L    – Admin Guest Management</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    :root {
+      --bg: #040914;
+      --panel: #0a1931;
+      --panel2: #0d1e38;
+      --gold: #d4af37;
+      --gold2: #ffd700;
+      --text: #f0f4fc;
+      --muted: #9bb2d4;
+      --danger: #ff5c68;
+      --success: #64d88a;
+      --line: rgba(212,175,55,.22);
+    }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at 50% 0%, #0a2346 0%, transparent 48%),
+        var(--bg);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    body { min-height: 100vh; }
+
+    button, input { font: inherit; }
+
+    .hidden { display: none !important; }
+
+    .login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .login-card {
+      width: min(440px, 100%);
+      background: rgba(10,25,49,.88);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 34px;
+      box-shadow: 0 25px 70px rgba(0,0,0,.55);
+      text-align: center;
+      backdrop-filter: blur(16px);
+    }
+
+    .crest {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 16px;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 2rem;
+      background: #001f54;
+      box-shadow: 0 0 24px rgba(212,175,55,.25);
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      letter-spacing: 3px;
+      font-size: .72rem;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Cinzel', serif;
+    }
+
+    .login-card h1 {
+      margin: 8px 0 8px;
+      font-size: 2rem;
+      color: var(--gold2);
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: .88rem;
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+
+    .field {
+      text-align: left;
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      color: var(--muted);
+      font-size: .76rem;
+      margin-bottom: 7px;
+    }
+
+    input {
+      width: 100%;
+      border: 1px solid rgba(212,175,55,.3);
+      border-radius: 9px;
+      background: rgba(3,9,18,.85);
+      color: white;
+      padding: 13px 14px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--gold2);
+      box-shadow: 0 0 14px rgba(212,175,55,.15);
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 9px;
+      padding: 12px 18px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: .2s ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    input[readonly] {
+      opacity: .78;
+      cursor: not-allowed;
+      border-color: rgba(212,175,55,.5);
+    }
+
+    .btn-gold {
+      width: 100%;
+      background: linear-gradient(135deg, #d4af37, #fff2b2, #aa8214);
+      color: #07101d;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,.07);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+
+    .btn-danger {
+      background: rgba(255,92,104,.12);
+      color: #ff8c94;
+      border: 1px solid rgba(255,92,104,.35);
+    }
+
+    .error {
+      display: none;
+      margin: 12px 0;
+      padding: 10px;
+      border-radius: 8px;
+      color: #ff8c94;
+      background: rgba(255,92,104,.1);
+      border: 1px solid rgba(255,92,104,.3);
+      font-size: .82rem;
+    }
+
+    .loading {
+      color: var(--muted);
+      font-size: .82rem;
+      margin-top: 14px;
+    }
+
+    .field-help {
+      color: var(--muted);
+      font-size: .68rem;
+      line-height: 1.4;
+      margin-top: 6px;
+    }
+
+    .admin-app {
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .topbar {
+      max-width: 1400px;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding: 18px 20px;
+      background: rgba(10,25,49,.82);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #001f54;
+    }
+
+    .brand-title {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      color: var(--gold2);
+      letter-spacing: 1px;
+    }
+
+    .brand-sub {
+      color: var(--muted);
+      font-size: .72rem;
+      margin-top: 3px;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 9px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .admin-email {
+      color: var(--muted);
+      font-size: .75rem;
+      margin-right: 4px;
+    }
+
+    .dashboard {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .stat {
+      padding: 18px;
+      background: rgba(10,25,49,.75);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: .74rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .stat-value {
+      margin-top: 7px;
+      font-family: 'Cinzel', serif;
+      font-size: 1.55rem;
+      color: var(--gold2);
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .search {
+      flex: 1;
+      min-width: 240px;
+    }
+
+    .table-wrap {
+      background: rgba(10,25,49,.78);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 820px;
+    }
+
+    th, td {
+      padding: 14px 15px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      font-size: .82rem;
+    }
+
+    th {
+      color: var(--gold-light, #fef1b8);
+      font-family: 'Cinzel', serif;
+      font-size: .73rem;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    td { color: #e6edf8; }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .ticket {
+      color: var(--gold2);
+      font-family: monospace;
+      letter-spacing: 1px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 7px;
+      white-space: nowrap;
+    }
+
+    .small-btn {
+      padding: 7px 10px;
+      font-size: .72rem;
+      border-radius: 7px;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 36px;
+      color: var(--muted);
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.7);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 100;
+    }
+
+    .modal-backdrop.open { display: flex; }
+
+    .modal {
+      width: min(540px, 100%);
+      max-height: 90vh;
+      overflow: auto;
+      background: #0a1931;
+      border: 1px solid var(--gold);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 30px 90px rgba(0,0,0,.7);
+    }
+
+    .modal h2 {
+      margin: 0 0 18px;
+      color: var(--gold2);
+      font-size: 1.35rem;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 9px;
+      justify-content: flex-end;
+      margin-top: 18px;
+    }
+
+    .modal-actions .btn { width: auto; }
+
+    .notice {
+      margin-bottom: 14px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: .78rem;
+      display: none;
+    }
+
+    .notice.success {
+      display: block;
+      color: #8ef0ad;
+      background: rgba(100,216,138,.1);
+      border: 1px solid rgba(100,216,138,.25);
+    }
+
+    .notice.error {
+      display: block;
+    }
+
+    @media (max-width: 720px) {
+      .admin-app { padding: 12px; }
+      .stats { grid-template-columns: 1fr; }
+      .topbar { padding: 14px; }
+      .admin-email { width: 100%; }
+      .login-card { padding: 26px 20px; }
+    }
+  
+    /* ============================================================
+       SUPER ADMIN / ADMIN MANAGEMENT
+       ============================================================ */
+    .role-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: .66rem;
+      font-weight: 800;
+      letter-spacing: .7px;
+      text-transform: uppercase;
+    }
+
+    .role-superadmin {
+      color: #fff0a8;
+      background: rgba(255,215,0,.12);
+      border: 1px solid rgba(255,215,0,.35);
+    }
+
+    .role-admin {
+      color: #bcd7ff;
+      background: rgba(80,150,255,.12);
+      border: 1px solid rgba(80,150,255,.28);
+    }
+
+    .admin-management {
+      margin-top: 18px;
+      background: rgba(10,25,49,.78);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .admin-management-header {
+      padding: 17px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+
+    .admin-management-title {
+      font-family: 'Cinzel', serif;
+      color: var(--gold2);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .admin-management-sub {
+      color: var(--muted);
+      font-size: .72rem;
+      margin-top: 4px;
+    }
+
+    .admin-table-wrap {
+      overflow: auto;
+    }
+
+    .admin-table {
+      width: 100%;
+      min-width: 720px;
+      border-collapse: collapse;
+    }
+
+    .admin-table th,
+    .admin-table td {
+      padding: 13px 15px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      font-size: .8rem;
+    }
+
+    .admin-table th {
+      color: var(--gold-light, #fef1b8);
+      font-family: 'Cinzel', serif;
+      font-size: .7rem;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    .admin-table tr:last-child td { border-bottom: 0; }
+
+    .admin-email-cell {
+      color: #dfe8f7;
+      word-break: break-word;
+    }
+
+    .protected-row {
+      opacity: .92;
+    }
+
+    .admin-modal .modal {
+      width: min(520px, 100%);
+    }
+
+    .readonly-role {
+      display: flex;
+      align-items: center;
+      min-height: 46px;
+      padding: 12px 14px;
+      border-radius: 9px;
+      background: rgba(3,9,18,.55);
+      border: 1px solid rgba(212,175,55,.24);
+      color: var(--muted);
+      font-size: .84rem;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,.08);
+    }
+
+    @media (max-width: 720px) {
+      .admin-management-header { align-items: stretch; }
+      .admin-management-header .btn { width: 100%; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ADMIN LOGIN -->
+  <section id="loginScreen" class="login-screen">
+    <div class="login-card">
+      <div class="crest">👑</div>
+      <div class="eyebrow">KMV 2020 O/L    2026</div>
+      <h1>Admin Portal</h1>
+      <div class="subtitle">
+        Secure guest management for the KMV 2020 O/L     Reunion.
+      </div>
+
+      <form id="adminLoginForm">
+        <div class="field">
+          <label for="adminEmail">ADMIN EMAIL</label>
+          <input id="adminEmail" type="email" autocomplete="username" required placeholder="admin@email.com" />
+        </div>
+
+        <div class="field">
+          <label for="adminPassword">PASSWORD</label>
+          <input id="adminPassword" type="password" autocomplete="current-password" required placeholder="Enter password" />
+        </div>
+
+        <div id="loginError" class="error"></div>
+
+        <button id="loginBtn" class="btn btn-gold" type="submit">
+          ADMIN LOGIN
+        </button>
+      </form>
+
+      <div id="loginLoading" class="loading hidden">
+        Connecting securely...
+      </div>
+
+      <div class="login-note">
+        Authorized KMV 2020 O/L     administrators only.
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ADMIN APP -->
+  <main id="adminApp" class="admin-app hidden">
+
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-icon">👑</div>
+        <div>
+          <div class="brand-title">KMV 2020 O/L     ADMIN</div>
+          <div class="brand-sub">Guest & Royal Gate Pass Management</div>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <span id="adminRoleDisplay" class="role-badge"></span>
+        <span id="adminEmailDisplay" class="admin-email"></span>
+        <button id="refreshBtn" class="btn btn-secondary">↻ Refresh</button>
+        <button id="logoutBtn" class="btn btn-danger">Logout</button>
+      </div>
+    </header>
+
+
+    <section class="dashboard">
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-label">Total Guests</div>
+          <div id="totalGuests" class="stat-value">0</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Visible Results</div>
+          <div id="visibleGuests" class="stat-value">0</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Your Access</div>
+          <div id="accessLevel" class="stat-value" style="font-size:1.05rem;">—</div>
+        </div>
+      </div>
+
+      <div id="notice" class="notice"></div>
+
+      <!-- GUEST MANAGEMENT -->
+      <div class="toolbar">
+        <input
+          id="searchInput"
+          class="search"
+          type="search"
+          placeholder="Search name, NIC, phone or ticket ID..."
+          autocomplete="off"
+        />
+        <button id="addGuestBtn" class="btn btn-gold">+ Add Guest</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>NAME</th>
+              <th>NIC</th>
+              <th>PHONE</th>
+              <th>TICKET ID</th>
+              <th>ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody id="guestTableBody"></tbody>
+        </table>
+
+        <div id="emptyState" class="empty hidden">
+          No guest records found.
+        </div>
+      </div>
+
+
+      <!-- SUPER ADMIN ONLY -->
+      <section id="adminManagement" class="admin-management hidden">
+        <div class="admin-management-header">
+          <div>
+            <div class="admin-management-title">👑 Admin Management</div>
+            <div class="admin-management-sub">
+              Super Admin control panel — add, edit or remove KMV 2020 O/L     administrators.
+            </div>
+          </div>
+
+          <button id="addAdminBtn" class="btn btn-gold">+ Add Admin</button>
+        </div>
+
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>NAME</th>
+                <th>EMAIL</th>
+                <th>ROLE</th>
+                <th>ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody id="adminTableBody"></tbody>
+          </table>
+
+          <div id="adminEmptyState" class="empty hidden">
+            No administrators found.
+          </div>
+        </div>
+      </section>
+
+    </section>
+  </main>
+
+
+  <!-- ADD / EDIT GUEST MODAL -->
+  <div id="guestModalBackdrop" class="modal-backdrop">
+    <div class="modal">
+      <h2 id="modalTitle">Add Guest</h2>
+
+      <form id="guestForm">
+        <input id="editingOriginalNic" type="hidden" />
+
+        <div class="field">
+          <label for="guestName">FULL NAME</label>
+          <input id="guestName" type="text" required />
+        </div>
+
+        <div class="field">
+          <label for="guestNic">NIC</label>
+          <input id="guestNic" type="text" required autocomplete="off" />
+        </div>
+
+        <div class="field">
+          <label for="guestPhone">PHONE</label>
+          <input id="guestPhone" type="tel" required />
+        </div>
+
+        <div class="field">
+          <label for="guestTicketId">AUTO-GENERATED TICKET ID</label>
+          <input id="guestTicketId" type="text" placeholder="Auto-generated" required readonly />
+        </div>
+
+        <div id="formError" class="error"></div>
+
+        <div class="modal-actions">
+          <button type="button" id="cancelModalBtn" class="btn btn-secondary">Cancel</button>
+          <button type="submit" id="saveGuestBtn" class="btn btn-gold">Save Guest</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- ADD / EDIT ADMIN MODAL -->
+  <div id="adminModalBackdrop" class="modal-backdrop admin-modal">
+    <div class="modal">
+      <h2 id="adminModalTitle">Add Admin</h2>
+
+      <form id="adminForm">
+        <input id="editingOriginalAdminEmail" type="hidden" />
+
+        <div class="field">
+          <label for="adminName">ADMIN NAME</label>
+          <input id="adminName" type="text" required />
+        </div>
+
+        <div class="field">
+          <label for="adminAccountEmail">ADMIN EMAIL</label>
+          <input
+            id="adminAccountEmail"
+            type="email"
+            required
+            autocomplete="off"
+            placeholder="admin@email.com"
+          />
+        </div>
+
+        <div class="field" id="adminPasswordField">
+          <label for="newAdminPassword">PASSWORD</label>
+          <input
+            id="newAdminPassword"
+            type="password"
+            minlength="6"
+            autocomplete="new-password"
+            placeholder="Minimum 6 characters"
+          />
+          <div class="field-help">Set the password the new administrator will use to log in.</div>
+        </div>
+
+        <div class="field">
+          <label>ROLE</label>
+          <div class="readonly-role">
+            👤 ADMIN &nbsp; — &nbsp; Super Admin can manage this account
+          </div>
+        </div>
+
+        <div id="adminFormError" class="error"></div>
+
+        <div class="modal-actions">
+          <button type="button" id="cancelAdminModalBtn" class="btn btn-secondary">Cancel</button>
+          <button type="submit" id="saveAdminBtn" class="btn btn-gold">Save Admin</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+
+  <script>
+    /* ============================================================
+       KMV 2020 O/L    ADMIN PORTAL
+       Firebase Authentication + Cloud Firestore
+       Super Admin + Normal Admin system
+       ============================================================ */
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDGHS7j_Ovj0N-b-8RW71HyvEdTABKMdFA",
+      authDomain: "elysia-reunion.firebaseapp.com",
+      projectId: "elysia-reunion",
+      storageBucket: "elysia-reunion.firebasestorage.app",
+      messagingSenderId: "985506879172",
+      appId: "1:985506879172:web:cf62355fb3ee406331b91",
+      measurementId: "G-EDYKJD8HZL"
+    };
+
+    // Permanent KMV 2020 O/L    Super Admin UID
+    const SUPER_ADMIN_UID = "cpdDyc4hOsMLslbM5AO0MZk0yAx1";
+
+    firebase.initializeApp(firebaseConfig);
+
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // Secondary Firebase app used only when the Super Admin creates
+    // a new email/password administrator. This keeps the Super Admin
+    // session signed in while the new account is created.
+    const adminCreatorApp = firebase.initializeApp(firebaseConfig, "adminCreator");
+    const adminCreatorAuth = adminCreatorApp.auth();
+
+    let allGuests = [];
+    let allAdmins = [];
+    let currentUser = null;
+    let currentRole = null;
+    let currentAdminName = "";
+
+    const loginScreen = document.getElementById("loginScreen");
+    const adminApp = document.getElementById("adminApp");
+    const loginForm = document.getElementById("adminLoginForm");
+    const loginBtn = document.getElementById("loginBtn");
+    const loginError = document.getElementById("loginError");
+    const loginLoading = document.getElementById("loginLoading");
+
+    const tableBody = document.getElementById("guestTableBody");
+    const emptyState = document.getElementById("emptyState");
+    const searchInput = document.getElementById("searchInput");
+    const totalGuests = document.getElementById("totalGuests");
+    const visibleGuests = document.getElementById("visibleGuests");
+    const notice = document.getElementById("notice");
+
+    const guestModalBackdrop = document.getElementById("guestModalBackdrop");
+    const modalTitle = document.getElementById("modalTitle");
+    const guestForm = document.getElementById("guestForm");
+    const formError = document.getElementById("formError");
+    const editingOriginalNic = document.getElementById("editingOriginalNic");
+
+    const adminManagement = document.getElementById("adminManagement");
+    const adminTableBody = document.getElementById("adminTableBody");
+    const adminEmptyState = document.getElementById("adminEmptyState");
+    const adminModalBackdrop = document.getElementById("adminModalBackdrop");
+    const adminModalTitle = document.getElementById("adminModalTitle");
+    const adminForm = document.getElementById("adminForm");
+    const adminFormError = document.getElementById("adminFormError");
+    const editingOriginalAdminEmail = document.getElementById("editingOriginalAdminEmail");
+
+
+    /* ============================================================
+       HELPERS
+       ============================================================ */
+
+    function normalizeNIC(value) {
+      return String(value || "")
+        .trim()
+        .toUpperCase()
+        .replace(/[\s\-_]/g, "");
+    }
+
+    function normalizeEmail(value) {
+      return String(value || "").trim().toLowerCase();
+    }
+
+    function showLoginError(message) {
+      loginError.textContent = message;
+      loginError.style.display = "block";
+    }
+
+    function hideLoginError() {
+      loginError.style.display = "none";
+      loginError.textContent = "";
+    }
+
+    function showFormError(message) {
+      formError.textContent = message;
+      formError.style.display = "block";
+    }
+
+    function hideFormError() {
+      formError.textContent = "";
+      formError.style.display = "none";
+    }
+
+    function showAdminFormError(message) {
+      adminFormError.textContent = message;
+      adminFormError.style.display = "block";
+    }
+
+    function hideAdminFormError() {
+      adminFormError.textContent = "";
+      adminFormError.style.display = "none";
+    }
+
+    function showNotice(message, type = "success") {
+      notice.textContent = message;
+      notice.className = "notice " + type;
+
+      clearTimeout(showNotice.timer);
+
+      showNotice.timer = setTimeout(() => {
+        notice.className = "notice";
+        notice.textContent = "";
+      }, 3500);
+    }
+
+    function setLoginBusy(busy) {
+      loginBtn.disabled = busy;
+      loginBtn.textContent = busy ? "SIGNING IN..." : "ADMIN LOGIN";
+      loginLoading.classList.toggle("hidden", !busy);
+    }
+
+    function closeGuestModal() {
+      guestModalBackdrop.classList.remove("open");
+      hideFormError();
+    }
+
+    function closeAdminModal() {
+      adminModalBackdrop.classList.remove("open");
+      hideAdminFormError();
+    }
+
+
+    /* ============================================================
+       AUTHENTICATION
+       ============================================================ */
+
+    loginForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      hideLoginError();
+
+      const email = normalizeEmail(document.getElementById("adminEmail").value);
+      const password = document.getElementById("adminPassword").value;
+
+      if (!email || !password) {
+        showLoginError("Please enter your admin email and password.");
+        return;
+      }
+
+      setLoginBusy(true);
+
+      try {
+        const credential = await auth.signInWithEmailAndPassword(email, password);
+        await verifyAdminAndOpen(credential.user);
+      } catch (error) {
+        console.error("Admin login error:", error);
+
+        try {
+          await auth.signOut();
+        } catch (_) {}
+
+        if (error && (
+          error.code === "auth/invalid-credential" ||
+          error.code === "auth/wrong-password" ||
+          error.code === "auth/user-not-found"
+        )) {
+          showLoginError("Incorrect email or password.");
+        } else if (error && error.code === "auth/too-many-requests") {
+          showLoginError("Too many login attempts. Please wait and try again.");
+        } else if (error && error.code === "permission-denied") {
+          showLoginError("This account is not authorized as an KMV 2020 O/L    administrator.");
+        } else if (error && error.message === "UNAUTHORIZED_ADMIN") {
+          showLoginError("This account is not authorized as an KMV 2020 O/L    administrator.");
+        } else {
+          showLoginError("Could not sign in. Please check your credentials and try again.");
+        }
+      } finally {
+        setLoginBusy(false);
+      }
+    });
+
+    auth.onAuthStateChanged(async (user) => {
+      if (!user) {
+        currentUser = null;
+        currentRole = null;
+        currentAdminName = "";
+        loginScreen.classList.remove("hidden");
+        adminApp.classList.add("hidden");
+        adminManagement.classList.add("hidden");
+        return;
+      }
+
+      try {
+        await verifyAdminAndOpen(user);
+      } catch (error) {
+        console.error("Auth state verification error:", error);
+        try { await auth.signOut(); } catch (_) {}
+        loginScreen.classList.remove("hidden");
+        adminApp.classList.add("hidden");
+      }
+    });
+
+    async function verifyAdminAndOpen(user) {
+      const email = normalizeEmail(user.email);
+
+      if (!email) {
+        throw new Error("The account does not have an email address.");
+      }
+
+      // The permanent Super Admin is identified by BOTH UID and role.
+      const adminRef = db.collection("admins").doc(user.uid);
+      const adminSnap = await adminRef.get();
+
+      if (!adminSnap.exists) {
+        throw new Error("UNAUTHORIZED_ADMIN");
+      }
+
+      const adminData = adminSnap.data() || {};
+      const role = String(adminData.role || "").trim().toLowerCase();
+
+      if (role !== "admin" && role !== "superadmin") {
+        throw new Error("UNAUTHORIZED_ADMIN");
+      }
+
+      if (role === "superadmin" && user.uid !== SUPER_ADMIN_UID) {
+        throw new Error("UNAUTHORIZED_SUPERADMIN");
+      }
+
+      if (user.uid === SUPER_ADMIN_UID && role !== "superadmin") {
+        throw new Error("SUPERADMIN_ROLE_MISMATCH");
+      }
+
+      currentUser = user;
+      currentRole = role;
+      currentAdminName = String(adminData.name || "").trim();
+
+      await openAdminPortal(user);
+    }
+
+    async function openAdminPortal(user) {
+      loginScreen.classList.add("hidden");
+      adminApp.classList.remove("hidden");
+
+      document.getElementById("adminEmailDisplay").textContent = user.email || "";
+
+      const roleDisplay = document.getElementById("adminRoleDisplay");
+      const accessLevel = document.getElementById("accessLevel");
+
+      if (currentRole === "superadmin") {
+        roleDisplay.textContent = "👑 SUPER ADMIN";
+        roleDisplay.className = "role-badge role-superadmin";
+        accessLevel.textContent = "Super Admin";
+        adminManagement.classList.remove("hidden");
+      } else {
+        roleDisplay.textContent = "👤 ADMIN";
+        roleDisplay.className = "role-badge role-admin";
+        accessLevel.textContent = "Admin";
+        adminManagement.classList.add("hidden");
+      }
+
+      await loadGuests();
+      if (currentRole === "superadmin") await loadAdmins();
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      await auth.signOut();
+    });
+
+
+    /* ============================================================
+       GUESTS
+       ============================================================ */
+
+    async function loadGuests() {
+      try {
+        const snapshot = await db.collection("guests").get();
+
+        allGuests = snapshot.docs.map(doc => {
+          const data = doc.data() || {};
+
+          return {
+            docId: doc.id,
+            name: String(data.name || "").trim(),
+            nic: String(data.nic || doc.id).trim(),
+            phone: String(data.phone || "").trim(),
+            ticketId: String(data.ticketId || "").trim()
+          };
+        });
+
+        allGuests.sort((a, b) =>
+          a.name.localeCompare(b.name, undefined, { sensitivity: "base" })
+        );
+
+        totalGuests.textContent = allGuests.length;
+        renderGuests();
+
+      } catch (error) {
+        console.error("Guest load error:", error);
+
+        if (error && error.code === "permission-denied") {
+          showNotice("Firestore denied guest access. Check the published Rules and admin account.", "error");
+        } else {
+          showNotice("Could not load guest records.", "error");
+        }
+      }
+    }
+
+
+    function renderGuests() {
+      const query = searchInput.value.trim().toLowerCase();
+
+      const filtered = allGuests.filter(guest => {
+        if (!query) return true;
+
+        return [
+          guest.name,
+          guest.nic,
+          guest.phone,
+          guest.ticketId
+        ].some(value => value.toLowerCase().includes(query));
+      });
+
+      visibleGuests.textContent = filtered.length;
+      tableBody.innerHTML = "";
+
+      if (!filtered.length) {
+        emptyState.classList.remove("hidden");
+        return;
+      }
+
+      emptyState.classList.add("hidden");
+
+      filtered.forEach(guest => {
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+          <td>${escapeHtml(guest.name)}</td>
+          <td>${escapeHtml(guest.nic)}</td>
+          <td>${escapeHtml(guest.phone)}</td>
+          <td class="ticket">${escapeHtml(guest.ticketId)}</td>
+          <td>
+            <div class="actions">
+              <button class="btn btn-secondary small-btn"
+                onclick="editGuest('${escapeAttr(guest.docId)}')">Edit</button>
+
+              <button class="btn btn-danger small-btn"
+                onclick="deleteGuest('${escapeAttr(guest.docId)}')">Delete</button>
+            </div>
+          </td>
+        `;
+
+        tableBody.appendChild(tr);
+      });
+    }
+
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function escapeAttr(value) {
+      return String(value)
+        .replaceAll("\\", "\\\\")
+        .replaceAll("'", "\\'");
+    }
+
+
+    searchInput.addEventListener("input", renderGuests);
+
+
+    document.getElementById("refreshBtn").addEventListener("click", async () => {
+      await loadGuests();
+
+      if (currentRole === "superadmin") {
+        await loadAdmins();
+      }
+
+      showNotice("Dashboard refreshed.");
+    });
+
+
+    /* ============================================================
+       ADD / EDIT GUEST
+       ============================================================ */
+
+    document.getElementById("addGuestBtn").addEventListener("click", () => {
+      openGuestModal();
+    });
+
+
+    async function generateNextTicketId() {
+      const snapshot = await db.collection("guests").get();
+      let maxNumber = 0;
+
+      snapshot.forEach(doc => {
+        const data = doc.data() || {};
+        const ticket = String(data.ticketId || "").trim().toUpperCase();
+        const match = ticket.match(/^KMV-(\d+)$/);
+
+        if (match) {
+          maxNumber = Math.max(maxNumber, parseInt(match[1], 10));
+        }
+      });
+
+      return `KMV-${String(maxNumber + 1).padStart(4, "0")}`;
+    }
+
+
+    async function openGuestModal(guest = null) {
+      hideFormError();
+      guestForm.reset();
+
+      const ticketInput = document.getElementById("guestTicketId");
+
+      if (guest) {
+        modalTitle.textContent = "Edit Guest";
+        editingOriginalNic.value = guest.docId;
+
+        ticketInput.disabled = false;
+        ticketInput.readOnly = false;
+
+        document.getElementById("guestName").value = guest.name;
+        document.getElementById("guestNic").value = guest.nic;
+        document.getElementById("guestPhone").value = guest.phone;
+        ticketInput.value = guest.ticketId;
+
+      } else {
+        modalTitle.textContent = "Add Guest";
+        editingOriginalNic.value = "";
+
+        ticketInput.value = "Generating...";
+        ticketInput.disabled = true;
+        ticketInput.readOnly = true;
+
+        try {
+          ticketInput.value = await generateNextTicketId();
+        } catch (error) {
+          console.error("Ticket ID generation error:", error);
+          ticketInput.value = "";
+          showFormError("Could not generate a Ticket ID. Please refresh and try again.");
+        }
+      }
+
+      guestModalBackdrop.classList.add("open");
+
+      setTimeout(() => {
+        document.getElementById("guestName").focus();
+      }, 80);
+    }
+
+
+    document.getElementById("cancelModalBtn").addEventListener("click", closeGuestModal);
+
+    guestModalBackdrop.addEventListener("click", (event) => {
+      if (event.target === guestModalBackdrop) closeGuestModal();
+    });
+
+
+    window.editGuest = function(docId) {
+      const guest = allGuests.find(item => item.docId === docId);
+
+      if (!guest) {
+        showNotice("Guest record could not be found.", "error");
+        return;
+      }
+
+      openGuestModal(guest);
+    };
+
+
+    guestForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      hideFormError();
+
+      const name = document.getElementById("guestName").value.trim();
+      const nic = normalizeNIC(document.getElementById("guestNic").value);
+      const phone = document.getElementById("guestPhone").value.trim();
+      const ticketId = document.getElementById("guestTicketId").value.trim().toUpperCase();
+      const originalNic = editingOriginalNic.value.trim();
+
+      if (!name || !nic || !phone || !ticketId) {
+        showFormError("Please complete all four fields.");
+        return;
+      }
+
+      const saveBtn = document.getElementById("saveGuestBtn");
+      saveBtn.disabled = true;
+      saveBtn.textContent = "SAVING...";
+
+      try {
+        const newData = {
+          name,
+          nic,
+          phone,
+          ticketId
+        };
+
+        if (!originalNic) {
+          const existing = await db.collection("guests").doc(nic).get();
+
+          if (existing.exists) {
+            showFormError("A guest with this NIC already exists.");
+            return;
+          }
+
+          await db.collection("guests").doc(nic).set(newData);
+          showNotice("Guest added successfully.");
+
+        } else if (originalNic === nic) {
+          await db.collection("guests").doc(originalNic).update(newData);
+          showNotice("Guest updated successfully.");
+
+        } else {
+          const newRef = db.collection("guests").doc(nic);
+          const oldRef = db.collection("guests").doc(originalNic);
+
+          const newSnap = await newRef.get();
+
+          if (newSnap.exists) {
+            showFormError("The new NIC already belongs to another guest.");
+            return;
+          }
+
+          const oldSnap = await oldRef.get();
+
+          if (!oldSnap.exists) {
+            showFormError("Original guest record no longer exists.");
+            return;
+          }
+
+          await newRef.set(newData);
+          await oldRef.delete();
+
+          showNotice("Guest updated successfully.");
+        }
+
+        closeGuestModal();
+        await loadGuests();
+
+      } catch (error) {
+        console.error("Save guest error:", error);
+
+        if (error && error.code === "permission-denied") {
+          showFormError("Permission denied. Please make sure you are logged in as an authorized admin.");
+        } else {
+          showFormError("Could not save this guest. Please try again.");
+        }
+
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = "Save Guest";
+      }
+    });
+
+
+    /* ============================================================
+       DELETE GUEST
+       ============================================================ */
+
+    window.deleteGuest = async function(docId) {
+      const guest = allGuests.find(item => item.docId === docId);
+
+      if (!guest) {
+        showNotice("Guest record could not be found.", "error");
+        return;
+      }
+
+      const confirmed = confirm(
+        `Delete this guest?\n\nName: ${guest.name}\nNIC: ${guest.nic}\nTicket: ${guest.ticketId}\n\nThis cannot be undone.`
+      );
+
+      if (!confirmed) return;
+
+      try {
+        await db.collection("guests").doc(docId).delete();
+
+        showNotice("Guest deleted successfully.");
+        await loadGuests();
+
+      } catch (error) {
+        console.error("Delete guest error:", error);
+
+        if (error && error.code === "permission-denied") {
+          showNotice("Permission denied. You are not authorized to delete guests.", "error");
+        } else {
+          showNotice("Could not delete this guest.", "error");
+        }
+      }
+    };
+
+
+    /* ============================================================
+       SUPER ADMIN — ADMIN MANAGEMENT
+       ============================================================ */
+
+    async function loadAdmins() {
+      if (currentRole !== "superadmin") return;
+
+      try {
+        const snapshot = await db.collection("admins").get();
+
+        allAdmins = snapshot.docs.map(doc => {
+          const data = doc.data() || {};
+
+          return {
+            docId: doc.id,
+            name: String(data.name || "").trim(),
+            email: normalizeEmail(data.email || ""),
+            role: String(data.role || "admin").trim().toLowerCase()
+          };
+        });
+
+        allAdmins.sort((a, b) => {
+          if (a.role === "superadmin" && b.role !== "superadmin") return -1;
+          if (a.role !== "superadmin" && b.role === "superadmin") return 1;
+          return a.name.localeCompare(b.name, undefined, { sensitivity: "base" });
+        });
+
+        renderAdmins();
+
+      } catch (error) {
+        console.error("Admin load error:", error);
+
+        if (error && error.code === "permission-denied") {
+          showNotice("Firestore denied Admin Management access. Check the published Rules.", "error");
+        } else {
+          showNotice("Could not load administrator records.", "error");
+        }
+      }
+    }
+
+
+    function renderAdmins() {
+      adminTableBody.innerHTML = "";
+
+      if (!allAdmins.length) {
+        adminEmptyState.classList.remove("hidden");
+        return;
+      }
+
+      adminEmptyState.classList.add("hidden");
+
+      allAdmins.forEach(admin => {
+        const isSuper = admin.role === "superadmin";
+        const tr = document.createElement("tr");
+
+        if (isSuper) tr.classList.add("protected-row");
+
+        const roleBadge = isSuper
+          ? '<span class="role-badge role-superadmin">👑 SUPER ADMIN</span>'
+          : '<span class="role-badge role-admin">👤 ADMIN</span>';
+
+        const actions = isSuper
+          ? '<span style="color:#8da4c7;font-size:.72rem;">Protected</span>'
+          : `
+              <div class="actions">
+                <button class="btn btn-secondary small-btn"
+                  onclick="editAdmin('${escapeAttr(admin.docId)}')">Edit</button>
+
+                <button class="btn btn-danger small-btn"
+                  onclick="deleteAdmin('${escapeAttr(admin.docId)}')">Remove</button>
+              </div>
+            `;
+
+        tr.innerHTML = `
+          <td>${escapeHtml(admin.name)}</td>
+          <td class="admin-email-cell">${escapeHtml(admin.email)}</td>
+          <td>${roleBadge}</td>
+          <td>${actions}</td>
+        `;
+
+        adminTableBody.appendChild(tr);
+      });
+    }
+
+
+    document.getElementById("addAdminBtn").addEventListener("click", () => {
+      if (currentRole !== "superadmin") return;
+
+      openAdminModal();
+    });
+
+
+    async function openAdminModal(admin = null) {
+      if (currentRole !== "superadmin") return;
+
+      hideAdminFormError();
+      adminForm.reset();
+
+      const passwordField = document.getElementById("adminPasswordField");
+      const passwordInput = document.getElementById("newAdminPassword");
+
+      if (admin) {
+        adminModalTitle.textContent = "Edit Admin";
+        editingOriginalAdminEmail.value = admin.docId;
+
+        document.getElementById("adminName").value = admin.name;
+        document.getElementById("adminAccountEmail").value = admin.email;
+        passwordInput.value = "";
+        passwordInput.required = false;
+        passwordField.style.display = "none";
+
+      } else {
+        adminModalTitle.textContent = "Add Admin";
+        editingOriginalAdminEmail.value = "";
+        passwordInput.value = "";
+        passwordInput.required = true;
+        passwordField.style.display = "block";
+      }
+
+      adminModalBackdrop.classList.add("open");
+
+      setTimeout(() => {
+        document.getElementById("adminName").focus();
+      }, 80);
+    }
+
+
+    document.getElementById("cancelAdminModalBtn").addEventListener("click", closeAdminModal);
+
+    adminModalBackdrop.addEventListener("click", (event) => {
+      if (event.target === adminModalBackdrop) closeAdminModal();
+    });
+
+
+    window.editAdmin = function(docId) {
+      if (currentRole !== "superadmin") return;
+
+      const admin = allAdmins.find(item => item.docId === docId);
+
+      if (!admin) {
+        showNotice("Administrator record could not be found.", "error");
+        return;
+      }
+
+      // The permanent Super Admin cannot be edited through this panel.
+      if (admin.role === "superadmin") {
+        showNotice("The Super Admin account is protected.", "error");
+        return;
+      }
+
+      openAdminModal(admin);
+    };
+
+
+    adminForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (currentRole !== "superadmin") {
+        showAdminFormError("Only the Super Admin can manage administrators.");
+        return;
+      }
+
+      hideAdminFormError();
+
+      const name = document.getElementById("adminName").value.trim();
+      const email = normalizeEmail(document.getElementById("adminAccountEmail").value);
+      const passwordInput = document.getElementById("newAdminPassword");
+      const password = passwordInput.value;
+      const originalUid = String(editingOriginalAdminEmail.value || "").trim();
+
+      if (!name || !email) {
+        showAdminFormError("Please enter the administrator name and email.");
+        return;
+      }
+
+      if (!email.includes("@")) {
+        showAdminFormError("Please enter a valid email address.");
+        return;
+      }
+
+      if (!originalUid && password.length < 6) {
+        showAdminFormError("Please enter a password with at least 6 characters.");
+        return;
+      }
+
+      // Never allow the protected Super Admin account to be replaced.
+      if (email === normalizeEmail(currentUser.email)) {
+        showAdminFormError("The Super Admin account is protected.");
+        return;
+      }
+
+      const saveBtn = document.getElementById("saveAdminBtn");
+      saveBtn.disabled = true;
+      saveBtn.textContent = originalUid ? "SAVING..." : "CREATING...";
+
+      try {
+        if (!originalUid) {
+          const existingByEmail = allAdmins.find(a => normalizeEmail(a.email) === email);
+
+          if (existingByEmail) {
+            showAdminFormError("This email is already authorized as an administrator.");
+            return;
+          }
+
+          // Create the Firebase Auth account using a SECONDARY app,
+          // so the Super Admin remains logged in to the main app.
+          try {
+            await adminCreatorAuth.createUserWithEmailAndPassword(email, password);
+          } catch (authError) {
+            console.error("Admin Auth account creation error:", authError);
+
+            if (authError && authError.code === "auth/email-already-in-use") {
+              showAdminFormError("A Firebase account already exists for this email. Use a different email.");
+            } else if (authError && authError.code === "auth/invalid-email") {
+              showAdminFormError("Please enter a valid email address.");
+            } else if (authError && authError.code === "auth/weak-password") {
+              showAdminFormError("Password is too weak. Please use at least 6 characters.");
+            } else {
+              showAdminFormError("Could not create the administrator login account.");
+            }
+            return;
+          }
+
+          // Only after Auth account creation succeeds do we authorize it in Firestore.
+          const createdAdminUser = adminCreatorAuth.currentUser;
+          if (!createdAdminUser) {
+            throw new Error("ADMIN_AUTH_CREATE_FAILED");
+          }
+
+          await db.collection("admins").doc(createdAdminUser.uid).set({
+            name,
+            email,
+            role: "admin"
+          });
+
+          await adminCreatorAuth.signOut();
+          showNotice("Administrator account created successfully.");
+
+        } else {
+          // Editing changes the KMV 2020 O/L    authorization record only.
+          // The existing Firebase login/password remains unchanged.
+          // The hidden field stores the administrator UID (not the email).
+          const originalRef = db.collection("admins").doc(originalUid);
+          const originalSnap = await originalRef.get();
+
+          if (!originalSnap.exists) {
+            showAdminFormError("Original administrator record no longer exists.");
+            return;
+          }
+
+          const originalData = originalSnap.data() || {};
+
+          if (String(originalData.role || "").toLowerCase() === "superadmin") {
+            showAdminFormError("The Super Admin account is protected.");
+            return;
+          }
+
+          const storedEmail = normalizeEmail(originalData.email || "");
+          if (email !== storedEmail) {
+            showAdminFormError("The login email cannot be changed here. Remove this admin and create a new admin account with the new email.");
+            return;
+          }
+
+          await originalRef.update({
+            name,
+            email: storedEmail,
+            role: "admin"
+          });
+
+          showNotice("Administrator updated successfully.");
+        }
+
+        closeAdminModal();
+        await loadAdmins();
+
+      } catch (error) {
+        console.error("Save admin error:", error);
+
+        if (error && error.code === "permission-denied") {
+          showAdminFormError("Permission denied. Only the Super Admin can manage administrators.");
+        } else {
+          showAdminFormError("Could not save this administrator. Please try again.");
+        }
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = "Save Admin";
+      }
+    });
+
+
+    window.deleteAdmin = async function(docId) {
+      if (currentRole !== "superadmin") return;
+
+      const admin = allAdmins.find(item => item.docId === docId);
+
+      if (!admin) {
+        showNotice("Administrator record could not be found.", "error");
+        return;
+      }
+
+      if (admin.role === "superadmin") {
+        showNotice("The Super Admin account is protected and cannot be removed.", "error");
+        return;
+      }
+
+      const confirmed = confirm(
+        `Remove this administrator?\n\nName: ${admin.name}\nEmail: ${admin.email}\n\nThey will no longer be able to access the KMV 2020 O/L    Admin Portal.`
+      );
+
+      if (!confirmed) return;
+
+      try {
+        await db.collection("admins").doc(docId).delete();
+
+        showNotice("Administrator removed successfully.");
+        await loadAdmins();
+
+      } catch (error) {
+        console.error("Delete admin error:", error);
+
+        if (error && error.code === "permission-denied") {
+          showNotice("Permission denied. Only the Super Admin can remove administrators.", "error");
+        } else {
+          showNotice("Could not remove this administrator.", "error");
+        }
+      }
+    };
+
+  </script>
+</body>
+</html>
