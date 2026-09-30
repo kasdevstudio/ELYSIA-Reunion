@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ELYSIA – Admin Guest Management</title>
+  <title>Admin Guest Management</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -545,10 +545,10 @@
   <section id="loginScreen" class="login-screen">
     <div class="login-card">
       <div class="crest">👑</div>
-      <div class="eyebrow">ELYSIA 2026</div>
+      <div class="eyebrow">"5 YEARS LATER" Event2026</div>
       <h1>Admin Portal</h1>
       <div class="subtitle">
-        Secure guest management for the ELYSIA Reunion.
+        Secure guest management for the "5 YEARS LATER" EventReunion.
       </div>
 
       <form id="adminLoginForm">
@@ -574,7 +574,7 @@
       </div>
 
       <div class="login-note">
-        Authorized ELYSIA administrators only.
+        Authorized "5 YEARS LATER" Eventadministrators only.
       </div>
     </div>
   </section>
@@ -587,7 +587,7 @@
       <div class="brand">
         <div class="brand-icon">👑</div>
         <div>
-          <div class="brand-title">ELYSIA ADMIN</div>
+          <div class="brand-title">"5 YEARS LATER" EventADMIN</div>
           <div class="brand-sub">Guest & Royal Gate Pass Management</div>
         </div>
       </div>
@@ -660,7 +660,7 @@
           <div>
             <div class="admin-management-title">👑 Admin Management</div>
             <div class="admin-management-sub">
-              Super Admin control panel — add, edit or remove ELYSIA administrators.
+              Super Admin control panel — add, edit or remove "5 YEARS LATER" Eventadministrators.
             </div>
           </div>
 
@@ -789,7 +789,7 @@
 
   <script>
     /* ============================================================
-       ELYSIA ADMIN PORTAL
+       "5 YEARS LATER" EventADMIN PORTAL
        Firebase Authentication + Cloud Firestore
        Super Admin + Normal Admin system
        ============================================================ */
@@ -804,7 +804,7 @@
       measurementId: "G-EDYKJD8HZL"
     };
 
-    // Permanent ELYSIA Super Admin UID
+    // Permanent "5 YEARS LATER" EventSuper Admin UID
     const SUPER_ADMIN_UID = "cpdDyc4hOsMLslbM5AO0MZk0yAx1";
 
     firebase.initializeApp(firebaseConfig);
@@ -965,9 +965,9 @@
         } else if (error && error.code === "auth/too-many-requests") {
           showLoginError("Too many login attempts. Please wait and try again.");
         } else if (error && error.code === "permission-denied") {
-          showLoginError("This account is not authorized as an ELYSIA administrator.");
+          showLoginError("This account is not authorized as an "5 YEARS LATER" Eventadministrator.");
         } else if (error && error.message === "UNAUTHORIZED_ADMIN") {
-          showLoginError("This account is not authorized as an ELYSIA administrator.");
+          showLoginError("This account is not authorized as an "5 YEARS LATER" Eventadministrator.");
         } else {
           showLoginError("Could not sign in. Please check your credentials and try again.");
         }
@@ -1630,7 +1630,7 @@
           showNotice("Administrator account created successfully.");
 
         } else {
-          // Editing changes the ELYSIA authorization record only.
+          // Editing changes the "5 YEARS LATER" Eventauthorization record only.
           // The existing Firebase login/password remains unchanged.
           // The hidden field stores the administrator UID (not the email).
           const originalRef = db.collection("admins").doc(originalUid);
@@ -1697,7 +1697,7 @@
       }
 
       const confirmed = confirm(
-        `Remove this administrator?\n\nName: ${admin.name}\nEmail: ${admin.email}\n\nThey will no longer be able to access the ELYSIA Admin Portal.`
+        `Remove this administrator?\n\nName: ${admin.name}\nEmail: ${admin.email}\n\nThey will no longer be able to access the "5 YEARS LATER" EventAdmin Portal.`
       );
 
       if (!confirmed) return;
