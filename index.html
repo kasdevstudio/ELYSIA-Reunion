@@ -3,3968 +3,1654 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-
-<title>5 YEARS LATER – Royal Gate Pass</title>
-
-<meta name="theme-color" content="#031b45" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<title>5 YEARS LATER – Royal Gate Pass Portal</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-<!-- QR GENERATOR -->
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
-
-<!-- PDF -->
+<!-- PDF & CANVAS LIBRARIES -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
-
-*,
-*::before,
-*::after{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    -webkit-font-smoothing:antialiased;
-}
-
-:root{
-
-    --bg:#020817;
-    --navy:#031b45;
-    --navy2:#062b68;
-    --blue:#0755c9;
-
-    --gold:#d9b63c;
-    --gold-bright:#ffd83d;
-    --gold-light:#fff0ae;
-
-    --white:#ffffff;
-    --muted:#aebfdb;
-
-    --heading:'Cinzel',serif;
-    --body:'Montserrat',sans-serif;
-}
-
-html,
-body{
-
-    width:100%;
-    height:100%;
-
-    overflow:hidden;
-
-    background:
-        radial-gradient(
-            circle at 50% 25%,
-            #073b88 0%,
-            #031b45 35%,
-            #020817 80%
-        );
-
-    font-family:var(--body);
-    color:white;
-
-    overscroll-behavior:none;
-}
-
-button,
-input{
-    font-family:inherit;
-}
-
-/* =========================================================
-   BACKGROUND
-========================================================= */
-
-#particles-canvas{
-
-    position:fixed;
-    inset:0;
-
-    width:100%;
-    height:100%;
-
-    pointer-events:none;
-
-    z-index:1;
-}
-
-.ambient-glow{
-
-    position:fixed;
-    inset:0;
-
-    pointer-events:none;
-
-    z-index:2;
-
-    background:
-
-        radial-gradient(
-            circle at 50% 12%,
-            rgba(0,84,210,.40),
-            transparent 45%
-        ),
-
-        radial-gradient(
-            circle at 10% 80%,
-            rgba(0,52,145,.28),
-            transparent 45%
-        ),
-
-        radial-gradient(
-            circle at 90% 65%,
-            rgba(255,210,50,.08),
-            transparent 35%
-        );
-
-    animation:ambientBreath 9s ease-in-out infinite alternate;
-}
-
-@keyframes ambientBreath{
-
-    from{
-        opacity:.75;
-        transform:scale(1);
-    }
-
-    to{
-        opacity:1;
-        transform:scale(1.035);
-    }
-}
-
-
-/* =========================================================
-   GOLD TEXT
-========================================================= */
-
-.gold-text{
-
-    background:
-        linear-gradient(
-            90deg,
-            #c99620,
-            #fff1a7,
-            #ffd633,
-            #fff0a1,
-            #c99620
-        );
-
-    background-size:220% auto;
-
-    color:transparent;
-
-    -webkit-background-clip:text;
-    background-clip:text;
-
-    animation:goldShimmer 6s linear infinite;
-}
-
-@keyframes goldShimmer{
-
-    to{
-        background-position:220% center;
-    }
-}
-
-
-/* =========================================================
-   AUTH
-========================================================= */
-
-#auth-screen{
-
-    position:fixed;
-    inset:0;
-
-    z-index:1000;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    padding:20px;
-
-    background:
-
-        radial-gradient(
-            circle at 50% 20%,
-            rgba(0,61,150,.55),
-            transparent 55%
-        ),
-
-        #020817;
-
-    transition:
-        opacity .7s ease,
-        visibility .7s ease;
-}
-
-#auth-screen.hidden{
-
-    opacity:0;
-    visibility:hidden;
-    pointer-events:none;
-}
-
-.auth-card{
-
-    width:min(500px,100%);
-
-    padding:42px 34px;
-
-    text-align:center;
-
-    border-radius:24px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(9,38,82,.96),
-            rgba(3,18,43,.97)
-        );
-
-    border:1px solid rgba(255,216,61,.35);
-
-    box-shadow:
-
-        0 30px 100px rgba(0,0,0,.65),
-
-        0 0 50px rgba(0,78,190,.12);
-
-    animation:authEnter .9s cubic-bezier(.2,.9,.3,1);
-}
-
-@keyframes authEnter{
-
-    from{
-        opacity:0;
-        transform:
-            translateY(35px)
-            scale(.96);
-    }
-
-    to{
-        opacity:1;
-        transform:none;
-    }
-}
-
-.auth-logo{
-
-    width:82px;
-    height:82px;
-
-    margin:0 auto 18px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:50%;
-
-    border:2px solid var(--gold-bright);
-
-    background:#06337d;
-
-    font-size:2.3rem;
-
-    box-shadow:
-        0 0 25px rgba(255,216,61,.32);
-}
-
-.auth-kicker{
-
-    color:var(--gold-bright);
-
-    font-size:.72rem;
-
-    letter-spacing:5px;
-
-    text-transform:uppercase;
-}
-
-.auth-title{
-
-    font-family:var(--heading);
-
-    font-size:
-        clamp(2rem,7vw,3rem);
-
-    margin:8px 0 12px;
-
-    font-weight:900;
-}
-
-.auth-subtitle{
-
-    color:#b8c8df;
-
-    font-size:.88rem;
-
-    line-height:1.6;
-
-    margin-bottom:25px;
-}
-
-.auth-input{
-
-    width:100%;
-
-    height:58px;
-
-    border-radius:10px;
-
-    border:1px solid rgba(255,216,61,.4);
-
-    background:#020c1c;
-
-    color:white;
-
-    padding:0 18px;
-
-    outline:none;
-
-    font-size:1rem;
-
-    letter-spacing:1px;
-
-    transition:.3s;
-}
-
-.auth-input:focus{
-
-    border-color:var(--gold-bright);
-
-    box-shadow:
-        0 0 25px rgba(255,216,61,.16);
-}
-
-.auth-error{
-
-    display:none;
-
-    margin:12px 0;
-
-    padding:12px;
-
-    border-radius:10px;
-
-    color:#ff9292;
-
-    background:rgba(255,50,80,.08);
-
-    border:1px solid rgba(255,80,100,.3);
-
-    font-size:.82rem;
-
-    line-height:1.5;
-}
-
-
-/* =========================================================
-   BUTTON
-========================================================= */
-
-.btn-gold{
-
-    border:0;
-
-    min-height:52px;
-
-    padding:0 30px;
-
-    border-radius:50px;
-
-    cursor:pointer;
-
-    display:inline-flex;
-
-    align-items:center;
-    justify-content:center;
-
-    background:
-        linear-gradient(
-            135deg,
-            #c69a27,
-            #ffe58b,
-            #ffd332,
-            #b98718
-        );
-
-    color:#06142b;
-
-    font-family:var(--heading);
-
-    font-weight:800;
-
-    letter-spacing:1.7px;
-
-    text-transform:uppercase;
-
-    box-shadow:
-        0 12px 30px rgba(255,210,50,.25);
-
-    transition:
-        transform .3s,
-        box-shadow .3s;
-}
-
-.btn-gold:hover{
-
-    transform:translateY(-3px);
-
-    box-shadow:
-        0 18px 40px rgba(255,210,50,.4);
-}
-
-.btn-gold:active{
-
-    transform:scale(.97);
-}
-
-.btn-gold:disabled{
-
-    opacity:.6;
-}
-
-
-/* =========================================================
-   PORTAL
-========================================================= */
-
-#portal-content{
-
-    position:fixed;
-    inset:0;
-
-    z-index:10;
-
-    opacity:0;
-
-    pointer-events:none;
-
-    transition:
-        opacity .7s ease;
-}
-
-#portal-content.unlocked{
-
-    opacity:1;
-
-    pointer-events:auto;
-}
-
-
-/* =========================================================
-   TOP BAR
-========================================================= */
-
-.top-progress{
-
-    position:fixed;
-
-    top:0;
-    left:0;
-
-    width:100%;
-    height:4px;
-
-    z-index:100;
-
-    background:rgba(255,255,255,.05);
-}
-
-.top-progress-bar{
-
-    height:100%;
-
-    width:20%;
-
-    background:
-        linear-gradient(
-            90deg,
-            #b78a18,
-            #fff0a3,
-            #ffd52f
-        );
-
-    box-shadow:
-        0 0 14px #ffd52f;
-
-    transition:
-        width .8s cubic-bezier(.2,.9,.3,1);
-}
-
-
-/* =========================================================
-   USER PILL
-========================================================= */
-
-.user-pill{
-
-    position:fixed;
-
-    top:18px;
-    right:22px;
-
-    z-index:90;
-
-    padding:8px 17px;
-
-    border-radius:30px;
-
-    border:1px solid var(--gold);
-
-    background:rgba(3,18,43,.82);
-
-    backdrop-filter:blur(15px);
-
-    color:#e8edf8;
-
-    font-size:.75rem;
-
-    letter-spacing:.7px;
-
-    box-shadow:
-        0 8px 25px rgba(0,0,0,.35);
-}
-
-.user-pill strong{
-
-    color:var(--gold-bright);
-}
-
-
-/* =========================================================
-   SIDE DOTS
-========================================================= */
-
-.side-nav{
-
-    position:fixed;
-
-    right:27px;
-
-    top:50%;
-
-    transform:translateY(-50%);
-
-    z-index:90;
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:14px;
-}
-
-.nav-dot{
-
-    width:10px;
-    height:10px;
-
-    border-radius:50%;
-
-    border:1px solid var(--gold);
-
-    background:transparent;
-
-    cursor:pointer;
-
-    transition:.3s;
-}
-
-.nav-dot.active{
-
-    background:var(--gold-bright);
-
-    box-shadow:
-        0 0 16px var(--gold-bright);
-
-    transform:scale(1.4);
-}
-
-
-/* =========================================================
-   SLIDE DECK
-========================================================= */
-
-.deck{
-
-    position:relative;
-
-    width:100vw;
-    height:100vh;
-
-    perspective:1400px;
-}
-
-.slide{
-
-    position:absolute;
-
-    inset:0;
-
-    width:100%;
-    height:100%;
-
-    padding:
-        80px
-        80px
-        50px;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    opacity:0;
-
-    pointer-events:none;
-
-    transform:
-        translate3d(0,80px,-300px)
-        rotateX(-8deg);
-
-    transition:
-        opacity .75s cubic-bezier(.2,.9,.3,1),
-        transform .85s cubic-bezier(.2,.9,.3,1);
-
-    overflow-y:auto;
-
-    z-index:5;
-}
-
-.slide.active{
-
-    opacity:1;
-
-    pointer-events:auto;
-
-    transform:
-        translate3d(0,0,0)
-        rotateX(0);
-
-    z-index:20;
-}
-
-.slide.passed{
-
-    opacity:0;
-
-    transform:
-        translate3d(0,-100px,180px)
-        rotateX(8deg);
-}
-
-.slide-inner{
-
-    width:min(1100px,100%);
-
-    margin:auto;
-
-    text-align:center;
-}
-
-
-/* =========================================================
-   SLIDE HEADINGS
-========================================================= */
-
-.section-kicker{
-
-    color:var(--gold);
-
-    font-size:.72rem;
-
-    letter-spacing:5px;
-
-    text-transform:uppercase;
-
-    margin-bottom:8px;
-}
-
-.section-title{
-
-    font-family:var(--heading);
-
-    font-size:
-        clamp(1.8rem,4vw,3rem);
-
-    font-weight:800;
-
-    margin-bottom:16px;
-}
-
-.divider{
-
-    width:75px;
-    height:2px;
-
-    margin:0 auto 28px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            var(--gold-bright),
-            transparent
-        );
-}
-
-
-/* =========================================================
-   SLIDE 0 – MAIN WELCOME
-========================================================= */
-
-.hero-banner{
-
-    width:min(850px,100%);
-
-    margin:0 auto 30px;
-
-    padding:30px;
-
-    border-radius:20px;
-
-    border:1px solid rgba(255,216,61,.35);
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(4,48,120,.92),
-            rgba(4,24,55,.9)
-        );
-
-    box-shadow:
-        0 25px 70px rgba(0,0,0,.5);
-
-    animation:heroFloat 7s ease-in-out infinite;
-}
-
-@keyframes heroFloat{
-
-    0%,100%{
-        transform:translateY(0);
-    }
-
-    50%{
-        transform:translateY(-4px);
-    }
-}
-
-.hero-title{
-
-    font-family:var(--heading);
-
-    font-size:
-        clamp(2.4rem,7vw,5rem);
-
-    font-weight:900;
-
-    letter-spacing:5px;
-
-    line-height:1;
-}
-
-.hero-subtitle{
-
-    margin-top:15px;
-
-    color:var(--gold-light);
-
-    letter-spacing:4px;
-
-    font-size:.85rem;
-}
-
-.welcome-name{
-
-    margin:22px 0;
-
-    font-size:1.1rem;
-
-    color:#c8d6eb;
-}
-
-.welcome-name strong{
-
-    color:var(--gold-bright);
-
-    text-decoration:underline;
-
-    text-underline-offset:5px;
-}
-
-
-/* =========================================================
-   COUNTDOWN
-========================================================= */
-
-.countdown{
-
-    display:flex;
-
-    justify-content:center;
-
-    gap:12px;
-
-    flex-wrap:wrap;
-
-    margin-bottom:28px;
-}
-
-.count-box{
-
-    min-width:75px;
-
-    padding:13px 12px;
-
-    border-radius:11px;
-
-    border:1px solid rgba(255,216,61,.3);
-
-    background:rgba(1,13,31,.75);
-
-    backdrop-filter:blur(12px);
-}
-
-.count-number{
-
-    font-family:var(--heading);
-
-    font-size:1.6rem;
-
-    font-weight:700;
-
-    color:var(--gold-light);
-}
-
-.count-label{
-
-    font-size:.6rem;
-
-    letter-spacing:1.5px;
-
-    color:#8fa6c8;
-
-    text-transform:uppercase;
-}
-
-
-/* =========================================================
-   SLIDE 1 – TICKET
-========================================================= */
-
-.ticket-area{
-
-    width:min(1050px,100%);
-
-    margin:auto;
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-}
-
-.ticket-wrapper{
-
-    position:relative;
-
-    width:min(1000px,100%);
-
-    aspect-ratio:2/1;
-
-    overflow:hidden;
-
-    border-radius:12px;
-
-    box-shadow:
-        0 25px 80px rgba(0,0,0,.65),
-        0 0 40px rgba(255,205,40,.08);
-
-    background:#031b45;
-}
-
-.ticket-image{
-
-    width:100%;
-    height:100%;
-
-    display:block;
-
-    object-fit:contain;
-}
-
-.ticket-qr{
-
-    position:absolute;
-
-    left:84.1%;
-    top:53.5%;
-
-    width:10.8%;
-    aspect-ratio:1/1;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    background:white;
-
-    border-radius:3px;
-
-    padding:2px;
-
-    box-shadow:
-        0 0 10px rgba(255,255,255,.25);
-}
-
-.ticket-qr canvas{
-
-    width:100%!important;
-    height:100%!important;
-}
-
-.ticket-info{
-
-    margin-top:20px;
-
-    display:flex;
-
-    justify-content:center;
-
-    gap:10px;
-
-    flex-wrap:wrap;
-}
-
-.ticket-id-display{
-
-    color:var(--gold-bright);
-
-    font-family:monospace;
-
-    letter-spacing:3px;
-
-    font-size:.95rem;
-}
-
-.download-ticket{
-
-    margin-top:18px;
-
-    min-height:48px;
-
-    padding:0 25px;
-
-    border-radius:30px;
-
-    border:1px solid var(--gold);
-
-    color:var(--gold-light);
-
-    background:rgba(3,27,69,.7);
-
-    cursor:pointer;
-
-    transition:.3s;
-}
-
-.download-ticket:hover{
-
-    background:rgba(255,216,61,.12);
-
-    box-shadow:
-        0 0 25px rgba(255,216,61,.18);
-}
-
-
-/* =========================================================
-   GLASS CARDS
-========================================================= */
-
-.glass-card{
-
-    padding:25px;
-
-    border-radius:18px;
-
-    border:1px solid rgba(255,216,61,.22);
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(7,35,76,.88),
-            rgba(2,15,34,.86)
-        );
-
-    backdrop-filter:blur(18px);
-
-    box-shadow:
-        0 20px 50px rgba(0,0,0,.38);
-
-    transition:
-        transform .35s,
-        border-color .35s,
-        box-shadow .35s;
-}
-
-.glass-card:hover{
-
-    transform:translateY(-5px);
-
-    border-color:
-        rgba(255,216,61,.55);
-
-    box-shadow:
-        0 25px 60px rgba(0,0,0,.5),
-        0 0 30px rgba(255,210,40,.08);
-}
-
-
-/* =========================================================
-   SLIDE 2 – EVENT INFORMATION
-========================================================= */
-
-.info-grid{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(4,1fr);
-
-    gap:16px;
-}
-
-.info-icon{
-
-    font-size:2rem;
-
-    margin-bottom:12px;
-}
-
-.info-card h3{
-
-    font-family:var(--heading);
-
-    color:var(--gold-light);
-
-    font-size:1rem;
-
-    margin-bottom:8px;
-}
-
-.info-card p{
-
-    color:#afc2df;
-
-    font-size:.82rem;
-
-    line-height:1.6;
-}
-
-.info-highlight{
-
-    color:var(--gold-bright)!important;
-
-    margin-top:5px;
-}
-
-
-/* =========================================================
-   SLIDE 3 – ACTIVITIES
-========================================================= */
-
-.activities-layout{
-
-    display:grid;
-
-    grid-template-columns:
-        1.35fr
-        1fr;
-
-    gap:20px;
-
-    align-items:stretch;
-}
-
-.dj-card{
-
-    position:relative;
-
-    min-height:520px;
-
-    overflow:hidden;
-
-    border-radius:25px;
-
-    border:1px solid rgba(255,216,61,.4);
-
-    background:#031b45;
-
-    box-shadow:
-        0 30px 80px rgba(0,0,0,.55);
-}
-
-.dj-image{
-
-    position:absolute;
-
-    inset:0;
-
-    width:100%;
-    height:100%;
-
-    object-fit:cover;
-
-    object-position:center;
-
-    transition:
-        transform 1s cubic-bezier(.2,.9,.3,1);
-}
-
-.dj-card:hover .dj-image{
-
-    transform:scale(1.04);
-}
-
-.dj-overlay{
-
-    position:absolute;
-
-    inset:0;
-
-    background:
-        linear-gradient(
-            180deg,
-            transparent 30%,
-            rgba(1,9,22,.1) 45%,
-            rgba(1,9,22,.94) 100%
-        );
-}
-
-.dj-content{
-
-    position:absolute;
-
-    left:28px;
-    right:28px;
-    bottom:28px;
-
-    text-align:left;
-
-    z-index:2;
-}
-
-.dj-kicker{
-
-    color:var(--gold-bright);
-
-    font-size:.7rem;
-
-    letter-spacing:4px;
-
-    text-transform:uppercase;
-}
-
-.dj-name{
-
-    font-family:var(--heading);
-
-    font-size:
-        clamp(1.7rem,4vw,3rem);
-
-    margin-top:6px;
-}
-
-.dj-description{
-
-    color:#d0dced;
-
-    font-size:.85rem;
-
-    margin-top:8px;
-
-    max-width:450px;
-
-    line-height:1.6;
-}
-
-.activity-stack{
-
-    display:grid;
-
-    grid-template-columns:1fr 1fr;
-
-    gap:16px;
-}
-
-.activity-card{
-
-    min-height:250px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:flex-end;
-
-    text-align:left;
-
-    position:relative;
-
-    overflow:hidden;
-}
-
-.activity-number{
-
-    position:absolute;
-
-    top:15px;
-    right:17px;
-
-    font-family:var(--heading);
-
-    font-size:2.5rem;
-
-    color:rgba(255,216,61,.12);
-}
-
-.activity-card .icon{
-
-    font-size:2.4rem;
-
-    margin-bottom:15px;
-}
-
-.activity-card h3{
-
-    font-family:var(--heading);
-
-    color:var(--gold-light);
-
-    margin-bottom:7px;
-}
-
-.activity-card p{
-
-    color:#aebfd9;
-
-    font-size:.78rem;
-
-    line-height:1.55;
-}
-
-
-/* =========================================================
-   SLIDE 4 – LOCATION
-========================================================= */
-
-.location-layout{
-
-    display:grid;
-
-    grid-template-columns:
-        1.1fr
-        1fr;
-
-    gap:22px;
-
-    align-items:stretch;
-}
-
-.hotel-card{
-
-    position:relative;
-
-    min-height:500px;
-
-    overflow:hidden;
-
-    border-radius:24px;
-
-    border:1px solid rgba(255,216,61,.35);
-
-    background:#031b45;
-
-    box-shadow:
-        0 25px 70px rgba(0,0,0,.5);
-}
-
-.hotel-image{
-
-    width:100%;
-    height:100%;
-
-    min-height:500px;
-
-    object-fit:cover;
-
-    display:block;
-
-    transition:transform 1s ease;
-}
-
-.hotel-card:hover .hotel-image{
-
-    transform:scale(1.04);
-}
-
-.hotel-overlay{
-
-    position:absolute;
-
-    inset:0;
-
-    background:
-        linear-gradient(
-            180deg,
-            transparent 25%,
-            rgba(1,10,25,.9) 100%
-        );
-}
-
-.hotel-content{
-
-    position:absolute;
-
-    left:28px;
-    right:28px;
-    bottom:28px;
-
-    text-align:left;
-}
-
-.hotel-content h3{
-
-    font-family:var(--heading);
-
-    font-size:1.8rem;
-
-    color:white;
-}
-
-.hotel-location{
-
-    color:var(--gold-bright);
-
-    margin-top:5px;
-
-    font-size:.9rem;
-}
-
-.location-details{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:15px;
-}
-
-.location-detail-card{
-
-    text-align:left;
-}
-
-.location-detail-card h3{
-
-    font-family:var(--heading);
-
-    color:var(--gold-light);
-
-    margin-bottom:7px;
-}
-
-.location-detail-card p{
-
-    color:#aebfd9;
-
-    font-size:.84rem;
-
-    line-height:1.6;
-}
-
-.map-button{
-
-    width:100%;
-
-    min-height:55px;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    border-radius:13px;
-
-    border:1px solid var(--gold);
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(214,174,47,.16),
-            rgba(255,216,61,.06)
-        );
-
-    color:var(--gold-light);
-
-    text-decoration:none;
-
-    font-weight:700;
-
-    letter-spacing:1px;
-
-    transition:.3s;
-}
-
-.map-button:hover{
-
-    background:
-        rgba(255,216,61,.17);
-
-    transform:translateY(-2px);
-
-    box-shadow:
-        0 12px 35px rgba(255,216,61,.1);
-}
-
-.map-note{
-
-    font-size:.7rem;
-
-    color:#7891b5;
-
-    text-align:center;
-}
-
-
-/* =========================================================
-   POSTER OPENING
-========================================================= */
-
-#poster-opening{
-
-    position:fixed;
-
-    inset:0;
-
-    z-index:2000;
-
-    overflow:hidden;
-
-    background:#031b45;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    transition:
-        opacity .7s ease,
-        visibility .7s ease;
-}
-
-#poster-opening.closed{
-
-    opacity:0;
-
-    visibility:hidden;
-
-    pointer-events:none;
-}
-
-.poster-stage{
-
-    position:absolute;
-
-    inset:0;
-
-    background:#031b45;
-
-    overflow:hidden;
-}
-
-.poster-half{
-
-    position:absolute;
-
-    top:0;
-
-    width:50%;
-    height:100%;
-
-    background-repeat:no-repeat;
-
-    background-size:200% 100%;
-
-    transition:
-        transform 1.35s cubic-bezier(.77,0,.18,1);
-}
-
-.poster-left{
-
-    left:0;
-
-    background-image:
-        url("https://i.postimg.cc/cHS5qVrG/1.png");
-
-    background-position:left center;
-
-    border-right:1px solid rgba(255,215,50,.18);
-}
-
-.poster-right{
-
-    right:0;
-
-    background-image:
-        url("https://i.postimg.cc/vBsSRpcR/2.png");
-
-    background-position:right center;
-
-    border-left:1px solid rgba(255,215,50,.18);
-}
-
-#poster-opening.opening .poster-left{
-
-    transform:translateX(-105%);
-}
-
-#poster-opening.opening .poster-right{
-
-    transform:translateX(105%);
-}
-
-.poster-center-button{
-
-    position:relative;
-
-    z-index:10;
-
-    width:118px;
-    height:118px;
-
-    border-radius:50%;
-
-    border:2px solid var(--gold-bright);
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(255,225,100,.95),
-            rgba(150,100,10,.9)
-        );
-
-    color:#07142a;
-
-    font-family:var(--heading);
-
-    font-weight:900;
-
-    letter-spacing:2px;
-
-    cursor:pointer;
-
-    box-shadow:
-        0 0 0 10px rgba(255,215,50,.07),
-        0 0 45px rgba(255,215,50,.45);
-
-    animation:openPulse 2.3s ease-in-out infinite;
-
-    transition:
-        transform .3s,
-        opacity .4s;
-}
-
-.poster-center-button:hover{
-
-    transform:scale(1.08);
-}
-
-#poster-opening.opening .poster-center-button{
-
-    opacity:0;
-
-    transform:scale(1.3);
-}
-
-@keyframes openPulse{
-
-    0%,100%{
-        box-shadow:
-            0 0 0 8px rgba(255,215,50,.06),
-            0 0 35px rgba(255,215,50,.35);
-    }
-
-    50%{
-        box-shadow:
-            0 0 0 16px rgba(255,215,50,.03),
-            0 0 60px rgba(255,215,50,.6);
-    }
-}
-
-.poster-hint{
-
-    position:absolute;
-
-    z-index:11;
-
-    bottom:55px;
-
-    left:50%;
-
-    transform:translateX(-50%);
-
-    color:#fff2bd;
-
-    font-size:.7rem;
-
-    letter-spacing:4px;
-
-    text-transform:uppercase;
-
-    opacity:.85;
-
-    transition:.4s;
-}
-
-#poster-opening.opening .poster-hint{
-
-    opacity:0;
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media(max-width:900px){
-
-    .info-grid{
-
-        grid-template-columns:
-            repeat(2,1fr);
-    }
-
-    .activities-layout{
-
-        grid-template-columns:1fr;
-    }
-
-    .dj-card{
-
-        min-height:420px;
-    }
-
-    .location-layout{
-
-        grid-template-columns:1fr;
-    }
-
-    .hotel-card,
-    .hotel-image{
-
-        min-height:360px;
-    }
-
-    .slide{
-
-        padding:
-            80px
-            20px
-            30px;
-    }
-}
-
-@media(max-width:600px){
-
-    .user-pill{
-
-        top:12px;
-        right:12px;
-
-        font-size:.65rem;
-
-        padding:7px 12px;
-    }
-
-    .side-nav{
-
-        right:9px;
-
-        gap:12px;
-    }
-
-    .nav-dot{
-
-        width:8px;
-        height:8px;
-    }
-
-    .slide{
-
-        padding:
-            75px
-            15px
-            25px;
-    }
-
-    .hero-banner{
-
-        padding:25px 15px;
-    }
-
-    .hero-title{
-
-        letter-spacing:2px;
-    }
-
-    .hero-subtitle{
-
-        letter-spacing:2px;
-        font-size:.7rem;
-    }
-
-    .count-box{
-
-        min-width:68px;
-    }
-
-    .info-grid{
-
-        grid-template-columns:1fr;
-    }
-
-    .ticket-wrapper{
-
-        width:100%;
-
-        border-radius:8px;
-    }
-
-    .ticket-qr{
-
-        left:84%;
-        top:53.5%;
-        width:11%;
-    }
-
-    .activities-layout{
-
-        gap:12px;
-    }
-
-    .dj-card{
-
-        min-height:390px;
-    }
-
-    .activity-stack{
-
-        grid-template-columns:1fr 1fr;
-
-        gap:10px;
-    }
-
-    .activity-card{
-
-        min-height:190px;
-
-        padding:18px;
-    }
-
-    .activity-card .icon{
-
-        font-size:1.9rem;
-    }
-
-    .activity-card h3{
-
-        font-size:.9rem;
-    }
-
-    .activity-card p{
-
-        font-size:.7rem;
-    }
-
-    .hotel-card,
-    .hotel-image{
-
-        min-height:330px;
-    }
-
-    .poster-center-button{
-
-        width:96px;
-        height:96px;
-
-        font-size:.72rem;
-    }
-
-    .poster-hint{
-
-        bottom:35px;
-
-        font-size:.58rem;
-
-        letter-spacing:2px;
-    }
+*, *::before, *::after {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+-webkit-font-smoothing: antialiased;
+}
+
+:root {
+--bg-primary: #020716;
+--bg-deep-blue: #031338;
+--bg-royal-sapphire: #002d7a;
+--gold-primary: #f2c037;
+--gold-bright: #ffe66d;
+--gold-light: #fff5c0;
+--gold-gradient: linear-gradient(135deg, #ffd700 0%, #fff6cc 40%, #e0b02b 75%, #9b7100 100%);
+--gold-border: rgba(255, 215, 0, 0.18);
+--text-light: #ffffff;
+--text-muted: #c7dbf9;
+--font-heading: 'Cinzel', serif;
+--font-body: 'Montserrat', sans-serif;
+--font-mono: 'Share Tech Mono', 'Courier New', monospace;
+}
+
+html, body {
+width: 100%;
+max-width: 100%;
+height: 100%;
+overflow-x: hidden !important;
+overflow-y: hidden;
+background-color: var(--bg-primary);
+overscroll-behavior: none;
+font-family: var(--font-body);
+color: var(--text-light);
+}
+
+#particles-canvas {
+position: fixed;
+inset: 0;
+width: 100%;
+height: 100%;
+z-index: 1;
+pointer-events: none;
+}
+
+.ambient-glow {
+position: fixed;
+inset: 0;
+background:
+radial-gradient(circle at 50% 18%, rgba(0, 68, 187, 0.95) 0%, rgba(2, 18, 56, 0.8) 50%, transparent 75%),
+radial-gradient(circle at 88% 78%, rgba(255, 204, 0, 0.22) 0%, transparent 55%),
+radial-gradient(circle at 12% 82%, rgba(0, 52, 148, 0.9) 0%, transparent 60%);
+z-index: 1;
+pointer-events: none;
+animation: ambientBreath 8s ease-in-out infinite alternate;
+}
+
+@keyframes ambientBreath {
+0% { opacity: 0.85; transform: scale(1); }
+100% { opacity: 1; transform: scale(1.03); }
+}
+
+.royal-corner {
+position: fixed;
+width: 50px;
+height: 50px;
+z-index: 30;
+pointer-events: none;
+opacity: 0.35;
+}
+.royal-corner.top-left {
+top: 14px;
+left: 14px;
+border-top: 2px solid var(--gold-bright);
+border-left: 2px solid var(--gold-bright);
+border-top-left-radius: 6px;
+}
+.royal-corner.bottom-left {
+bottom: 14px;
+left: 14px;
+border-bottom: 2px solid var(--gold-bright);
+border-left: 2px solid var(--gold-bright);
+border-bottom-left-radius: 6px;
+}
+.royal-corner.bottom-right {
+bottom: 14px;
+right: 14px;
+border-bottom: 2px solid var(--gold-bright);
+border-right: 2px solid var(--gold-bright);
+border-bottom-right-radius: 6px;
+}
+
+@media (max-width: 768px) {
+.royal-corner { width: 26px; height: 26px; opacity: 0.25; }
+}
+
+.shimmer-text {
+background: linear-gradient(90deg, #d4af37 0%, #ffffff 25%, #ffe600 50%, #d4af37 75%, #ffffff 100%);
+background-size: 250% auto;
+color: transparent;
+-webkit-background-clip: text;
+background-clip: text;
+animation: goldShimmer 4s linear infinite;
+text-shadow: 0 0 25px rgba(255, 215, 0, 0.45);
+}
+
+@keyframes goldShimmer {
+to { background-position: 250% center; }
+}
+
+.btn-gold {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+gap: 8px;
+background: var(--gold-gradient);
+color: #030a17;
+font-family: var(--font-heading);
+font-weight: 800;
+font-size: 0.85rem;
+letter-spacing: 1.5px;
+text-transform: uppercase;
+padding: 12px 28px;
+border-radius: 50px;
+border: 1.5px solid rgba(255, 255, 255, 0.8);
+cursor: pointer;
+box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3), 0 0 15px rgba(255, 215, 0, 0.2);
+transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+position: relative;
+overflow: hidden;
+text-decoration: none;
+}
+
+.btn-gold:hover {
+transform: scale(1.03) translateY(-2px);
+box-shadow: 0 10px 28px rgba(255, 215, 0, 0.5);
+}
+
+.btn-gold:disabled {
+opacity: 0.6;
+cursor: not-allowed;
+transform: none;
+}
+
+.glass-card {
+background: linear-gradient(150deg, rgba(8, 28, 64, 0.5) 0%, rgba(3, 14, 34, 0.6) 100%);
+backdrop-filter: blur(14px);
+-webkit-backdrop-filter: blur(14px);
+border: 1px solid var(--gold-border);
+border-radius: 16px;
+padding: 16px;
+box-shadow: 0 8px 24px rgba(0, 10, 30, 0.25), inset 0 0 15px rgba(255, 215, 0, 0.03);
+transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.glass-card:hover {
+border-color: rgba(255, 215, 0, 0.4);
+}
+
+.divider-gold {
+width: 60px;
+height: 2px;
+background: var(--gold-gradient);
+margin: 0 auto 16px auto;
+position: relative;
+box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+}
+
+.divider-gold::after {
+content: '◆';
+position: absolute;
+left: 50%;
+top: 50%;
+transform: translate(-50%, -50%);
+color: var(--gold-bright);
+font-size: 0.6rem;
+background: #04122d;
+padding: 0 6px;
+}
+
+.pro-icon {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+color: var(--gold-bright);
+margin-bottom: 6px;
+}
+.pro-icon svg {
+width: 20px;
+height: 20px;
+stroke-width: 1.8;
+}
+
+/* AUTH LOGIN SCREEN */
+#auth-screen {
+position: fixed;
+inset: 0;
+z-index: 1000;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 20px;
+background: radial-gradient(circle at 50% 50%, rgba(6, 22, 54, 0.98) 0%, rgba(1, 4, 12, 0.99) 100%);
+backdrop-filter: blur(16px);
+transition: opacity .55s ease, visibility .55s ease;
+}
+
+.auth-card {
+max-width: 440px;
+width: 100%;
+text-align: center;
+padding: 35px 25px;
+border: 1px solid var(--gold-border);
+border-radius: 20px;
+box-shadow: 0 15px 40px rgba(0, 10, 30, 0.45);
+}
+
+.auth-logo-slot {
+width: 80px;
+height: 80px;
+margin: 0 auto 16px auto;
+border-radius: 50%;
+border: 2px solid var(--gold-bright);
+display: flex;
+align-items: center;
+justify-content: center;
+background: linear-gradient(135deg, #003688 0%, #001740 100%);
+box-shadow: 0 0 25px rgba(255, 215, 0, 0.45);
+padding: 6px;
+overflow: hidden;
+}
+
+.auth-logo-slot img {
+width: 100%;
+height: 100%;
+object-fit: contain;
+border-radius: 50%;
+}
+
+.auth-input {
+width: 100%;
+background: rgba(2, 7, 18, 0.85);
+border: 1px solid rgba(255, 215, 0, 0.35);
+color: #fff;
+padding: 14px 18px;
+border-radius: 10px;
+font-size: 1.05rem;
+font-family: var(--font-body);
+text-align: center;
+letter-spacing: 2px;
+margin: 18px 0 14px 0;
+outline: none;
+text-transform: uppercase;
+}
+
+.auth-input:focus {
+border-color: var(--gold-bright);
+box-shadow: 0 0 18px rgba(255, 215, 0, 0.35);
+}
+
+.auth-error {
+color: #ff6b6b;
+font-size: 0.85rem;
+margin-bottom: 12px;
+display: none;
+line-height: 1.4;
+background: rgba(255, 82, 82, 0.15);
+padding: 8px;
+border-radius: 6px;
+border: 1px solid rgba(255, 82, 82, 0.4);
+}
+
+/* 1:1 POSTER OPENING MODAL */
+#poster-opening-modal {
+position: fixed;
+inset: 0;
+z-index: 800;
+background: #031338;
+display: flex;
+align-items: center;
+justify-content: center;
+opacity: 0;
+visibility: hidden;
+pointer-events: none;
+transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#poster-opening-modal.active {
+opacity: 1;
+visibility: visible;
+pointer-events: auto;
+}
+
+.poster-stage-box {
+position: relative;
+width: min(86vw, 480px);
+height: min(86vw, 480px);
+aspect-ratio: 1 / 1;
+border-radius: 18px;
+overflow: hidden;
+border: 2px solid var(--gold-bright);
+box-shadow: 0 15px 45px rgba(0, 10, 30, 0.55);
+display: flex;
+}
+
+.poster-half {
+position: absolute;
+top: 0;
+bottom: 0;
+width: 50%;
+height: 100%;
+background-size: cover;
+background-repeat: no-repeat;
+transition: transform 1.25s cubic-bezier(0.77, 0, 0.18, 1);
+z-index: 2;
+}
+
+.poster-half-left {
+left: 0;
+background-image: url("https://i.postimg.cc/NM7ybPKW/1.png");
+background-position: left center;
+border-right: 1px solid rgba(255, 215, 0, 0.4);
+}
+
+.poster-half-right {
+right: 0;
+background-image: url("https://i.postimg.cc/V6BS4HJ2/2.png");
+background-position: right center;
+border-left: 1px solid rgba(255, 215, 0, 0.4);
+}
+
+#poster-opening-modal.open .poster-half-left { transform: translateX(-102%); }
+#poster-opening-modal.open .poster-half-right { transform: translateX(102%); }
+
+.open-curtain-btn {
+position: absolute;
+bottom: 22px;
+left: 50%;
+transform: translateX(-50%);
+z-index: 10;
+padding: 11px 40px;
+border-radius: 35px;
+border: 2px solid #ffffff;
+background: var(--gold-gradient);
+color: #030a17;
+font-family: var(--font-heading);
+font-weight: 900;
+font-size: 0.92rem;
+letter-spacing: 3px;
+cursor: pointer;
+box-shadow: 0 8px 22px rgba(0,0,0,0.5), 0 0 25px rgba(255, 215, 0, 0.55);
+transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.open-curtain-btn:hover {
+transform: translateX(-50%) scale(1.05);
+}
+
+#poster-opening-modal.open .open-curtain-btn {
+opacity: 0;
+transform: translateX(-50%) scale(0.9);
+pointer-events: none;
+}
+
+/* MAIN VIEWPORT */
+#portal-content {
+display: block;
+width: 100%;
+max-width: 100vw;
+height: 100vh;
+overflow-x: hidden !important;
+opacity: 0;
+pointer-events: none;
+user-select: none;
+transition: opacity 0.5s ease;
+}
+
+#portal-content.auth-unlocked {
+opacity: 1;
+pointer-events: auto;
+user-select: auto;
+}
+
+.top-progress-container {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 4px;
+background: rgba(255, 255, 255, 0.08);
+z-index: 120;
+}
+
+.top-progress-bar {
+height: 100%;
+width: 20%;
+background: var(--gold-gradient);
+box-shadow: 0 0 16px var(--gold-bright);
+transition: width 0.7s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+.user-access-pill {
+position: fixed;
+top: max(12px, env(safe-area-inset-top, 12px));
+right: 18px;
+z-index: 120;
+background: linear-gradient(135deg, rgba(14, 42, 90, 0.85) 0%, rgba(4, 15, 36, 0.9) 100%);
+border: 1.2px solid var(--gold-primary);
+padding: 5px 15px;
+border-radius: 30px;
+font-size: 0.78rem;
+font-weight: 600;
+letter-spacing: 0.8px;
+color: #ffffff;
+display: flex;
+align-items: center;
+gap: 6px;
+box-shadow: 0 4px 14px rgba(0, 10, 30, 0.3);
+}
+
+.user-access-pill svg { width: 14px; height: 14px; color: var(--gold-bright); }
+
+@media (max-width: 768px) {
+.user-access-pill { right: 12px; top: max(10px, env(safe-area-inset-top, 10px)); font-size: 0.72rem; }
+}
+
+.side-nav {
+position: fixed;
+right: 20px;
+top: 50%;
+transform: translateY(-50%);
+display: flex;
+flex-direction: column;
+gap: 12px;
+z-index: 120;
+}
+
+@media (max-width: 768px) { .side-nav { display: none; } }
+
+.nav-dot {
+width: 9px;
+height: 9px;
+border-radius: 50%;
+border: 1.6px solid var(--gold-primary);
+background: rgba(255, 215, 0, 0.15);
+cursor: pointer;
+transition: all 0.35s ease;
+}
+
+.nav-dot.active {
+background: var(--gold-bright);
+box-shadow: 0 0 14px var(--gold-bright);
+transform: scale(1.35);
+border-color: #fff;
+}
+
+/* 3D Slide Mechanism (5 Slides) */
+.deck-container {
+position: relative;
+width: 100%;
+max-width: 100vw;
+height: 100vh;
+overflow-x: hidden !important;
+perspective: 1400px;
+z-index: 10;
+}
+
+.slide {
+position: absolute;
+inset: 0;
+width: 100%;
+max-width: 100%;
+display: flex;
+align-items: flex-start;
+justify-content: center;
+padding: 40px 14px 40px 14px;
+opacity: 0;
+pointer-events: none;
+transform: translate3d(0, 80px, -200px) rotateX(-8deg);
+transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.85s cubic-bezier(0.2, 0.9, 0.3, 1);
+overflow-y: auto;
+overflow-x: hidden !important;
+-webkit-overflow-scrolling: touch;
+scroll-behavior: smooth;
+}
+
+.slide.active { opacity: 1; pointer-events: auto; transform: translate3d(0, 0, 0) rotateX(0deg); z-index: 20; }
+.slide.passed { opacity: 0; pointer-events: none; transform: translate3d(0, -80px, 150px) rotateX(8deg); z-index: 10; }
+
+.slide-inner {
+width: 100%;
+max-width: 960px;
+margin: auto;
+text-align: center;
+padding-bottom: 25px;
+overflow-x: hidden !important;
+}
+
+/* CENTER VERTICALLY FOR SLIDE 0 & 1 */
+.slide.centered-slide {
+align-items: center !important;
+}
+
+.slide.centered-slide .slide-inner {
+margin-top: auto;
+margin-bottom: auto;
+}
+
+/* HERO SLIDE */
+.hero-layout-grid {
+display: grid;
+grid-template-columns: 210px 1fr 210px;
+gap: 16px;
+align-items: center;
+margin-top: 5px;
+width: 100%;
+}
+
+@media (max-width: 900px) {
+.hero-layout-grid { grid-template-columns: 1fr; }
+.hero-side-card.desktop-only { display: none; }
+}
+
+.hero-side-card {
+background: linear-gradient(150deg, rgba(8, 28, 64, 0.5), rgba(2, 10, 26, 0.6));
+border: 1px solid var(--gold-border);
+border-radius: 16px;
+padding: 12px;
+box-shadow: 0 8px 20px rgba(0, 10, 30, 0.25);
+text-align: center;
+cursor: pointer;
+transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.hero-side-card:hover { transform: translateY(-3px); border-color: var(--gold-bright); }
+
+.hero-side-img {
+width: 100%;
+height: 120px;
+border-radius: 8px;
+object-fit: cover;
+border: 1px solid rgba(255,215,0,0.18);
+margin-bottom: 8px;
+}
+
+.event-banner-container {
+width: 100%;
+max-width: 500px;
+margin: 0 auto;
+padding: 22px 16px;
+border-radius: 20px;
+border: 1.2px solid var(--gold-border);
+background: linear-gradient(145deg, rgba(0, 48, 130, 0.55) 0%, rgba(4, 18, 45, 0.65) 100%);
+box-shadow: 0 10px 30px rgba(0, 10, 30, 0.3), inset 0 0 25px rgba(255, 215, 0, 0.05);
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+
+.school-crest {
+width: 74px;
+height: 74px;
+border-radius: 50%;
+border: 2px solid var(--gold-bright);
+margin-bottom: 10px;
+box-shadow: 0 0 22px rgba(255, 215, 0, 0.45);
+display: flex;
+align-items: center;
+justify-content: center;
+background: linear-gradient(135deg, #002870 0%, #001238 100%);
+padding: 5px;
+overflow: hidden;
+}
+
+.school-crest img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
+
+.batch-badge {
+display: inline-block;
+font-family: var(--font-heading);
+font-size: clamp(0.7rem, 1.4vw, 0.84rem);
+letter-spacing: 2.2px;
+color: #ffffff;
+font-weight: 800;
+margin-bottom: 8px;
+padding: 3px 12px;
+background: rgba(255, 215, 0, 0.12);
+border: 1px solid rgba(255, 215, 0, 0.28);
+border-radius: 25px;
+}
+
+.banner-title {
+font-family: var(--font-heading);
+font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+letter-spacing: 4px;
+font-weight: 900;
+line-height: 1.15;
+}
+
+.attendee-welcome {
+font-size: 0.96rem;
+color: #ffffff;
+margin: 10px 0 16px 0;
+letter-spacing: 0.6px;
+}
+
+.attendee-welcome span {
+color: var(--gold-bright);
+font-weight: 800;
+text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+border-bottom: none !important;
+text-decoration: none !important;
+}
+
+.mini-countdown { display: flex; justify-content: center; gap: 8px; margin-bottom: 18px; }
+
+.mini-cd-box {
+background: linear-gradient(145deg, rgba(7, 24, 56, 0.55), rgba(2, 10, 26, 0.65));
+border: 1px solid rgba(255, 215, 0, 0.25);
+border-radius: 8px;
+padding: 8px 10px;
+min-width: 55px;
+}
+
+.mini-cd-num { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: #ffffff; }
+.mini-cd-lbl { font-size: 0.6rem; font-weight: 700; color: var(--gold-bright); letter-spacing: 1px; text-transform: uppercase; margin-top: 1px; }
+
+.hero-mobile-teasers { display: none; }
+@media (max-width: 900px) {
+.hero-mobile-teasers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+  max-width: 500px;
+  margin: 14px auto 0 auto;
+}
+.hero-mobile-box {
+  background: linear-gradient(150deg, rgba(8, 25, 55, 0.5), rgba(3, 12, 28, 0.6));
+  border: 1px solid var(--gold-border);
+  border-radius: 12px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  text-align: left;
+}
+.hero-mobile-box:active { transform: scale(0.96); border-color: var(--gold-bright); }
+.hero-mobile-thumb { width: 40px; height: 40px; border-radius: 6px; object-fit: cover; flex-shrink: 0; }
+.hero-mobile-box h5 { font-family: var(--font-heading); color: #fff; font-size: 0.72rem; }
+.hero-mobile-box span { font-size: 0.6rem; color: var(--gold-bright); font-weight: 600; display: block; }
+}
+
+/* SLIDE 1: TICKET CANVAS & POSITIONED VERTICAL STUB (DOWN & RIGHT SHIFTED) */
+.ticket-canvas-container {
+position: relative;
+width: min(760px, 100%);
+margin: 0 auto 12px auto;
+border-radius: 10px;
+overflow: hidden;
+box-shadow: 0 10px 30px rgba(0, 10, 30, 0.4);
+border: 1.5px solid var(--gold-bright);
+aspect-ratio: 2 / 1;
+background: #031b45;
+}
+
+.ticket-template-img { width: 100%; height: 100%; display: block; object-fit: contain; }
+
+/* POSITIONED FURTHER RIGHT & DOWN TO SIT FLUSH BENEATH THE CROWN */
+.ticket-vertical-stub {
+position: absolute;
+right: 3.2%;
+top: 52%;
+transform: translateY(-50%);
+height: 42%;
+width: 12%;
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+gap: 7px;
+pointer-events: none;
+z-index: 6;
+overflow: hidden;
+padding: 1px 0;
+}
+
+/* 1. GUEST NAME FIRST (LEFT / INNER COLUMN) */
+.stub-owner-name {
+writing-mode: vertical-rl;
+transform: rotate(180deg);
+font-family: var(--font-heading);
+font-size: clamp(0.54rem, 1.05vw, 0.78rem);
+font-weight: 800;
+color: #ffffff;
+letter-spacing: 1.4px;
+text-transform: uppercase;
+white-space: nowrap;
+max-height: 100%;
+overflow: hidden;
+text-shadow: 0 0 5px rgba(0, 0, 0, 0.95);
+line-height: 1;
+}
+
+/* 2. CHASSIS NUMBER STAMP (RIGHT / OUTER COLUMN) */
+.stub-chassis-number {
+writing-mode: vertical-rl;
+transform: rotate(180deg);
+font-family: var(--font-mono);
+font-size: clamp(0.48rem, 0.95vw, 0.72rem);
+font-weight: 900;
+letter-spacing: 2px;
+color: var(--gold-bright);
+text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+text-transform: uppercase;
+white-space: nowrap;
+border-left: 1px dashed rgba(255, 215, 0, 0.35);
+padding-left: 4px;
+max-height: 100%;
+line-height: 1;
+}
+
+@media (max-width: 600px) {
+.ticket-vertical-stub {
+  right: 2.8%;
+  top: 53%;
+  width: 12.8%;
+  gap: 4px;
+  height: 40%;
+}
+.stub-owner-name {
+  font-size: clamp(0.44rem, 2vw, 0.58rem);
+  letter-spacing: 0.8px;
+}
+.stub-chassis-number {
+  font-size: clamp(0.4rem, 1.8vw, 0.52rem);
+  letter-spacing: 1.2px;
+  padding-left: 2px;
+}
+}
+
+.ticket-meta-pill {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+flex-wrap: wrap;
+gap: 6px 12px;
+background: rgba(3, 16, 42, 0.55);
+border: 1px solid var(--gold-border);
+padding: 5px 16px;
+border-radius: 25px;
+font-size: 0.82rem;
+margin-bottom: 12px;
+}
+
+.ticket-meta-pill span { color: var(--gold-bright); font-family: monospace; font-weight: 700; letter-spacing: 1.5px; }
+
+/* SLIDE 2: VENUE COMPACT PRO GRID */
+.venue-apple-grid {
+display: grid;
+grid-template-columns: 310px 1fr;
+gap: 14px;
+align-items: stretch;
+text-align: left;
+max-width: 780px;
+margin: 0 auto;
+width: 100%;
+}
+
+@media (max-width: 820px) {
+.venue-apple-grid { grid-template-columns: 1fr; max-width: 480px; }
+}
+
+.poster-stage-card {
+position: relative;
+height: 100%;
+min-height: 270px;
+border-radius: 14px;
+overflow: hidden;
+border: 1.2px solid var(--gold-bright);
+background: #031b45;
+box-shadow: 0 8px 24px rgba(0, 10, 30, 0.3);
+}
+
+.poster-stage-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.venue-info-stack { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.venue-info-card {
+display: flex;
+flex-direction: column;
+justify-content: flex-end;
+min-height: 110px;
+border-radius: 12px;
+padding: 12px;
+position: relative;
+}
+
+.venue-info-card .v-num {
+position: absolute;
+top: 8px;
+right: 10px;
+font-family: var(--font-heading);
+font-size: 1.25rem;
+color: rgba(255, 215, 0, 0.12);
+font-weight: 800;
+}
+
+/* SLIDE 3: ACTIVITIES PRO GRID */
+.apple-grid {
+display: grid;
+grid-template-columns: 1.1fr 1fr;
+gap: 14px;
+align-items: stretch;
+text-align: left;
+max-width: 820px;
+margin: 0 auto;
+width: 100%;
+}
+
+@media (max-width: 820px) {
+.apple-grid { grid-template-columns: 1fr; max-width: 480px; }
+}
+
+.dj-hero-card {
+position: relative;
+min-height: 280px;
+border-radius: 14px;
+overflow: hidden;
+border: 1.2px solid var(--gold-bright);
+background: #031b45;
+box-shadow: 0 8px 24px rgba(0, 10, 30, 0.3);
+}
+
+.dj-hero-card img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.dj-gradient-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 35%, rgba(2, 8, 22, 0.4) 55%, rgba(1, 6, 18, 0.95) 100%); }
+
+.dj-card-info { position: absolute; bottom: 14px; left: 14px; right: 14px; z-index: 2; }
+
+.feature-stack { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.feature-mini-card {
+display: flex;
+flex-direction: column;
+justify-content: flex-end;
+min-height: 110px;
+border-radius: 12px;
+padding: 12px;
+position: relative;
+}
+
+.feature-mini-card .f-num {
+position: absolute;
+top: 8px;
+right: 10px;
+font-family: var(--font-heading);
+font-size: 1.25rem;
+color: rgba(255, 215, 0, 0.12);
+font-weight: 800;
+}
+
+/* SLIDE 4: LOCATION AND HOTEL */
+.location-deck-grid {
+display: grid;
+grid-template-columns: 1.1fr 1fr;
+gap: 14px;
+align-items: stretch;
+text-align: left;
+max-width: 780px;
+margin: 0 auto;
+width: 100%;
+}
+
+@media (max-width: 820px) {
+.location-deck-grid { grid-template-columns: 1fr; max-width: 480px; }
+}
+
+.hotel-hero-card {
+position: relative;
+min-height: 280px;
+border-radius: 14px;
+overflow: hidden;
+border: 1px solid var(--gold-border);
+background: #031b45;
+box-shadow: 0 8px 24px rgba(0, 10, 30, 0.3);
+}
+
+.hotel-hero-card img { width: 100%; height: 100%; object-fit: cover; }
+.hotel-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 20%, rgba(1, 8, 22, 0.92) 100%); }
+.hotel-content { position: absolute; bottom: 14px; left: 14px; right: 14px; z-index: 2; }
+
+/* FIXED DEVELOPER BRANDING AT SCREEN BOTTOM */
+.dev-branding-fixed {
+position: fixed;
+bottom: 8px;
+left: 50%;
+transform: translateX(-50%);
+z-index: 85;
+text-align: center;
+font-size: 0.62rem;
+color: rgba(199, 219, 249, 0.28);
+letter-spacing: 1.4px;
+text-transform: uppercase;
+font-family: var(--font-body);
+user-select: none;
+pointer-events: none;
+white-space: nowrap;
+}
+
+body.auth-locked {
+overflow: hidden;
+}
+
+#auth-screen.auth-hidden {
+opacity: 0;
+visibility: hidden;
+pointer-events: none;
 }
-
-
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
-
-@media(prefers-reduced-motion:reduce){
-
-    *,
-    *::before,
-    *::after{
-
-        animation-duration:.01ms!important;
-
-        animation-iteration-count:1!important;
-
-        transition-duration:.01ms!important;
-    }
-}
-
 </style>
 </head>
-
-
-<body>
-
-
-<!-- =========================================================
-     PARTICLES
-========================================================= -->
+<body class="auth-locked">
 
 <canvas id="particles-canvas"></canvas>
-
 <div class="ambient-glow"></div>
 
+<div class="royal-corner top-left"></div>
+<div class="royal-corner bottom-left"></div>
+<div class="royal-corner bottom-right"></div>
 
-<!-- =========================================================
-     AUTH SCREEN
-========================================================= -->
-
+<!-- AUTH LOGIN SCREEN (NO SINHALA TEXT, CLEAN MINIMAL ENTRY) -->
 <div id="auth-screen">
+<div class="glass-card auth-card">
+<div class="auth-logo-slot">
+  <img src="https://i.postimg.cc/x8k1hNCr/OIP.webp" alt="School Crest" />
+</div>
+<span style="font-size: 0.74rem; letter-spacing: 3.5px; color: var(--gold-bright); text-transform: uppercase; font-weight: 700;">
+2020 O/L BATCH PRESENTS
+</span>
+<h2 class="shimmer-text" style="font-family: var(--font-heading); font-size: 2.1rem; margin: 8px 0 16px 0;">
+5 YEARS LATER
+</h2>
 
-    <div class="auth-card">
-
-        <div class="auth-logo">
-            👑
-        </div>
-
-        <div class="auth-kicker">
-            2020 O/L • 2023 A/L REUNION
-        </div>
-
-        <h1 class="auth-title gold-text">
-            5 YEARS LATER
-        </h1>
-
-        <p class="auth-subtitle">
-            ඔබගේ ජාතික හැඳුනුම්පත් අංකය ඇතුළත් කර
-            ඔබගේ Official Digital Gate Pass එක ලබා ගන්න.
-        </p>
-
-        <form id="nicLoginForm">
-
-            <input
-                id="accessKeyInput"
-                class="auth-input"
-                type="text"
-                placeholder="NIC NUMBER"
-                autocomplete="off"
-                spellcheck="false"
-            />
-
-            <div id="authError" class="auth-error"></div>
-
-            <button
-                id="loginBtn"
-                type="submit"
-                class="btn-gold"
-                style="width:100%;margin-top:14px;border-radius:10px;"
-            >
-                Unlock Royal Pass
-            </button>
-
-        </form>
-
-    </div>
-
+<form id="nicLoginForm" method="get" autocomplete="off">
+<input type="text" id="accessKeyInput" name="nic" class="auth-input" placeholder="NIC NUMBER" inputmode="text" spellcheck="false" autocomplete="off" />
+<div id="authError" class="auth-error"></div>
+<button type="submit" class="btn-gold" id="loginBtn" style="width: 100%; border-radius: 10px;">
+Unlock Royal Pass
+</button>
+</form>
+</div>
 </div>
 
-
-<!-- =========================================================
-     POSTER OPENING
-========================================================= -->
-
-<div id="poster-opening">
-
-    <div class="poster-stage">
-
-        <div class="poster-half poster-left"></div>
-
-        <div class="poster-half poster-right"></div>
-
-    </div>
-
-    <button
-        id="openPosterButton"
-        class="poster-center-button"
-        type="button"
-    >
-        OPEN
-    </button>
-
-    <div class="poster-hint">
-        Tap to enter
-    </div>
-
+<!-- 1:1 POSTER OPENING MODAL -->
+<div id="poster-opening-modal">
+  <div class="poster-stage-box">
+    <div class="poster-half poster-half-left"></div>
+    <div class="poster-half poster-half-right"></div>
+    <button class="open-curtain-btn" id="openCurtainBtn" type="button">OPEN</button>
+  </div>
 </div>
 
-
-<!-- =========================================================
-     MAIN PORTAL
-========================================================= -->
-
+<!-- MAIN PORTAL -->
 <div id="portal-content">
 
-
-    <div class="top-progress">
-
-        <div
-            id="topProgressBar"
-            class="top-progress-bar"
-        ></div>
-
-    </div>
-
-
-    <div class="user-pill">
-
-        👑
-
-        <span id="pillUser">
-            Guest
-        </span>
-
-        •
-
-        <strong id="pillTicket">
-            KMV-0000
-        </strong>
-
-    </div>
-
-
-    <!-- SIDE DOT NAVIGATION -->
-
-    <div class="side-nav">
-
-        <div
-            class="nav-dot active"
-            onclick="goToSlide(0)"
-        ></div>
-
-        <div
-            class="nav-dot"
-            onclick="goToSlide(1)"
-        ></div>
-
-        <div
-            class="nav-dot"
-            onclick="goToSlide(2)"
-        ></div>
-
-        <div
-            class="nav-dot"
-            onclick="goToSlide(3)"
-        ></div>
-
-        <div
-            class="nav-dot"
-            onclick="goToSlide(4)"
-        ></div>
-
-    </div>
-
-
-    <div class="deck">
-
-
-        <!-- =================================================
-             SLIDE 0
-        ================================================== -->
-
-        <section class="slide active">
-
-            <div class="slide-inner">
-
-                <div class="hero-banner">
-
-                    <div class="hero-title gold-text">
-                        5 YEARS LATER
-                    </div>
-
-                    <div class="hero-subtitle">
-                        THE ULTIMATE GET TOGETHER
-                    </div>
-
-                </div>
-
-
-                <div class="welcome-name">
-
-                    Honored Guest:
-
-                    <strong id="welcomeName">
-                        Loading...
-                    </strong>
-
-                </div>
-
-
-                <div class="countdown">
-
-                    <div class="count-box">
-                        <div
-                            id="days"
-                            class="count-number"
-                        >
-                            00
-                        </div>
-
-                        <div class="count-label">
-                            Days
-                        </div>
-                    </div>
-
-
-                    <div class="count-box">
-                        <div
-                            id="hours"
-                            class="count-number"
-                        >
-                            00
-                        </div>
-
-                        <div class="count-label">
-                            Hours
-                        </div>
-                    </div>
-
-
-                    <div class="count-box">
-                        <div
-                            id="minutes"
-                            class="count-number"
-                        >
-                            00
-                        </div>
-
-                        <div class="count-label">
-                            Min
-                        </div>
-                    </div>
-
-
-                    <div class="count-box">
-                        <div
-                            id="seconds"
-                            class="count-number"
-                        >
-                            00
-                        </div>
-
-                        <div class="count-label">
-                            Sec
-                        </div>
-                    </div>
-
-                </div>
-
-
-                <button
-                    class="btn-gold"
-                    onclick="goToSlide(1)"
-                >
-                    View Official Gate Pass
-                </button>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             SLIDE 1 – DIGITAL TICKET
-        ================================================== -->
-
-        <section class="slide">
-
-            <div class="slide-inner ticket-area">
-
-                <div class="section-kicker">
-                    Entrance Verification
-                </div>
-
-                <h2 class="section-title gold-text">
-                    Official Digital Pass
-                </h2>
-
-                <div class="divider"></div>
-
-
-                <div
-                    id="ticketCapture"
-                    class="ticket-wrapper"
-                >
-
-                    <img
-                        class="ticket-image"
-                        src="https://i.postimg.cc/q7RZp8Gt/Ticket.png"
-                        crossorigin="anonymous"
-                        alt="Official 5 Years Later Ticket"
-                    />
-
-
-                    <!-- QR IS INSERTED HERE -->
-
-                    <div
-                        id="ticketQR"
-                        class="ticket-qr"
-                    ></div>
-
-                </div>
-
-
-                <div class="ticket-info">
-
-                    <span
-                        style="color:#9db2d1;"
-                    >
-                        Guest:
-                    </span>
-
-                    <strong id="cardGuestName">
-                        Guest
-                    </strong>
-
-                    <span style="color:#526b91;">
-                        •
-                    </span>
-
-                    <span
-                        id="cardTicketId"
-                        class="ticket-id-display"
-                    >
-                        KMV-0001
-                    </span>
-
-                </div>
-
-
-                <button
-                    id="downloadTicketBtn"
-                    class="download-ticket"
-                    type="button"
-                >
-                    ↓ Download Official Ticket PDF
-                </button>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             SLIDE 2 – EVENT INFORMATION
-        ================================================== -->
-
-        <section class="slide">
-
-            <div class="slide-inner">
-
-                <div class="section-kicker">
-                    Event Information
-                </div>
-
-                <h2 class="section-title gold-text">
-                    The Reunion Experience
-                </h2>
-
-                <div class="divider"></div>
-
-
-                <div class="info-grid">
-
-
-                    <div class="glass-card info-card">
-
-                        <div class="info-icon">
-                            📅
-                        </div>
-
-                        <h3>
-                            Date
-                        </h3>
-
-                        <p>
-                            27th December 2026
-                        </p>
-
-                        <p class="info-highlight">
-                            Sunday
-                        </p>
-
-                    </div>
-
-
-                    <div class="glass-card info-card">
-
-                        <div class="info-icon">
-                            ⏰
-                        </div>
-
-                        <h3>
-                            Time
-                        </h3>
-
-                        <p>
-                            8:00 AM – 4:00 PM
-                        </p>
-
-                        <p class="info-highlight">
-                            Full Day
-                        </p>
-
-                    </div>
-
-
-                    <div class="glass-card info-card">
-
-                        <div class="info-icon">
-                            👔
-                        </div>
-
-                        <h3>
-                            Dress Code
-                        </h3>
-
-                        <p>
-                            Black & White
-                        </p>
-
-                        <p class="info-highlight">
-                            White & Blue
-                        </p>
-
-                    </div>
-
-
-                    <div class="glass-card info-card">
-
-                        <div class="info-icon">
-                            🎟️
-                        </div>
-
-                        <h3>
-                            Admission
-                        </h3>
-
-                        <p>
-                            LKR 4,000
-                        </p>
-
-                        <p class="info-highlight">
-                            All Inclusive
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             SLIDE 3 – ACTIVITIES
-        ================================================== -->
-
-        <section class="slide">
-
-            <div class="slide-inner">
-
-                <div class="section-kicker">
-                    What Awaits You
-                </div>
-
-                <h2 class="section-title gold-text">
-                    Activities & Moments
-                </h2>
-
-                <div class="divider"></div>
-
-
-                <div class="activities-layout">
-
-
-                    <!-- FEATURED DJ -->
-
-                    <div class="dj-card">
-
-                        <img
-                            class="dj-image"
-                            src="https://i.postimg.cc/hvjGrZ8T/Chat-GPT-Image-Sep-30-2026-07-18-27-PM.png"
-                            crossorigin="anonymous"
-                            alt="DJ Artist"
-                        />
-
-                        <div class="dj-overlay"></div>
-
-                        <div class="dj-content">
-
-                            <div class="dj-kicker">
-                                Live Performance
-                            </div>
-
-                            <div class="dj-name">
-                                DJ SHAN JAY
-                            </div>
-
-                            <div class="dj-description">
-                                Get ready for an unforgettable
-                                reunion night with school anthems,
-                                party tracks and nonstop energy.
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- APPLE STYLE FEATURE CARDS -->
-
-                    <div class="activity-stack">
-
-
-                        <div class="glass-card activity-card">
-
-                            <div class="activity-number">
-                                01
-                            </div>
-
-                            <div class="icon">
-                                📸
-                            </div>
-
-                            <h3>
-                                Photo Shoot
-                            </h3>
-
-                            <p>
-                                Capture the reunion memories
-                                with your batch mates.
-                            </p>
-
-                        </div>
-
-
-                        <div class="glass-card activity-card">
-
-                            <div class="activity-number">
-                                02
-                            </div>
-
-                            <div class="icon">
-                                🥂
-                            </div>
-
-                            <h3>
-                                Welcome Drinks
-                            </h3>
-
-                            <p>
-                                Refreshing drinks waiting
-                                when you arrive.
-                            </p>
-
-                        </div>
-
-
-                        <div class="glass-card activity-card">
-
-                            <div class="activity-number">
-                                03
-                            </div>
-
-                            <div class="icon">
-                                🍽️
-                            </div>
-
-                            <h3>
-                                Grand Food
-                            </h3>
-
-                            <p>
-                                Enjoy the full-day feast
-                                with everyone.
-                            </p>
-
-                        </div>
-
-
-                        <div class="glass-card activity-card">
-
-                            <div class="activity-number">
-                                04
-                            </div>
-
-                            <div class="icon">
-                                ✨
-                            </div>
-
-                            <h3>
-                                Memories
-                            </h3>
-
-                            <p>
-                                Reconnect, laugh and create
-                                new memories together.
-                            </p>
-
-                        </div>
-
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             SLIDE 4 – LOCATION
-        ================================================== -->
-
-        <section class="slide">
-
-            <div class="slide-inner">
-
-                <div class="section-kicker">
-                    Find Your Way
-                </div>
-
-                <h2 class="section-title gold-text">
-                    Glamoura Hotel
-                </h2>
-
-                <div class="divider"></div>
-
-
-                <div class="location-layout">
-
-
-                    <!-- HOTEL IMAGE -->
-
-                    <div class="hotel-card">
-
-                        <img
-                            class="hotel-image"
-                            src="https://i.postimg.cc/zGtYwDtt/Chat-GPT-Image-Sep-30-2026-07-24-01-PM.png"
-                            crossorigin="anonymous"
-                            alt="Glamoura Hotel"
-                        />
-
-                        <div class="hotel-overlay"></div>
-
-                        <div class="hotel-content">
-
-                            <h3>
-                                Glamoura Hotel
-                            </h3>
-
-                            <div class="hotel-location">
-                                Gemunupura
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- LOCATION DETAILS -->
-
-                    <div class="location-details">
-
-
-                        <div class="glass-card location-detail-card">
-
-                            <h3>
-                                📍 Event Location
-                            </h3>
-
-                            <p>
-                                Glamoura Hotel<br>
-                                Gemunupura
-                            </p>
-
-                        </div>
-
-
-                        <div class="glass-card location-detail-card">
-
-                            <h3>
-                                🕐 Event Time
-                            </h3>
-
-                            <p>
-                                27th December 2026<br>
-                                8:00 AM – 4:00 PM
-                            </p>
-
-                        </div>
-
-
-                        <div class="glass-card location-detail-card">
-
-                            <h3>
-                                🚗 Getting There
-                            </h3>
-
-                            <p>
-                                Use Google Maps to get
-                                turn-by-turn directions
-                                directly to the venue.
-                            </p>
-
-                        </div>
-
-
-                        <a
-                            class="map-button"
-                            href="https://maps.app.goo.gl/gTNFUT3VWWjstmyz6?g_st=aw"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            📍 OPEN LOCATION IN GOOGLE MAPS
-                        </a>
-
-
-                        <div class="map-note">
-                            Tap the button to open navigation.
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-    </div>
-
+<div class="top-progress-container">
+<div class="top-progress-bar" id="topProgressBar"></div>
 </div>
 
+<!-- Active User Status Tag -->
+<div class="user-access-pill">
+<span class="pro-icon" style="margin:0;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zM3 20h18v2H3z"/></svg></span>
+<span id="pillUser">Guest</span> •
+<span id="pillTicket" style="color: var(--gold-bright); font-weight: 800;">KMV-0000</span>
+</div>
 
-<!-- =========================================================
-     FIREBASE
-========================================================= -->
+<!-- Side Nav Dots (5 Slides) -->
+<div class="side-nav">
+<div class="nav-dot active" onclick="goToSlide(0)"></div>
+<div class="nav-dot" onclick="goToSlide(1)"></div>
+<div class="nav-dot" onclick="goToSlide(2)"></div>
+<div class="nav-dot" onclick="goToSlide(3)"></div>
+<div class="nav-dot" onclick="goToSlide(4)"></div>
+</div>
+
+<div class="deck-container">
+
+<!-- SLIDE 0: FLYER HERO BANNER (CENTERED ON PAGE) -->
+<div class="slide active centered-slide">
+<div class="slide-inner">
+
+<div class="hero-layout-grid">
+  <!-- Desktop Left Highlight: DJ -->
+  <div class="hero-side-card desktop-only" onclick="goToSlide(3)">
+    <img src="https://i.postimg.cc/hvjGrZ8T/Chat-GPT-Image-Sep-30-2026-07-18-27-PM.png" alt="DJ Live" class="hero-side-img" />
+    <span style="color:var(--gold-bright); font-size:0.66rem; font-weight:700; letter-spacing:1.8px; text-transform:uppercase;">DJ Artist</span>
+    <h4 style="font-family:var(--font-heading); color:#fff; font-size:1rem; margin-top:2px;">DJ SHAN JAY</h4>
+    <p style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;">View artist & tracks →</p>
+  </div>
+
+  <!-- Center Main Crest Banner -->
+  <div class="event-banner-container">
+    <div class="school-crest">
+      <img src="https://i.postimg.cc/x8k1hNCr/OIP.webp" alt="School Crest Logo" />
+    </div>
+    <div class="batch-badge">2020 O/L BATCH PRESENTS</div>
+    <h1 class="banner-title shimmer-text">5 YEARS LATER</h1>
+    <p style="font-size: 0.85rem; letter-spacing: 3px; color: var(--gold-bright); font-weight: 600; margin-top: 4px;">– THE ULTIMATE GET TOGETHER –</p>
+
+    <div class="attendee-welcome">
+      Honored Guest: <span id="welcomeName">Loading...</span>
+    </div>
+
+    <div class="mini-countdown">
+      <div class="mini-cd-box"><div class="mini-cd-num" id="days">00</div><div class="mini-cd-lbl">Days</div></div>
+      <div class="mini-cd-box"><div class="mini-cd-num" id="hours">00</div><div class="mini-cd-lbl">Hours</div></div>
+      <div class="mini-cd-box"><div class="mini-cd-num" id="minutes">00</div><div class="mini-cd-lbl">Min</div></div>
+      <div class="mini-cd-box"><div class="mini-cd-num" id="seconds">00</div><div class="mini-cd-lbl">Sec</div></div>
+    </div>
+
+    <button onclick="goToSlide(1)" class="btn-gold">View Your Official Gate Pass</button>
+  </div>
+
+  <!-- Desktop Right Highlight: Hotel -->
+  <div class="hero-side-card desktop-only" onclick="goToSlide(4)">
+    <img src="https://i.postimg.cc/zGtYwDtt/Chat-GPT-Image-Sep-30-2026-07-24-01-PM.png" alt="Glamoura Hotel" class="hero-side-img" />
+    <span style="color:var(--gold-bright); font-size:0.66rem; font-weight:700; letter-spacing:1.8px; text-transform:uppercase;">Official Venue</span>
+    <h4 style="font-family:var(--font-heading); color:#fff; font-size:1rem; margin-top:2px;">Glamoura Hotel</h4>
+    <p style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;">Gemunupura • Venue Maps →</p>
+  </div>
+</div>
+
+<!-- Mobile Quick Interactive Teasers Below Hero -->
+<div class="hero-mobile-teasers">
+  <div class="hero-mobile-box" onclick="goToSlide(3)">
+    <img src="https://i.postimg.cc/hvjGrZ8T/Chat-GPT-Image-Sep-30-2026-07-18-27-PM.png" alt="DJ Live" class="hero-mobile-thumb" />
+    <div>
+      <h5>DJ SHAN JAY</h5>
+      <span>View Performance →</span>
+    </div>
+  </div>
+  <div class="hero-mobile-box" onclick="goToSlide(4)">
+    <img src="https://i.postimg.cc/zGtYwDtt/Chat-GPT-Image-Sep-30-2026-07-24-01-PM.png" alt="Glamoura Hotel" class="hero-mobile-thumb" />
+    <div>
+      <h5>GLAMOURA HOTEL</h5>
+      <span>Open Venue Maps →</span>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<!-- SLIDE 1: NEW OFFICIAL TICKET & VERTICAL STUB (CENTERED ON PAGE, DOWN & RIGHT) -->
+<div class="slide centered-slide">
+<div class="slide-inner">
+<span style="font-size: 0.74rem; letter-spacing: 3px; color: var(--gold-bright); text-transform: uppercase; font-weight: 700;">
+Entrance Verification
+</span>
+<h2 style="font-family: var(--font-heading); font-size: 1.8rem; margin: 4px 0 12px 0;">Official Digital Pass</h2>
+<div class="divider-gold"></div>
+
+<div class="ticket-meta-pill">
+  Guest: <strong id="ticketGuestPill" style="color:#fff;">Guest</strong> • Ticket: <span id="ticketIdPill">KMV-0001</span>
+</div>
+
+<!-- NEW TICKET WITH NAME (LEFT) & CHASSIS NUMBER (RIGHT) -->
+<div id="ticketCaptureTarget" class="ticket-canvas-container">
+  <img class="ticket-template-img" src="https://i.postimg.cc/9QkJj1Wp/new-Ticket.png" alt="Official Ticket Template" crossorigin="anonymous" />
+  
+  <div class="ticket-vertical-stub">
+    <div class="stub-owner-name" id="ticketStubName">GUEST</div>
+    <div class="stub-chassis-number" id="ticketStubChassis">KMV - 0001</div>
+  </div>
+</div>
+
+<div style="margin-top: 14px;">
+  <button id="downloadTicketPdfBtn" class="btn-gold" style="border-radius: 30px;">
+    ⬇ Download Official Ticket PDF
+  </button>
+</div>
+
+</div>
+</div>
+
+<!-- SLIDE 2: VENUE DETAILS -->
+<div class="slide">
+<div class="slide-inner">
+<span style="font-size: 0.74rem; letter-spacing: 3px; color: var(--gold-bright); text-transform: uppercase; font-weight: 700;">
+Event Information
+</span>
+<h2 style="font-family: var(--font-heading); font-size: 1.8rem; margin: 4px 0 12px 0;">Venue & Details</h2>
+<div class="divider-gold"></div>
+
+<div class="venue-apple-grid">
+  <div class="poster-stage-card">
+    <img src="https://i.postimg.cc/Ssf1mDMb/Untitled-1.png" alt="5 YEARS LATER Poster" loading="lazy" />
+  </div>
+
+  <div class="venue-info-stack">
+    <div class="glass-card venue-info-card">
+      <div class="v-num">01</div>
+      <div class="pro-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M12 2l10 8H2l10-8z"/></svg></div>
+      <h4 style="font-family: var(--font-heading); color: var(--gold-bright); font-size: 0.92rem; margin-bottom: 2px;">LOCATION</h4>
+      <p style="font-size: 0.86rem; color: #fff; font-weight: 700;">Glamoura Hotel</p>
+      <p style="font-size: 0.74rem; color: var(--gold-primary);">Gemunupura, Sri Lanka</p>
+    </div>
+
+    <div class="glass-card venue-info-card">
+      <div class="v-num">02</div>
+      <div class="pro-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M12 14v4M12 14l2-2"/></svg></div>
+      <h4 style="font-family: var(--font-heading); color: var(--gold-bright); font-size: 0.92rem; margin-bottom: 2px;">DATE & TIME</h4>
+      <p style="font-size: 0.86rem; color: #fff; font-weight: 700;">27th Dec 2026</p>
+      <p style="font-size: 0.74rem; color: var(--gold-primary);">8:00 AM – 4:00 PM</p>
+    </div>
+
+    <div class="glass-card venue-info-card">
+      <div class="v-num">03</div>
+      <div class="pro-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2l2 5-2 15-2-15 2-5zM10 2h4"/></svg></div>
+      <h4 style="font-family: var(--font-heading); color: var(--gold-bright); font-size: 0.92rem; margin-bottom: 2px;">DRESS CODE</h4>
+      <p style="font-size: 0.86rem; color: #fff; font-weight: 700;">Black & White</p>
+      <p style="font-size: 0.74rem; color: #90caf9;">White & Blue</p>
+    </div>
+
+    <div class="glass-card venue-info-card">
+      <div class="v-num">04</div>
+      <div class="pro-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v2z"/><path d="M13 5v2M13 11v2M13 17v2"/></svg></div>
+      <h4 style="font-family: var(--font-heading); color: var(--gold-bright); font-size: 0.92rem; margin-bottom: 2px;">ADMISSION</h4>
+      <p style="font-size: 0.86rem; color: #fff; font-weight: 700;">LKR 4,000</p>
+      <p style="font-size: 0.74rem; color: #a5d6a7;">All Inclusive Feast</p>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<!-- SLIDE 3: ACTIVITIES & MOMENTS -->
+<div class="slide">
+<div class="slide-inner">
+<span style="font-size: 0.74rem; letter-spacing: 3px; color: var(--gold-bright); text-transform: uppercase; font-weight: 700;">
+What Awaits You
+</span>
+<h2 style="font-family: var(--font-heading); font-size: 1.8rem; margin: 4px 0 12px 0;">Activities & Moments</h2>
+<div class="divider-gold"></div>
+
+<div class="apple-grid">
+  <!-- Highlight DJ -->
+  <div class="dj-hero-card">
+    <img src="https://i.postimg.cc/hvjGrZ8T/Chat-GPT-Image-Sep-30-2026-07-18-27-PM.png" alt="DJ Artist" crossorigin="anonymous" />
+    <div class="dj-gradient-overlay"></div>
+    <div class="dj-card-info">
+      <span style="color:var(--gold-bright); font-size:0.68rem; letter-spacing:2.5px; text-transform:uppercase; font-weight:700;">LIVE PERFORMANCE</span>
+      <h3 style="font-family:var(--font-heading); font-size: clamp(1.5rem, 2.8vw, 2.1rem); color:#fff; margin-top:2px;">DJ SHAN JAY</h3>
+      <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.4; margin-top:3px;">
+        High-energy school anthems, top remixes, and pulsating rhythm beats.
+      </p>
+    </div>
+  </div>
+
+  <!-- Feature Grid -->
+  <div class="feature-stack">
+    <div class="glass-card feature-mini-card">
+      <div class="f-num">01</div>
+      <div class="pro-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+      <span style="color:var(--gold-bright); font-size:0.66rem; letter-spacing:1.5px; font-weight:700; text-transform:uppercase;">PHOTOGRAPHER</span>
+      <h4 style="font-family: var(--font-heading); color: #fff; font-size: 1rem; margin-top: 1px;">ISHARA CHATHURANGA</h4>
+      <p style="font-size: 0.72rem; color: var(--text-muted); margin-top:2px;">Studio red carpet photoshoot session.</p>
+    </div>
+
+    <div class="glass-card feature-mini-card">
+      <div class="f-num">02</div>
+      <div class="pro-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 22h8M12 15v7M5 3h14l-2 9a5 5 0 0 1-10 0L5 3z"/></svg></div>
+      <h4 style="font-family: var(--font-heading); color: var(--gold-bright); font-size: 0.92rem; margin-bottom: 2px;">WELCOME DRINKS</h4>
+      <p style="font-size: 0.72rem; color: var(--text-muted);">Chilled mocktails & fresh beverages on arrival.</p>
+    </div>
+
+    <div class="glass-card feature-mini-card">
+      <div class="f-num">03</div>
+      <div class="pro-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 2v20M21 15V2a3 3 0 0 0-3 3v7h3M6 2v7a2 2 0 0 1-2 2H2V2h4zM4 11v11"/></svg></div>
+      <h4 style="font-family: var(--font-heading); color: var(--gold-bright); font-size: 0.92rem; margin-bottom: 2px;">GRAND BUFFET</h4>
+      <p style="font-size: 0.72rem; color: var(--text-muted);">Multi-course gourmet feast and desserts.</p>
+    </div>
+
+    <div class="glass-card feature-mini-card">
+      <div class="f-num">04</div>
+      <div class="pro-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8L12 2z"/></svg></div>
+      <h4 style="font-family: var(--font-heading); color: var(--gold-bright); font-size: 0.92rem; margin-bottom: 2px;">REUNION VAULT</h4>
+      <p style="font-size: 0.72rem; color: var(--text-muted);">Batch memories, shared laughs, and bonds.</p>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<!-- SLIDE 4: LOCATION AND HOTEL -->
+<div class="slide">
+<div class="slide-inner">
+<span style="font-size: 0.74rem; letter-spacing: 3px; color: var(--gold-bright); text-transform: uppercase; font-weight: 700;">
+Find Your Way
+</span>
+<h2 style="font-family: var(--font-heading); font-size: 1.8rem; margin: 4px 0 12px 0;">Glamoura Hotel</h2>
+<div class="divider-gold"></div>
+
+<div class="location-deck-grid">
+  <div class="hotel-hero-card">
+    <img src="https://i.postimg.cc/zGtYwDtt/Chat-GPT-Image-Sep-30-2026-07-24-01-PM.png" alt="Glamoura Hotel View" crossorigin="anonymous" />
+    <div class="hotel-overlay"></div>
+    <div class="hotel-content">
+      <span style="color:var(--gold-bright); font-size:0.68rem; letter-spacing:2.5px; font-weight:700;">OFFICIAL VENUE</span>
+      <h3 style="font-family:var(--font-heading); font-size:1.5rem; color:#fff; margin-top:2px;">Glamoura Hotel</h3>
+      <p style="color:var(--text-muted); font-size:0.8rem; margin-top:2px;">Gemunupura • Luxury Banquet Hall</p>
+    </div>
+  </div>
+
+  <div style="display:flex; flex-direction:column; gap:12px;">
+    <div class="glass-card">
+      <div class="pro-icon" style="margin-bottom:4px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+      <h4 style="font-family:var(--font-heading); color:var(--gold-bright); font-size:0.98rem; margin-bottom:2px;">Event Address</h4>
+      <p style="color:#fff; font-weight:600; font-size:0.88rem;">Glamoura Hotel, Gemunupura</p>
+      <p style="color:var(--text-muted); font-size:0.75rem; margin-top:2px;">Reserved parking and red carpet entrance for attendees.</p>
+    </div>
+
+    <div class="glass-card">
+      <div class="pro-icon" style="margin-bottom:4px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+      <h4 style="font-family:var(--font-heading); color:var(--gold-bright); font-size:0.98rem; margin-bottom:2px;">Date & Time</h4>
+      <p style="color:#fff; font-weight:600; font-size:0.88rem;">Sunday, 27th December 2026</p>
+      <p style="color:var(--gold-bright); font-size:0.78rem; margin-top:1px;">8:00 AM – 4:00 PM (Full Day)</p>
+    </div>
+
+    <a href="https://maps.app.goo.gl/gTNFUT3VWWjstmyz6?g_st=aw" target="_blank" rel="noopener noreferrer" class="btn-gold" style="width: 100%; border-radius: 10px; font-size:0.82rem;">
+      Open Location in Google Maps
+    </a>
+  </div>
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- FIXED DEVELOPER BRANDING AT SCREEN BOTTOM -->
+<div class="dev-branding-fixed">Develop By {KAS}Dev Studio</div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 
-
 <script>
-
-/* ============================================================
-   FIREBASE CONFIG
-============================================================ */
-
 const firebaseConfig = {
-
-    apiKey:
-        "AIzaSyDGHS7j_Ovj0N-b8-8RW71HyvEdTABKMdFA",
-
-    authDomain:
-        "elysia-reunion.firebaseapp.com",
-
-    projectId:
-        "elysia-reunion",
-
-    storageBucket:
-        "elysia-reunion.firebasestorage.app",
-
-    messagingSenderId:
-        "985506879172",
-
-    appId:
-        "1:985506879172:web:cf62355fb3ee406331b91",
-
-    measurementId:
-        "G-EDYKJD8HZL"
+apiKey: "AIzaSyDGHS7j_Ovj0N-b-8RW71HyvEdTABKMdFA",
+authDomain: "elysia-reunion.firebaseapp.com",
+projectId: "elysia-reunion",
+storageBucket: "elysia-reunion.firebasestorage.app",
+messagingSenderId: "985506879172",
+appId: "1:985506879172:web:cf62355fb3ee406331b91",
+measurementId: "G-EDYKJD8HZL"
 };
-
 
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
-
 const db = firebase.firestore();
 
-
-/* ============================================================
-   HELPERS
-============================================================ */
-
-function normalizeNIC(value){
-
-    return String(value || "")
-        .trim()
-        .toUpperCase()
-        .replace(/[\s\-_]/g,"");
+function normalizeNIC(value) {
+return String(value || "").trim().toUpperCase().replace(/[\s\-_]/g, "");
 }
 
-
-function formatKMV(ticketId){
-
-    let id = String(ticketId || "")
-        .trim()
-        .toUpperCase();
-
-    /*
-       Existing old IDs such as:
-
-       KLY-0001
-       ELY-0001
-       ELY-1001
-
-       will appear as KMV IDs in the portal.
-    */
-
-    if(
-        id.startsWith("KLY-") ||
-        id.startsWith("ELY-")
-    ){
-
-        id =
-            "KMV-" +
-            id.substring(
-                id.indexOf("-") + 1
-            );
-    }
-
-    /*
-       If old data contains only a number,
-       convert it to KMV.
-    */
-
-    if(/^\d+$/.test(id)){
-
-        id = "KMV-" + id;
-    }
-
-    return id || "KMV-0000";
+function formatKMVID(ticketId) {
+let id = String(ticketId || "").trim().toUpperCase();
+if (id.startsWith("KLY-") || id.startsWith("ELY-")) {
+  id = "KMV-" + id.substring(id.indexOf("-") + 1);
+} else if (/^\d+$/.test(id)) {
+  id = "KMV-" + id;
+} else if (!id.startsWith("KMV-")) {
+  id = "KMV-" + id;
+}
+return id || "KMV-0000";
 }
 
-
-/* ============================================================
-   AUTH ERROR
-============================================================ */
-
-function showAuthError(message){
-
-    const error =
-        document.getElementById("authError");
-
-    const button =
-        document.getElementById("loginBtn");
-
-    if(error){
-
-        error.style.display = "block";
-
-        error.innerText = message;
-    }
-
-    if(button){
-
-        button.disabled = false;
-
-        button.innerText =
-            "Unlock Royal Pass";
-    }
+function showAuthError(message) {
+const err = document.getElementById("authError");
+const btn = document.getElementById("loginBtn");
+if (err) {
+  err.style.display = "block";
+  err.innerText = message;
+}
+if (btn) {
+  btn.disabled = false;
+  btn.innerText = "Unlock Royal Pass";
+}
 }
 
-
-function setLoginBusy(busy){
-
-    const button =
-        document.getElementById("loginBtn");
-
-    if(!button) return;
-
-    button.disabled = busy;
-
-    button.innerText =
-        busy
-            ? "VERIFYING NIC..."
-            : "Unlock Royal Pass";
+function setLoginBusy(isBusy) {
+const btn = document.getElementById("loginBtn");
+if (!btn) return;
+btn.disabled = isBusy;
+btn.innerText = isBusy ? "VERIFYING NIC..." : "Unlock Royal Pass";
 }
-
-
-/* ============================================================
-   ANONYMOUS AUTH
-============================================================ */
 
 auth.signInAnonymously()
-
-    .then(()=>{
-
-        const input =
-            document.getElementById(
-                "accessKeyInput"
-            );
-
-        if(input){
-
-            setTimeout(
-                ()=>input.focus(),
-                150
-            );
-        }
-
-    })
-
-    .catch(error=>{
-
-        console.error(
-            "Firebase anonymous auth:",
-            error
-        );
-
-        showAuthError(
-            "System connection error. Please refresh the page."
-        );
-
-    });
-
-
-/* ============================================================
-   NIC LOGIN
-============================================================ */
-
-document
-    .getElementById("nicLoginForm")
-    .addEventListener(
-        "submit",
-        async function(event){
-
-            event.preventDefault();
-
-            const input =
-                document.getElementById(
-                    "accessKeyInput"
-                );
-
-            const nic =
-                normalizeNIC(input.value);
-
-            if(!nic){
-
-                showAuthError(
-                    "කරුණාකර NIC අංකය ඇතුළත් කරන්න."
-                );
-
-                input.focus();
-
-                return;
-            }
-
-
-            if(!auth.currentUser){
-
-                showAuthError(
-                    "Secure connection is still starting. Please try again."
-                );
-
-                return;
-            }
-
-
-            document
-                .getElementById("authError")
-                .style.display = "none";
-
-
-            setLoginBusy(true);
-
-
-            try{
-
-                const guestRef =
-                    db
-                        .collection("guests")
-                        .doc(nic);
-
-
-                const guestSnap =
-                    await guestRef.get();
-
-
-                if(!guestSnap.exists){
-
-                    showAuthError(
-                        "මෙම NIC අංකයට අදාල Gate Pass එකක් හමු නොවීය."
-                    );
-
-                    input.focus();
-
-                    input.select();
-
-                    return;
-                }
-
-
-                const guest =
-                    guestSnap.data() || {};
-
-
-                const userData = {
-
-                    success:true,
-
-                    name:
-                        String(
-                            guest.name || ""
-                        ).trim(),
-
-                    nic:
-                        String(
-                            guest.nic || nic
-                        ).trim(),
-
-                    ticketId:
-                        formatKMV(
-                            guest.ticketId
-                        ),
-
-                    phone:
-                        String(
-                            guest.phone || ""
-                        ).trim()
-
-                };
-
-
-                if(
-                    !userData.name ||
-                    !userData.ticketId
-                ){
-
-                    showAuthError(
-                        "Guest record is incomplete. Please contact the organizer."
-                    );
-
-                    return;
-                }
-
-
-                launchPortal(userData);
-
-
-                /*
-                   First hide authentication.
-                   Then reveal the poster.
-                */
-
-                document
-                    .getElementById("auth-screen")
-                    .classList.add("hidden");
-
-
-                setTimeout(()=>{
-
-                    document
-                        .getElementById("poster-opening")
-                        .classList.remove("closed");
-
-                },400);
-
-
-            }
-            catch(error){
-
-                console.error(
-                    "Guest lookup error:",
-                    error
-                );
-
-
-                if(
-                    error &&
-                    error.code ===
-                    "permission-denied"
-                ){
-
-                    showAuthError(
-                        "Access was denied. Please refresh and try again."
-                    );
-
-                }
-                else{
-
-                    showAuthError(
-                        "Could not verify your NIC right now."
-                    );
-
-                }
-
-            }
-            finally{
-
-                setLoginBusy(false);
-
-            }
-
-        }
-    );
-
-
-/* ============================================================
-   PORTAL DATA
-============================================================ */
-
-let currentUserData = null;
-
-
-function launchPortal(userData){
-
-    currentUserData = userData;
-
-
-    document
-        .getElementById("portal-content")
-        .classList.add("unlocked");
-
-
-    document
-        .getElementById("pillUser")
-        .innerText =
-        userData.name;
-
-
-    document
-        .getElementById("pillTicket")
-        .innerText =
-        userData.ticketId;
-
-
-    document
-        .getElementById("welcomeName")
-        .innerText =
-        userData.name;
-
-
-    document
-        .getElementById("cardGuestName")
-        .innerText =
-        userData.name;
-
-
-    document
-        .getElementById("cardTicketId")
-        .innerText =
-        userData.ticketId;
-
-
-    /*
-       Generate QR
-    */
-
-    generateTicketQR(userData);
-
+.then(() => {
+const input = document.getElementById("accessKeyInput");
+if (input) setTimeout(() => input.focus(), 120);
+})
+.catch((error) => {
+console.error("Firebase Anonymous Auth background start:", error);
+});
+
+let currentActiveUser = null;
+
+document.getElementById("nicLoginForm").addEventListener("submit", async function(e) {
+e.preventDefault();
+
+const input = document.getElementById("accessKeyInput");
+const nic = normalizeNIC(input.value);
+
+if (!nic) {
+showAuthError("Please enter your NIC number!");
+input.focus();
+return;
 }
 
+document.getElementById("authError").style.display = "none";
+setLoginBusy(true);
 
-/* ============================================================
-   QR GENERATION
-============================================================ */
-
-async function generateTicketQR(userData){
-
-    const qrContainer =
-        document.getElementById(
-            "ticketQR"
-        );
-
-    if(!qrContainer) return;
-
-
-    qrContainer.innerHTML = "";
-
-
-    const qrData = JSON.stringify({
-
-        event:
-            "5 YEARS LATER",
-
-        guest:
-            userData.name,
-
-        ticket:
-            userData.ticketId,
-
-        nic:
-            userData.nic
-
-    });
-
-
-    try{
-
-        await QRCode.toCanvas(
-
-            document.createElement("canvas"),
-
-            qrData,
-
-            {
-                width:260,
-
-                margin:1,
-
-                errorCorrectionLevel:"H",
-
-                color:{
-                    dark:"#06152e",
-                    light:"#ffffff"
-                }
-            },
-
-            function(error,canvas){
-
-                if(error){
-
-                    console.error(
-                        "QR generation:",
-                        error
-                    );
-
-                    return;
-                }
-
-                qrContainer.appendChild(canvas);
-
-            }
-
-        );
-
-    }
-    catch(error){
-
-        console.error(
-            "QR error:",
-            error
-        );
-
-    }
-
+try {
+if (!auth.currentUser) {
+  await auth.signInAnonymously();
 }
 
+let guestRef = db.collection("guests").doc(nic);
+let guestSnap = await guestRef.get();
 
-/* ============================================================
-   POSTER OPEN ANIMATION
-============================================================ */
+if (!guestSnap.exists) {
+  const altNic = nic.endsWith('V') ? nic.replace(/V$/, '') : nic + 'V';
+  guestSnap = await db.collection("guests").doc(altNic).get();
+}
 
-const posterOpening =
-    document.getElementById(
-        "poster-opening"
-    );
+if (!guestSnap.exists) {
+  const querySnap = await db.collection("guests").where("nic", "==", nic).limit(1).get();
+  if (!querySnap.empty) {
+    guestSnap = querySnap.docs[0];
+  }
+}
 
-const openPosterButton =
-    document.getElementById(
-        "openPosterButton"
-    );
+if (!guestSnap.exists) {
+showAuthError("No Royal Gate Pass found for this NIC. Please check and try again.");
+input.focus();
+input.select();
+return;
+}
 
+const guest = guestSnap.data() || {};
+const finalTicketId = formatKMVID(guest.ticketId);
 
-openPosterButton.addEventListener(
-    "click",
-    ()=>{
+currentActiveUser = {
+success: true,
+name: String(guest.name || "").trim(),
+nic: String(guest.nic || nic).trim(),
+ticketId: finalTicketId,
+phone: String(guest.phone || "").trim(),
+};
 
-        posterOpening.classList.add(
-            "opening"
-        );
+if (!currentActiveUser.name || !currentActiveUser.ticketId) {
+showAuthError("Guest record is incomplete. Please contact the event organizer.");
+return;
+}
 
+launchPortal(currentActiveUser);
 
-        /*
-           Wait for curtain animation,
-           then completely remove overlay.
-        */
+document.getElementById("auth-screen").classList.add("auth-hidden");
+document.body.classList.remove("auth-locked");
 
-        setTimeout(()=>{
+const curtainModal = document.getElementById("poster-opening-modal");
+if (curtainModal) {
+  curtainModal.classList.add("active");
+}
 
-            posterOpening.classList.add(
-                "closed"
-            );
+} catch (error) {
+console.error("Firestore lookup error:", error);
+if (error && error.code === "permission-denied") {
+  showAuthError("Secure access was denied. Please refresh the page and try again.");
+} else {
+  showAuthError("Could not verify your NIC right now. Please check your internet connection.");
+}
+} finally {
+setLoginBusy(false);
+}
+});
 
-            posterOpening.classList.remove(
-                "opening"
-            );
+document.getElementById("openCurtainBtn").addEventListener("click", function() {
+const curtainModal = document.getElementById("poster-opening-modal");
+if (!curtainModal) return;
+curtainModal.classList.add("open");
 
-        },1400);
+setTimeout(() => {
+  curtainModal.classList.remove("active");
+  document.getElementById("portal-content").classList.add("auth-unlocked");
+}, 1250);
+});
 
-    }
-);
+function launchPortal(userData) {
+const setText = (id, val) => {
+  const el = document.getElementById(id);
+  if (el) el.innerText = val;
+};
 
+setText('pillUser', userData.name);
+setText('pillTicket', userData.ticketId);
+setText('welcomeName', userData.name);
+setText('ticketGuestPill', userData.name);
+setText('ticketIdPill', userData.ticketId);
 
-/* ============================================================
-   SLIDE SYSTEM
-============================================================ */
+const nameEl = document.getElementById('ticketStubName');
+const chassisEl = document.getElementById('ticketStubChassis');
 
-const slides =
-    document.querySelectorAll(
-        ".slide"
-    );
+if (nameEl) {
+  nameEl.innerText = userData.name;
+  if (userData.name.length > 18) {
+    nameEl.style.fontSize = 'clamp(0.44rem, 0.85vw, 0.6rem)';
+    nameEl.style.letterSpacing = '1px';
+  } else if (userData.name.length > 13) {
+    nameEl.style.fontSize = 'clamp(0.5rem, 0.95vw, 0.68rem)';
+    nameEl.style.letterSpacing = '1.2px';
+  } else {
+    nameEl.style.fontSize = '';
+    nameEl.style.letterSpacing = '';
+  }
+}
 
-const dots =
-    document.querySelectorAll(
-        ".nav-dot"
-    );
+if (chassisEl) {
+  chassisEl.innerText = userData.ticketId;
+}
+}
 
-const progressBar =
-    document.getElementById(
-        "topProgressBar"
-    );
+// PDF DOWNLOAD HANDLER
+document.getElementById("downloadTicketPdfBtn").addEventListener("click", async function() {
+if (!currentActiveUser) return;
 
+const btn = this;
+const originalText = btn.innerText;
+btn.disabled = true;
+btn.innerText = "PREPARING PDF TICKET...";
 
+try {
+  const ticketElem = document.getElementById("ticketCaptureTarget");
+  await new Promise(r => setTimeout(r, 350));
+
+  const canvas = await html2canvas(ticketElem, {
+    scale: 2.5,
+    useCORS: true,
+    allowTaint: false,
+    backgroundColor: "#031b45"
+  });
+
+  const imgData = canvas.toDataURL("image/png");
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF({
+    orientation: "landscape",
+    unit: "mm",
+    format: "a4"
+  });
+
+  const pageWidth = pdf.internal.pageSize.getWidth();
+  const pageHeight = pdf.internal.pageSize.getHeight();
+  const margin = 10;
+  const maxWidth = pageWidth - margin * 2;
+  const maxHeight = pageHeight - margin * 2;
+  const ratio = canvas.width / canvas.height;
+
+  let w = maxWidth;
+  let h = w / ratio;
+  if (h > maxHeight) {
+    h = maxHeight;
+    w = h * ratio;
+  }
+
+  const x = (pageWidth - w) / 2;
+  const y = (pageHeight - h) / 2;
+
+  pdf.addImage(imgData, "PNG", x, y, w, h);
+  pdf.save(`${currentActiveUser.ticketId}-5YearsLater-Pass.pdf`);
+} catch (err) {
+  console.error("PDF Generate Error:", err);
+  alert("Could not generate ticket PDF. Please try taking a screenshot.");
+} finally {
+  btn.disabled = false;
+  btn.innerText = originalText;
+}
+});
+
+/* 3D SLIDE CONTROLLER (5 SLIDES) */
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.nav-dot');
+const progressBar = document.getElementById('topProgressBar');
 let currentIndex = 0;
-
 let isTransitioning = false;
 
+function updateDeck(newIndex) {
+if (newIndex < 0 || newIndex >= slides.length || isTransitioning) return;
+isTransitioning = true;
 
-function updateDeck(newIndex){
+slides.forEach((slide, i) => {
+slide.classList.remove('active', 'passed');
+if (i < newIndex) slide.classList.add('passed');
+else if (i === newIndex) {
+  slide.classList.add('active');
+  slide.scrollTop = 0;
+}
+});
 
-    if(
-        newIndex < 0 ||
-        newIndex >= slides.length ||
-        isTransitioning
-    ){
+dots.forEach((dot, i) => dot.classList.toggle('active', i === newIndex));
+progressBar.style.width = `${((newIndex + 1) / slides.length) * 100}%`;
+currentIndex = newIndex;
 
-        return;
-    }
-
-
-    isTransitioning = true;
-
-
-    slides.forEach(
-        (slide,index)=>{
-
-            slide.classList.remove(
-                "active",
-                "passed"
-            );
-
-
-            if(index < newIndex){
-
-                slide.classList.add(
-                    "passed"
-                );
-
-            }
-            else if(index === newIndex){
-
-                slide.classList.add(
-                    "active"
-                );
-
-            }
-
-        }
-    );
-
-
-    dots.forEach(
-        (dot,index)=>{
-
-            dot.classList.toggle(
-                "active",
-                index === newIndex
-            );
-
-        }
-    );
-
-
-    progressBar.style.width =
-        `${((newIndex + 1) / slides.length) * 100}%`;
-
-
-    currentIndex =
-        newIndex;
-
-
-    setTimeout(
-        ()=>{
-            isTransitioning = false;
-        },
-        750
-    );
-
+setTimeout(() => { isTransitioning = false; }, 700);
 }
 
+function nextSlide() { if (currentIndex < slides.length - 1) updateDeck(currentIndex + 1); }
+function prevSlide() { if (currentIndex > 0) updateDeck(currentIndex - 1); }
+function goToSlide(idx) { updateDeck(idx); }
 
-function nextSlide(){
+let wheelCooldown = false;
+function handleDeckWheel(e) {
+const authScreen = document.getElementById('auth-screen');
+const curtainModal = document.getElementById('poster-opening-modal');
+if (!authScreen.classList.contains('auth-hidden') || (curtainModal && curtainModal.classList.contains('active'))) return;
+if (wheelCooldown) return;
 
-    if(
-        currentIndex <
-        slides.length - 1
-    ){
+const currentSlide = slides[currentIndex];
+const maxScrollTop = currentSlide.scrollHeight - currentSlide.clientHeight;
 
-        updateDeck(
-            currentIndex + 1
-        );
-
-    }
-
+if (e.deltaY > 0) {
+  if (currentSlide.scrollTop < maxScrollTop - 10) return;
+  e.preventDefault();
+  wheelCooldown = true;
+  nextSlide();
+  setTimeout(() => { wheelCooldown = false; }, 700);
+} else if (e.deltaY < 0) {
+  if (currentSlide.scrollTop > 10) return;
+  e.preventDefault();
+  wheelCooldown = true;
+  prevSlide();
+  setTimeout(() => { wheelCooldown = false; }, 700);
+}
 }
 
+document.addEventListener('wheel', handleDeckWheel, { capture: true, passive: false });
 
-function prevSlide(){
+document.addEventListener('keydown', (e) => {
+const authScreen = document.getElementById('auth-screen');
+const curtainModal = document.getElementById('poster-opening-modal');
+if (!authScreen.classList.contains('auth-hidden') || (curtainModal && curtainModal.classList.contains('active'))) return;
 
-    if(currentIndex > 0){
-
-        updateDeck(
-            currentIndex - 1
-        );
-
-    }
-
+if (['PageDown'].includes(e.key)) {
+e.preventDefault(); nextSlide();
+} else if (['PageUp'].includes(e.key)) {
+e.preventDefault(); prevSlide();
 }
-
-
-function goToSlide(index){
-
-    updateDeck(index);
-
-}
-
-
-/* ============================================================
-   MOUSE WHEEL
-============================================================ */
-
-let wheelLock = false;
-
-
-document.addEventListener(
-    "wheel",
-    function(event){
-
-        const auth =
-            document.getElementById(
-                "auth-screen"
-            );
-
-        if(
-            !auth.classList.contains(
-                "hidden"
-            )
-        ){
-
-            return;
-        }
-
-
-        if(
-            Math.abs(event.deltaY) < 15 ||
-            wheelLock
-        ){
-
-            return;
-        }
-
-
-        event.preventDefault();
-
-
-        wheelLock = true;
-
-
-        if(event.deltaY > 0){
-
-            nextSlide();
-
-        }
-        else{
-
-            prevSlide();
-
-        }
-
-
-        setTimeout(
-            ()=>{
-                wheelLock = false;
-            },
-            700
-        );
-
-    },
-    {
-        passive:false
-    }
-);
-
-
-/* ============================================================
-   KEYBOARD
-============================================================ */
-
-document.addEventListener(
-    "keydown",
-    event=>{
-
-        const auth =
-            document.getElementById(
-                "auth-screen"
-            );
-
-
-        if(
-            !auth.classList.contains(
-                "hidden"
-            )
-        ){
-
-            return;
-        }
-
-
-        if(
-            [
-                "ArrowDown",
-                "ArrowRight",
-                "PageDown",
-                " "
-            ].includes(event.key)
-        ){
-
-            event.preventDefault();
-
-            nextSlide();
-
-        }
-
-
-        if(
-            [
-                "ArrowUp",
-                "ArrowLeft",
-                "PageUp"
-            ].includes(event.key)
-        ){
-
-            event.preventDefault();
-
-            prevSlide();
-
-        }
-
-    }
-);
-
-
-/* ============================================================
-   TOUCH SWIPE
-============================================================ */
+});
 
 let touchStartY = 0;
+window.addEventListener('touchstart', (e) => { touchStartY = e.touches[0].clientY; }, { passive: true });
+window.addEventListener('touchend', (e) => {
+const authScreen = document.getElementById('auth-screen');
+const curtainModal = document.getElementById('poster-opening-modal');
+if (!authScreen.classList.contains('auth-hidden') || (curtainModal && curtainModal.classList.contains('active'))) return;
 
-let touchStartX = 0;
+const currentSlide = slides[currentIndex];
+const maxScrollTop = currentSlide.scrollHeight - currentSlide.clientHeight;
+const diffY = touchStartY - e.changedTouches[0].clientY;
 
-
-window.addEventListener(
-    "touchstart",
-    event=>{
-
-        touchStartY =
-            event.touches[0].clientY;
-
-        touchStartX =
-            event.touches[0].clientX;
-
-    },
-    {
-        passive:true
-    }
-);
-
-
-window.addEventListener(
-    "touchend",
-    event=>{
-
-        const auth =
-            document.getElementById(
-                "auth-screen"
-            );
-
-
-        if(
-            !auth.classList.contains(
-                "hidden"
-            )
-        ){
-
-            return;
-        }
-
-
-        const endY =
-            event.changedTouches[0].clientY;
-
-        const endX =
-            event.changedTouches[0].clientX;
-
-
-        const diffY =
-            touchStartY - endY;
-
-        const diffX =
-            touchStartX - endX;
-
-
-        /*
-           Only treat vertical gestures
-           as page navigation.
-        */
-
-        if(
-            Math.abs(diffY) >
-            Math.abs(diffX) &&
-            Math.abs(diffY) > 45
-        ){
-
-            if(diffY > 0){
-
-                nextSlide();
-
-            }
-            else{
-
-                prevSlide();
-
-            }
-
-        }
-
-    },
-    {
-        passive:true
-    }
-);
-
-
-/* ============================================================
-   COUNTDOWN
-============================================================ */
-
-const targetDate =
-    new Date(
-        "December 27, 2026 08:00:00"
-    ).getTime();
-
-
-function updateCountdown(){
-
-    const now =
-        Date.now();
-
-    const diff =
-        targetDate - now;
-
-
-    if(diff <= 0){
-
-        [
-            "days",
-            "hours",
-            "minutes",
-            "seconds"
-        ].forEach(
-            id=>{
-                document
-                    .getElementById(id)
-                    .innerText = "00";
-            }
-        );
-
-        return;
-    }
-
-
-    const days =
-        Math.floor(
-            diff /
-            (1000*60*60*24)
-        );
-
-
-    const hours =
-        Math.floor(
-            (diff %
-                (1000*60*60*24))
-            /
-            (1000*60*60)
-        );
-
-
-    const minutes =
-        Math.floor(
-            (diff %
-                (1000*60*60))
-            /
-            (1000*60)
-        );
-
-
-    const seconds =
-        Math.floor(
-            (diff %
-                (1000*60))
-            /
-            1000
-        );
-
-
-    document
-        .getElementById("days")
-        .innerText =
-        String(days).padStart(2,"0");
-
-
-    document
-        .getElementById("hours")
-        .innerText =
-        String(hours).padStart(2,"0");
-
-
-    document
-        .getElementById("minutes")
-        .innerText =
-        String(minutes).padStart(2,"0");
-
-
-    document
-        .getElementById("seconds")
-        .innerText =
-        String(seconds).padStart(2,"0");
-
+if (Math.abs(diffY) > 50) {
+  if (diffY > 0 && currentSlide.scrollTop >= maxScrollTop - 15) {
+    nextSlide();
+  } else if (diffY < 0 && currentSlide.scrollTop <= 15) {
+    prevSlide();
+  }
 }
+}, { passive: true });
 
-
-setInterval(
-    updateCountdown,
-    1000
-);
-
+/* COUNTDOWN TIMER */
+const targetDate = new Date('December 27, 2026 08:00:00').getTime();
+function updateCountdown() {
+const now = new Date().getTime();
+const diff = targetDate - now;
+if (diff > 0) {
+document.getElementById('days').innerText = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
+document.getElementById('hours').innerText = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+document.getElementById('minutes').innerText = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+document.getElementById('seconds').innerText = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
+}
+}
+setInterval(updateCountdown, 1000);
 updateCountdown();
 
-
-/* ============================================================
-   PDF DOWNLOAD
-============================================================ */
-
-document
-    .getElementById(
-        "downloadTicketBtn"
-    )
-    .addEventListener(
-        "click",
-        async function(){
-
-            if(!currentUserData){
-
-                return;
-            }
-
-
-            const button = this;
-
-            const originalText =
-                button.innerText;
-
-
-            button.disabled = true;
-
-            button.innerText =
-                "PREPARING TICKET...";
-
-
-            try{
-
-                const element =
-                    document.getElementById(
-                        "ticketCapture"
-                    );
-
-
-                /*
-                   Small wait gives the QR/image
-                   time to finish rendering.
-                */
-
-                await new Promise(
-                    resolve =>
-                        setTimeout(
-                            resolve,
-                            500
-                        )
-                );
-
-
-                const canvas =
-                    await html2canvas(
-                        element,
-                        {
-                            scale:2,
-
-                            useCORS:true,
-
-                            allowTaint:false,
-
-                            backgroundColor:
-                                "#031b45"
-                        }
-                    );
-
-
-                const imageData =
-                    canvas.toDataURL(
-                        "image/png"
-                    );
-
-
-                const {
-                    jsPDF
-                } =
-                    window.jspdf;
-
-
-                const pdf =
-                    new jsPDF({
-
-                        orientation:"landscape",
-
-                        unit:"mm",
-
-                        format:"a4"
-
-                    });
-
-
-                const pageWidth =
-                    pdf.internal.pageSize
-                        .getWidth();
-
-
-                const pageHeight =
-                    pdf.internal.pageSize
-                        .getHeight();
-
-
-                const margin = 8;
-
-
-                const maxWidth =
-                    pageWidth -
-                    margin * 2;
-
-
-                const maxHeight =
-                    pageHeight -
-                    margin * 2;
-
-
-                const ratio =
-                    canvas.width /
-                    canvas.height;
-
-
-                let width =
-                    maxWidth;
-
-                let height =
-                    width / ratio;
-
-
-                if(height > maxHeight){
-
-                    height =
-                        maxHeight;
-
-                    width =
-                        height * ratio;
-
-                }
-
-
-                const x =
-                    (pageWidth - width) / 2;
-
-
-                const y =
-                    (pageHeight - height) / 2;
-
-
-                pdf.addImage(
-
-                    imageData,
-
-                    "PNG",
-
-                    x,
-                    y,
-                    width,
-                    height
-                );
-
-
-                pdf.save(
-
-                    `${currentUserData.ticketId}-Official-Ticket.pdf`
-
-                );
-
-            }
-            catch(error){
-
-                console.error(
-                    "PDF error:",
-                    error
-                );
-
-
-                alert(
-                    "Ticket PDF එක generate කරන්න බැරි වුණා. Please try again."
-                );
-
-            }
-            finally{
-
-                button.disabled = false;
-
-                button.innerText =
-                    originalText;
-
-            }
-
-        }
-    );
-
-
-/* ============================================================
-   BACKGROUND PARTICLES
-============================================================ */
-
-const canvas =
-    document.getElementById(
-        "particles-canvas"
-    );
-
-const ctx =
-    canvas.getContext("2d");
-
-
+/* PARTICLES */
+const canvas = document.getElementById('particles-canvas');
+const ctx = canvas.getContext('2d');
 let particles = [];
-
-
-function resizeCanvas(){
-
-    canvas.width =
-        window.innerWidth;
-
-    canvas.height =
-        window.innerHeight;
-
-}
-
-
-window.addEventListener(
-    "resize",
-    resizeCanvas
-);
-
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
-
-class Particle{
-
-    constructor(){
-
-        this.reset();
-
-    }
-
-
-    reset(){
-
-        this.x =
-            Math.random() *
-            canvas.width;
-
-        this.y =
-            Math.random() *
-            canvas.height;
-
-        this.size =
-            Math.random()*1.7+.4;
-
-        this.speedY =
-            -(Math.random()*.35+.08);
-
-        this.speedX =
-            (Math.random()-.5)*.2;
-
-        this.opacity =
-            Math.random()*.45+.12;
-
-    }
-
-
-    update(){
-
-        this.y +=
-            this.speedY;
-
-        this.x +=
-            this.speedX;
-
-
-        if(
-            this.y < -5
-        ){
-
-            this.y =
-                canvas.height + 5;
-
-            this.x =
-                Math.random() *
-                canvas.width;
-
-        }
-
-    }
-
-
-    draw(){
-
-        ctx.beginPath();
-
-        ctx.arc(
-            this.x,
-            this.y,
-            this.size,
-            0,
-            Math.PI*2
-        );
-
-        ctx.fillStyle =
-            "#e2bd35";
-
-        ctx.globalAlpha =
-            this.opacity;
-
-        ctx.fill();
-
-        ctx.globalAlpha = 1;
-
-    }
-
+class Particle {
+constructor() { this.reset(); }
+reset() {
+this.x = Math.random() * canvas.width;
+this.y = Math.random() * canvas.height;
+this.size = Math.random() * 2.2 + 0.5;
+this.speedY = -(Math.random() * 0.45 + 0.15);
+this.speedX = (Math.random() - 0.5) * 0.3;
+this.opacity = Math.random() * 0.55 + 0.35;
 }
-
-
-for(
-    let i=0;
-    i<55;
-    i++
-){
-
-    particles.push(
-        new Particle()
-    );
-
+update() {
+this.y += this.speedY;
+this.x += this.speedX;
+if (this.y < 0) { this.y = canvas.height; this.x = Math.random() * canvas.width; }
 }
-
-
-function particleLoop(){
-
-    ctx.clearRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
-
-
-    particles.forEach(
-        particle=>{
-
-            particle.update();
-
-            particle.draw();
-
-        }
-    );
-
-
-    requestAnimationFrame(
-        particleLoop
-    );
-
+draw() {
+ctx.beginPath();
+ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+ctx.fillStyle = '#ffe66d';
+ctx.globalAlpha = this.opacity;
+ctx.shadowBlur = 8;
+ctx.shadowColor = '#ffd700';
+ctx.fill();
+ctx.globalAlpha = 1;
 }
-
-
-particleLoop();
-
-
-/* ============================================================
-   INITIAL PROGRESS
-============================================================ */
-
-progressBar.style.width = "20%";
-
+}
+for (let i = 0; i < 48; i++) particles.push(new Particle());
+function loop() {
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+particles.forEach(p => { p.update(); p.draw(); });
+requestAnimationFrame(loop);
+}
+loop();
 </script>
-
 </body>
 </html>
