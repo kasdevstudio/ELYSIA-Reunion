@@ -12,6 +12,7 @@
 <!-- PDF & CANVAS LIBRARIES -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <style>
 *, *::before, *::after {
@@ -479,6 +480,52 @@ perspective: 1400px;
 z-index: 10;
 }
 
+
+/* TICKET QR — guest details encoded without exposing the NIC */
+.ticket-stub-qr {
+  width: 42px;
+  height: 42px;
+  padding: 3px;
+  background: #ffffff;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3px;
+  flex: 0 0 auto;
+  overflow: hidden;
+}
+
+.ticket-stub-qr canvas,
+.ticket-stub-qr img {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .ticket-stub-qr {
+    width: 30px;
+    height: 30px;
+    padding: 2px;
+    border-radius: 3px;
+  }
+}
+
+/* Give pages 3–5 a little more scroll breathing room so bottom
+   details are never covered by the fixed footer. */
+.deck-container > .slide:nth-child(3),
+.deck-container > .slide:nth-child(4),
+.deck-container > .slide:nth-child(5) {
+  padding-bottom: 92px;
+}
+
+.deck-container > .slide:nth-child(3) .slide-inner,
+.deck-container > .slide:nth-child(4) .slide-inner,
+.deck-container > .slide:nth-child(5) .slide-inner {
+  padding-bottom: 45px;
+}
+
 .slide {
 position: absolute;
 inset: 0;
@@ -737,58 +784,65 @@ background: #031b45;
 /* POSITIONED FURTHER RIGHT & DOWN TO SIT FLUSH BENEATH THE CROWN */
 .ticket-vertical-stub {
 position: absolute;
-right: 3.2%;
+right: 2.6%;
 top: 52%;
 transform: translateY(-50%);
 height: 42%;
 width: 12%;
 display: flex;
-flex-direction: row;
+flex-direction: column;
 align-items: center;
 justify-content: center;
-gap: 7px;
+gap: 6px;
 pointer-events: none;
 z-index: 6;
 overflow: hidden;
-padding: 1px 0;
+padding: 1px 2px;
 }
 
-/* 1. GUEST NAME FIRST (LEFT / INNER COLUMN) */
+/* TICKET STUB — NORMAL HORIZONTAL TEXT: FIRST NAME ABOVE / NUMBER BELOW */
 .stub-owner-name {
-writing-mode: vertical-rl;
-transform: rotate(180deg);
+writing-mode: horizontal-tb;
+transform: none;
 font-family: var(--font-heading);
-font-size: clamp(0.54rem, 1.05vw, 0.78rem);
+font-size: clamp(0.42rem, 0.78vw, 0.62rem);
 font-weight: 800;
 color: #ffffff;
-letter-spacing: 1.4px;
+letter-spacing: 0.9px;
 text-transform: uppercase;
 white-space: nowrap;
-max-height: 100%;
+max-width: 100%;
 overflow: hidden;
-text-shadow: 0 0 5px rgba(0, 0, 0, 0.95);
+text-overflow: clip;
+text-align: center;
+text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
 line-height: 1;
 }
 
-/* 2. CHASSIS NUMBER STAMP (RIGHT / OUTER COLUMN) */
+/* Ticket number directly underneath the first name */
 .stub-chassis-number {
-writing-mode: vertical-rl;
-transform: rotate(180deg);
+writing-mode: horizontal-tb;
+transform: none;
 font-family: var(--font-mono);
-font-size: clamp(0.48rem, 0.95vw, 0.72rem);
+font-size: clamp(0.38rem, 0.66vw, 0.52rem);
 font-weight: 900;
-letter-spacing: 2px;
+letter-spacing: 1px;
 color: var(--gold-bright);
-text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+text-shadow: 0 1px 3px rgba(255, 215, 0, 0.45);
 text-transform: uppercase;
 white-space: nowrap;
-border-left: 1px dashed rgba(255, 215, 0, 0.35);
-padding-left: 4px;
-max-height: 100%;
+border: 0;
+border-top: 1px dashed rgba(255, 215, 0, 0.30);
+padding: 4px 0 0;
+max-width: 100%;
+overflow: hidden;
+text-overflow: clip;
+text-align: center;
 line-height: 1;
 }
 
 @media (max-width: 600px) {
+
 .ticket-vertical-stub {
   right: 2.8%;
   top: 53%;
@@ -1018,6 +1072,21 @@ opacity: 0;
 visibility: hidden;
 pointer-events: none;
 }
+
+@media (max-width: 600px) {
+  .deck-container > .slide:nth-child(3),
+  .deck-container > .slide:nth-child(4),
+  .deck-container > .slide:nth-child(5) {
+    padding-bottom: 110px;
+  }
+
+  .deck-container > .slide:nth-child(3) .slide-inner,
+  .deck-container > .slide:nth-child(4) .slide-inner,
+  .deck-container > .slide:nth-child(5) .slide-inner {
+    padding-bottom: 52px;
+  }
+}
+
 </style>
 </head>
 <body class="auth-locked">
@@ -1188,6 +1257,7 @@ Entrance Verification
   <div class="ticket-vertical-stub">
     <div class="stub-owner-name" id="ticketStubName">GUEST</div>
     <div class="stub-chassis-number" id="ticketStubChassis">KMV - 0001</div>
+    <div class="ticket-stub-qr" id="ticketStubQR" aria-label="Guest ticket QR"></div>
   </div>
 </div>
 
@@ -1536,13 +1606,13 @@ const nameEl = document.getElementById('ticketStubName');
 const chassisEl = document.getElementById('ticketStubChassis');
 
 if (nameEl) {
-  nameEl.innerText = userData.name;
-  if (userData.name.length > 18) {
-    nameEl.style.fontSize = 'clamp(0.44rem, 0.85vw, 0.6rem)';
+  // Ticket stub: use FIRST NAME only. The rest of the portal keeps the full name.
+  const firstName = String(userData.name || '').trim().split(/\\s+/)[0] || 'GUEST';
+  nameEl.innerText = firstName;
+
+  if (firstName.length > 13) {
+    nameEl.style.fontSize = 'clamp(0.48rem, 0.9vw, 0.64rem)';
     nameEl.style.letterSpacing = '1px';
-  } else if (userData.name.length > 13) {
-    nameEl.style.fontSize = 'clamp(0.5rem, 0.95vw, 0.68rem)';
-    nameEl.style.letterSpacing = '1.2px';
   } else {
     nameEl.style.fontSize = '';
     nameEl.style.letterSpacing = '';
@@ -1551,6 +1621,29 @@ if (nameEl) {
 
 if (chassisEl) {
   chassisEl.innerText = userData.ticketId;
+}
+
+/* Generate a compact ticket QR containing non-sensitive guest details. */
+const qrEl = document.getElementById('ticketStubQR');
+if (qrEl && typeof QRCode !== 'undefined') {
+  qrEl.innerHTML = '';
+  const firstName = String(userData.name || '').trim().split(/\\s+/)[0] || 'GUEST';
+  const qrPayload = JSON.stringify({
+    event: '5 YEARS LATER',
+    guest: firstName,
+    ticket: String(userData.ticketId || ''),
+    date: '27 December 2026',
+    time: '08:00 AM - 04:00 PM',
+    venue: 'Glamoura Hotel, Gemunupura'
+  });
+  new QRCode(qrEl, {
+    text: qrPayload,
+    width: 100,
+    height: 100,
+    colorDark: '#07152d',
+    colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.M
+  });
 }
 }
 
@@ -1563,15 +1656,192 @@ const originalText = btn.innerText;
 btn.disabled = true;
 btn.innerText = "PREPARING PDF TICKET...";
 
+let pdfClone = null;
+
 try {
   const ticketElem = document.getElementById("ticketCaptureTarget");
-  await new Promise(r => setTimeout(r, 350));
+  const ticketImage = ticketElem.querySelector(".ticket-template-img");
 
-  const canvas = await html2canvas(ticketElem, {
-    scale: 2.5,
+  // Make a temporary, fixed-size PDF-only ticket clone.
+  // Nothing on the visible website is changed.
+  pdfClone = ticketElem.cloneNode(true);
+
+  const cloneStub = pdfClone.querySelector(".ticket-vertical-stub");
+  const cloneName = pdfClone.querySelector("#ticketStubName");
+  const cloneNumber = pdfClone.querySelector("#ticketStubChassis");
+  const cloneQR = pdfClone.querySelector("#ticketStubQR");
+
+  // FIRST NAME ONLY in the downloadable ticket.
+  const firstName = String(currentActiveUser.name || "")
+    .trim()
+    .split(/\s+/)[0] || "GUEST";
+
+  if (cloneName) cloneName.textContent = firstName;
+  if (cloneNumber) cloneNumber.textContent = String(currentActiveUser.ticketId || "");
+
+  // Explicit PDF layout: no flex positioning or transformed text.
+  // This is the key fix for the "floating / moved away" text in the PDF.
+  pdfClone.style.position = "fixed";
+  pdfClone.style.left = "-10000px";
+  pdfClone.style.top = "0";
+  pdfClone.style.width = "760px";
+  pdfClone.style.height = "380px";
+  pdfClone.style.margin = "0";
+  pdfClone.style.padding = "0";
+  pdfClone.style.transform = "none";
+  pdfClone.style.opacity = "1";
+  pdfClone.style.visibility = "visible";
+  pdfClone.style.overflow = "hidden";
+  pdfClone.style.display = "block";
+
+  const cloneImg = pdfClone.querySelector(".ticket-template-img");
+  if (cloneImg) {
+    cloneImg.style.position = "absolute";
+    cloneImg.style.inset = "0";
+    cloneImg.style.width = "100%";
+    cloneImg.style.height = "100%";
+    cloneImg.style.objectFit = "contain";
+    cloneImg.style.display = "block";
+  }
+
+  if (cloneStub) {
+    cloneStub.style.position = "absolute";
+    cloneStub.style.right = "3.0%";
+    cloneStub.style.top = "52%";
+    cloneStub.style.width = "14%";
+    cloneStub.style.height = "42%";
+    cloneStub.style.transform = "translateY(-50%)";
+    cloneStub.style.display = "flex";
+    cloneStub.style.flexDirection = "column";
+    cloneStub.style.alignItems = "center";
+    cloneStub.style.justifyContent = "center";
+    cloneStub.style.gap = "7px";
+    cloneStub.style.padding = "0";
+    cloneStub.style.overflow = "visible";
+    cloneStub.style.zIndex = "20";
+  }
+
+  if (cloneName) {
+    // Normal horizontal text — first name on top.
+    cloneName.style.writingMode = "horizontal-tb";
+    cloneName.style.transform = "none";
+    cloneName.style.transformOrigin = "center center";
+    cloneName.style.display = "block";
+    cloneName.style.position = "relative";
+    cloneName.style.width = "100%";
+    cloneName.style.height = "auto";
+    cloneName.style.maxHeight = "none";
+    cloneName.style.overflow = "hidden";
+    cloneName.style.whiteSpace = "nowrap";
+    cloneName.style.textAlign = "center";
+    cloneName.style.fontFamily = "'Cinzel', serif";
+    cloneName.style.fontSize = "11px";
+    cloneName.style.fontWeight = "800";
+    cloneName.style.lineHeight = "1";
+    cloneName.style.letterSpacing = "0.8px";
+    cloneName.style.color = "#ffffff";
+    cloneName.style.textShadow = "0 1px 3px rgba(0,0,0,.85)";
+    cloneName.style.margin = "0";
+    cloneName.style.flexShrink = "0";
+  }
+
+  if (cloneQR) {
+    cloneQR.style.width = "46px";
+    cloneQR.style.height = "46px";
+    cloneQR.style.padding = "3px";
+    cloneQR.style.background = "#ffffff";
+    cloneQR.style.borderRadius = "3px";
+    cloneQR.style.display = "flex";
+    cloneQR.style.alignItems = "center";
+    cloneQR.style.justifyContent = "center";
+    cloneQR.style.overflow = "hidden";
+    cloneQR.style.flexShrink = "0";
+  }
+
+  if (cloneNumber) {
+    // Normal horizontal ticket number directly underneath.
+    cloneNumber.style.writingMode = "horizontal-tb";
+    cloneNumber.style.transform = "none";
+    cloneNumber.style.transformOrigin = "center center";
+    cloneNumber.style.display = "block";
+    cloneNumber.style.position = "relative";
+    cloneNumber.style.width = "100%";
+    cloneNumber.style.height = "auto";
+    cloneNumber.style.maxHeight = "none";
+    cloneNumber.style.overflow = "hidden";
+    cloneNumber.style.whiteSpace = "nowrap";
+    cloneNumber.style.textAlign = "center";
+    cloneNumber.style.fontFamily = "'Share Tech Mono', monospace";
+    cloneNumber.style.fontSize = "9px";
+    cloneNumber.style.fontWeight = "800";
+    cloneNumber.style.lineHeight = "1";
+    cloneNumber.style.letterSpacing = "0.8px";
+    cloneNumber.style.color = "#ffe66d";
+    cloneNumber.style.textShadow = "0 1px 3px rgba(0,0,0,.85)";
+    cloneNumber.style.border = "0";
+    cloneNumber.style.borderTop = "1px dashed rgba(255,215,0,.30)";
+    cloneNumber.style.padding = "4px 0 0";
+    cloneNumber.style.margin = "0";
+    cloneNumber.style.flexShrink = "0";
+  }
+
+  if (cloneQR && typeof QRCode !== 'undefined') {
+    cloneQR.innerHTML = '';
+    const firstName = String(currentActiveUser.name || '').trim().split(/\\s+/)[0] || 'GUEST';
+    const qrPayload = JSON.stringify({
+      event: '5 YEARS LATER',
+      guest: firstName,
+      ticket: String(currentActiveUser.ticketId || ''),
+      date: '27 December 2026',
+      time: '08:00 AM - 04:00 PM',
+      venue: 'Glamoura Hotel, Gemunupura'
+    });
+    new QRCode(cloneQR, {
+      text: qrPayload,
+      width: 120,
+      height: 120,
+      colorDark: '#07152d',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.M
+    });
+
+    cloneQR.style.width = '46px';
+    cloneQR.style.height = '46px';
+    cloneQR.style.padding = '3px';
+    cloneQR.style.background = '#ffffff';
+    cloneQR.style.borderRadius = '3px';
+    cloneQR.style.display = 'flex';
+    cloneQR.style.alignItems = 'center';
+    cloneQR.style.justifyContent = 'center';
+    cloneQR.style.overflow = 'hidden';
+    cloneQR.style.flexShrink = '0';
+
+    const qrCanvas = cloneQR.querySelector('canvas');
+    if (qrCanvas) {
+      qrCanvas.style.width = '100%';
+      qrCanvas.style.height = '100%';
+      qrCanvas.style.display = 'block';
+    }
+    const qrImg = cloneQR.querySelector('img');
+    if (qrImg) {
+      qrImg.style.width = '100%';
+      qrImg.style.height = '100%';
+      qrImg.style.display = 'block';
+    }
+  }
+
+  document.body.appendChild(pdfClone);
+
+  // Give the browser one frame to resolve the cloned image/fonts.
+  await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+
+  const canvas = await html2canvas(pdfClone, {
+    scale: 3,
     useCORS: true,
     allowTaint: false,
-    backgroundColor: "#031b45"
+    backgroundColor: "#031b45",
+    logging: false,
+    imageTimeout: 15000
   });
 
   const imgData = canvas.toDataURL("image/png");
@@ -1591,6 +1861,7 @@ try {
 
   let w = maxWidth;
   let h = w / ratio;
+
   if (h > maxHeight) {
     h = maxHeight;
     w = h * ratio;
@@ -1601,10 +1872,14 @@ try {
 
   pdf.addImage(imgData, "PNG", x, y, w, h);
   pdf.save(`${currentActiveUser.ticketId}-5YearsLater-Pass.pdf`);
+
 } catch (err) {
   console.error("PDF Generate Error:", err);
-  alert("Could not generate ticket PDF. Please try taking a screenshot.");
+  alert("Could not generate ticket PDF. Please try again.");
 } finally {
+  if (pdfClone && pdfClone.parentNode) {
+    pdfClone.parentNode.removeChild(pdfClone);
+  }
   btn.disabled = false;
   btn.innerText = originalText;
 }
