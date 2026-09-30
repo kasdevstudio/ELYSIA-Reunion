@@ -1711,7 +1711,7 @@
       } catch (error) {
         console.error("Delete admin error:", error);
 
-        if (error && error.code === "permission-denied") {
+        if (error && error.code === "permission-devied") {
           showNotice("Permission denied. Only the Super Admin can remove administrators.", "error");
         } else {
           showNotice("Could not remove this administrator.", "error");
